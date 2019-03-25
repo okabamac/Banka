@@ -1,0 +1,15 @@
+@media only screen and (max-width: 600px) {
+    .mainContainer {
+        height: 100%;
+    }
+    .mainBottomSVG {
+       width: 50%;
+       z-index: -1;
+    }
+    .companyImg {
+        margin-top: 0;
+    }
+    .mainTopSVG {
+        width: 85%;
+    }
+}
