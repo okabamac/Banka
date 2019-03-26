@@ -2,7 +2,7 @@
     --primary-color: #101C28;
     --secondary-color: #222F3F;
     --whitey: #fff;
-    --blackie: #333;
+    --blackie: #222F3F;
     --pinkie: #F80652;
     --lightdark: #ADC4D6;
     --box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12),
@@ -13,6 +13,7 @@
     --max-width: 1250px;
     --min-height: 750px;
     --linear-gradient: linear-gradient(315deg, #FF0057, #E64A19);
+    --transition: all 0.5s ease-in-out;
 }
 @font-face {
     font-family: DeliciousRoman;
@@ -71,7 +72,12 @@ body::before {
     padding: 1em;
 }
 
+.pageHero {
+     border-bottom: 2px solid rgba(235, 234, 234, 0.2);
+}
+
 .hero h2 {
+     top: 5px;
     display: inline-block;
 }
 
@@ -79,7 +85,7 @@ body::before {
     position: relative;
     width: 25px;
     height: 25px;
-    top: 3px;
+    top: 5px;
     margin-right: .2em;
     display: inline-block;
 }
@@ -111,7 +117,7 @@ body::before {
 .homeBtn:hover {
     background-color: #d19592;
     background-image: linear-gradient(315deg, #d19592 0%, #c81f70 74%);
-    transition: all 0.5s ease-in-out;
+    transition: var(--transition);
     border: none;
     color: var(--whitey);
 }
@@ -164,7 +170,7 @@ body::before {
 }
 
 .services ul li:hover {
-    transition: all 0.5s ease-in-out;
+    transition: var(--transition);
     color: var(--pinkie);
 }
 .services ul li:nth-child(1):before {
@@ -250,7 +256,7 @@ body::before {
     box-shadow: var(--box-shadow);
     animation-name: openModal;
     animation-duration: 1.5s;
-    transition: all 0.5s ease-in-out;
+    transition: var(--transition);
 }
 
 .signinForm {
@@ -348,7 +354,7 @@ label {
           border: none;
           color: #FFF;
           border-radius: 5px;
-          transition: all 0.2s;
+          transition: var(--transition);
           cursor: pointer;
           background-color: #d19592;
           background-image: linear-gradient(315deg, #d19592 0%, #c81f70 74%);
