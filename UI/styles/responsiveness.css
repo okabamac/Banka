@@ -1,4 +1,9 @@
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width:700.9){
+    #sideMenu {
+        display: block;
+    }
+}
+@media only screen and (max-width: 700px) {
     .mainContainer {
         height: 100%;
     }
@@ -11,5 +16,18 @@
     }
     .mainTopSVG {
         width: 85%;
+    }
+
+    .rightHeroItems {
+        display: none;
+    }
+    .hamburger-icon {
+        display: block;
+    }
+    .small-vp-info {
+        display: block;
+    }
+    #sideMenu {
+        display: none;
     }
 }
