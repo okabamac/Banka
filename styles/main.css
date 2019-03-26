@@ -109,7 +109,8 @@ body::before {
 }
 
 .homeBtn:hover {
-    background-color: var(--pinkie);
+    background-color: #d19592;
+    background-image: linear-gradient(315deg, #d19592 0%, #c81f70 74%);
     transition: all 0.5s ease-in-out;
     border: none;
     color: var(--whitey);
@@ -168,31 +169,31 @@ body::before {
 }
 .services ul li:nth-child(1):before {
     font-family: 'Material Icons';
-    content: "\e0af";
+    content: '\e0af';
     display: inline-block;
     margin: .5em .5em 0 -1.3em;
     color: var(--pinkie);
     width: 1.3em;
 }
 .services ul li:nth-child(2):before {
-    font-family: "Material Icons";
-    content: "\e850";
+    font-family: 'Material Icons';
+    content: '\e850';
     display: inline-block;
     margin: .5em .5em 0 -1.3em;
     color: var(--pinkie);
     width: 1.3em;
 }
 .services ul li:nth-child(3):before {
-    font-family: "Material Icons";
-    content: "\e263";
+    font-family: 'Material Icons';
+    content: '\e263';
     display: inline-block;
     margin: .5em .5em 0 -1.3em;
     color: var(--pinkie);
     width: 1.3em;
 }
 .services ul li:nth-child(4):before {
-    font-family: "Material Icons";
-    content: "\e870";
+    font-family: 'Material Icons';
+    content: '\e870';
     display: inline-block;
     margin: .5em .5em 0 -1.3em;
     color: var(--pinkie);
@@ -218,3 +219,138 @@ body::before {
     top: 0;
     right: 0;
 }
+
+#signinModal {
+    display: none;
+}
+#signupModal {
+    display: none;
+}
+.modalHome {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #485461;
+    background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+    opacity: 0.98;
+    overflow: auto;
+    padding: 2em;
+    z-index: 1;
+}
+.modalHome .formContent {
+    position: relative;
+    width: 350px;
+    height: 600px;
+    color: #333;
+    background-color: var(--whitey);
+    padding: 0;
+    overflow: auto;
+    box-shadow: var(--box-shadow);
+    animation-name: openModal;
+    animation-duration: 1.5s;
+    transition: all 0.5s ease-in-out;
+}
+
+.signinForm {
+ margin: 2.5em auto 0 auto;
+}
+.signupForm {
+    margin: 2.5em auto 0 auto;
+}
+.formHero {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    box-shadow: var(--box-shadow);
+    padding: 1em;
+}
+.formHero h2 {
+    display: inline-block;
+    color: #333;
+    font-size: 1.2em;
+}
+#closeBtn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 15px;
+    padding: 1em;
+    cursor: pointer;
+    color: rgb(13, 222, 135);
+}
+@keyframes openModal {
+    from{margin-top: -600px}
+    to {margin-top: 2.5em};
+}
+
+form {
+        position: relative;
+        display: grid;
+        width: 90%;
+        margin: auto;
+        grid-template-columns: 1fr;
+        font-family: 'Josefin Slab', serif;
+}
+.signinForm form {
+top: 6em;
+ grid-gap: 2em;
+}
+.signupForm form {
+    top: 3em;
+    grid-gap: 1.5em;
+
+}
+.signinForm form .field {
+     position: relative;
+     margin-bottom: 2em;
+
+}
+.signupForm form .field {
+     position: relative;
+ margin-bottom: 1em;
+}
+.field input {
+            width: 100%;
+            height: 40px;
+}
+
+label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding-left: 0.3em;
+            transition: all 200ms;
+            opacity: 0.8;
+        }
+        input {
+            padding: 1em 0 0 .3em;
+            border: none;
+            border-bottom: solid 0.1em var(--blackie);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #FFFFFF 4%);
+        }
+            input:focus {
+                box-shadow: none;
+                outline: none;
+                border-bottom: 0.5em solid var(--blackie);
+            }
+        input:focus + label, input:valid + label {
+            transform: translate3d(0, -100%, 0);
+            opacity: 1;
+            font-size: 120%;
+        }
+      .formBtn button {
+          width: 100%;
+          height: 40px;
+          font-weight: 600;
+          text-align: center;
+          border: none;
+          color: #FFF;
+          border-radius: 5px;
+          transition: all 0.2s;
+          cursor: pointer;
+          background-color: #d19592;
+          background-image: linear-gradient(315deg, #d19592 0%, #c81f70 74%);
+      }
+   
