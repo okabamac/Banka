@@ -1,6 +1,6 @@
 @import './main.css';
 
-#sideMenu {
+.sideMenu {
     position: absolute;
     width: 125px;
     height: calc(100% - 100px);
