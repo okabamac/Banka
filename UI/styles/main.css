@@ -35,6 +35,7 @@ body {
     background-color: var(--whitey);
     color: var(--whitey);
     font-family: 'Times New Roman', Times, serif;
+    overflow-x: hidden;
 }
 
 body::before {
@@ -95,6 +96,8 @@ body::before {
     right: 0;
     padding: 1em;
     top: 0;
+    height: 70px;
+    width: 400px;
 }
 
 .buttonsDiv button {
@@ -141,7 +144,7 @@ body::before {
     align-items: center;
     padding: 2em;
 }
-.content .welcome {
+.content #day {
     font-size: 1.2em;
     transform: rotate(357deg);
     margin-bottom: .6em;

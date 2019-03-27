@@ -10,6 +10,7 @@
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>
     <link rel='shortcut icon' type='image/x-icon' href='./images/logo.ico' />
     <link rel='stylesheet' href='./styles/main.css'>
+    <link rel='stylesheet' href='./styles/menu.css'>
     <link rel='stylesheet' href='./styles/responsiveness.css'>
     <title>Banka</title>
 </head>
@@ -20,7 +21,14 @@
             <img src='./images/logo.svg' class='logo' alt='logo'>
             <h2>Banka</h2>
             <img src='./images/path1a.svg' alt='SVG' class='mainTopSVG'>
-            <div class='buttonsDiv'>
+
+             <div class='hamburger-icon'>
+                 <div class='btn-line line-1'></div>
+                 <div class='btn-line line-2'></div>
+                 <div class='btn-line line-3'></div>
+             </div>
+
+            <div id="sideMenu" class='buttonsDiv'>
                 <button id='signinBtn' class='homeBtn'>Signin</button>
                 <button id='signupBtn' class='homeBtn'>Signup</button>
                 <button id='faq' class='homeBtn'>FAQ</button>
@@ -31,7 +39,7 @@
 
             <div class='box'>
                 <div class='content'>
-                    <div class='welcome'>Goodmorning,</div>
+                    <div id='day'></div>
                     <div class='manifesto'>
                         <h2>Experience Unbelievable Banking</h2>
                         <p>Banka ed ut perspiciatis unde omnis iste natus error sit volup
@@ -66,11 +74,11 @@
                 <div>
                 <form action=''>
                     <div class='field'>
-                        <input type='text' name='username'>
+                        <input type='text' name='username' required>
                         <label for='username'>Email</label>
                     </div>
                     <div class='field'>
-                        <input type='password' name='password'>
+                        <input type='password' name='password' required>
                         <label for='password'>Password</label>
                     </div>
                     <div class='formBtn'>
@@ -93,23 +101,23 @@
                 </div>
                 <form action=''>
                     <div class='field'>
-                        <input type='text' name='Firstname'>
+                        <input type='text' name='Firstname' required>
                         <label for='Firstname'>First Name</label>
                     </div>
                     <div class='field'>
-                        <input type='text' name='Lastname'>
+                        <input type='text' name='Lastname' required>
                         <label for='Lastname'>Last Name</label>
                     </div>
                     <div class='field'>
-                        <input type='text' name='username'>
+                        <input type='text' name='username' required>
                         <label for='username'>Email</label>
                     </div>
                     <div class='field'>
-                        <input type='password' name='password'>
+                        <input type='password' name='password' required>
                         <label for='password'>Password</label>
                     </div>
                     <div class='field'>
-                        <input type='password' name='password'>
+                        <input type='password' name='password' required>
                         <label for='password'>Confirm Password</label>
                     </div>
                     <div class='formBtn'>
@@ -127,6 +135,7 @@
 
     </div>
     <script src='./js/main.js'></script>
+    <script src='./js/pagesFunc.js'></script>
 </body>
 
 </html>

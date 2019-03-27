@@ -1,32 +1,56 @@
-@media only screen and (min-width:700.9){
+@import './main.css';
+
+@media only screen and (min-width:700.9) {
     #sideMenu {
         display: block;
     }
 }
+
 @media only screen and (max-width: 700px) {
     .mainContainer {
         height: 100%;
     }
+
     .mainBottomSVG {
-       width: 50%;
-       z-index: -1;
+        width: 50%;
+        z-index: -1;
     }
+
     .companyImg {
         margin-top: 0;
     }
+
     .mainTopSVG {
         width: 85%;
+    }
+
+    .buttonsDiv {
+        top: 40px;
+        right: -4em;
+        transition: .5s all linear;
+    }
+
+    .buttonsDiv button {
+        border: none;
+        margin-right: .4em;
+    }
+
+    .buttonsDiv button:last-child {
+        margin-right: 0
     }
 
     .rightHeroItems {
         display: none;
     }
+
     .hamburger-icon {
         display: block;
     }
+
     .small-vp-info {
         display: block;
     }
+
     #sideMenu {
         display: none;
     }
