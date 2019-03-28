@@ -8,9 +8,13 @@
 
 @media only screen and (max-width: 700px) {
     .mainContainer {
+        width: 100vw;
         height: 100%;
+        overflow: auto
     }
-
+    .sideMenu {
+        height: 100vh;
+    }
     .mainBottomSVG {
         width: 50%;
         z-index: -1;
@@ -53,5 +57,11 @@
 
     #sideMenu {
         display: none;
+    }
+    .content {
+        position: relative;
+        height: 100%;
+        padding: 1em;
+        width: 100%;
     }
 }
