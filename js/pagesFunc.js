@@ -45,16 +45,6 @@ window.addEventListener("resize",  () => {
 
 
 (function () {
-    let greeting;
-    const hour = new Date().getHours();
-    if (hour < 12) {
-        greeting = 'Goodmorning,';
-    }
-    else if ((hour >= 12) && (hour < 16)) {
-        greeting = 'Goodafternoon,';
-    }
-    else {
-        greeting = 'Goodevening,';
-    }
-    document.getElementById('day').innerHTML = greeting;
+    const notification = document.querySelector('#notification');
+    notification.classList.add('animate');
 })();
