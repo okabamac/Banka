@@ -1,19 +1,4 @@
 
-(function () {
-    let greeting;
-    const hour = new Date().getHours();
-    if (hour < 12) {
-        greeting = 'Goodmorning,';
-    }
-    else if ((hour >= 12) && (hour < 16)) {
-        greeting = 'Goodafternoon,';
-    }
-    else {
-        greeting = 'Goodevening,';
-    }
-    document.getElementById('day').innerHTML = greeting;
-})();
-
 const signinBtn = document.getElementById('signinBtn');
 const signupBtn = document.getElementById('signupBtn');
 
@@ -22,6 +7,8 @@ const closeSignup = document.querySelectorAll('#closeBtn')[1];
 
 const signinModal = document.getElementById('signinModal');
 const signupModal = document.getElementById('signupModal');
+const modalOverlay1 = document.querySelectorAll('.modalOverlay')[0];
+const modalOverlay2 = document.querySelectorAll('.modalOverlay')[1];
 
 
 const showOrHide = (elem, visibility) => {
@@ -38,14 +25,18 @@ signinBtn.addEventListener('click', openSigninModal);
 signupBtn.addEventListener('click', openSignupModal);
 
 closeSignin.addEventListener('click', () => {
+    if(signinModal)
     showOrHide(signinModal, 'none');
 });
 closeSignup.addEventListener('click', () => {
+    if(signupModal)
     showOrHide(signupModal, 'none');
 });
 
 window.addEventListener('click', (e) => {
-    if (e.target == signinModal || e.target == signupModal) 
-       showOrHide(e.target, 'none');
+    if (e.target == modalOverlay1 || e.target == modalOverlay2 ) 
+       showOrHide(e.target.parentNode, 'none');
 });
+
+
 

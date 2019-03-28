@@ -144,7 +144,7 @@ body::before {
     align-items: center;
     padding: 2em;
 }
-.content #day {
+.content .homeGreeting {
     font-size: 1.2em;
     transform: rotate(357deg);
     margin-bottom: .6em;
@@ -221,6 +221,7 @@ body::before {
 .mainBottomSVG {
     position: absolute;
     bottom: 0;
+    z-index: 3;
 }
 
 .mainTopSVG {
@@ -241,12 +242,18 @@ body::before {
     top: 0;
     height: 100%;
     width: 100%;
-    background-color: #485461;
-    background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
     opacity: 0.98;
     overflow: auto;
     padding: 2em;
     z-index: 1;
+}
+.modalOverlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: inherit;
+    height: inherit;
+    background-color: rgba(0, 0, 0, 0.356);
 }
 .modalHome .formContent {
     position: relative;
