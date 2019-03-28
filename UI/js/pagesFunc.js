@@ -39,12 +39,30 @@ window.addEventListener("resize", () => {
         if (hamburger.classList.contains('close') === false) {
             sideMenu.style.display = 'none';
         } else {
-             sideMenu.style.display = 'block';
+            sideMenu.style.display = 'block';
         }
     }
 }, true);
 
 
+
+
+// const searchBtn = document.getElementById('search-btn');
+// const search = document.getElementById('search');
+// const tip = document.getElementById('tip');
+
+// if (searchBtn) {
+
+//     searchBtn.addEventListener('click', () => {
+//         search.style.width = '200px';
+//         search.style.padding = '40px';
+//         search.style.cursor = 'text';
+//         search.focus();
+
+//         search.setAttribute('placeholder', 'Enter Ref');
+//     });
+
+// }
 
 (function () {
     const notification = document.querySelector('#notification');
