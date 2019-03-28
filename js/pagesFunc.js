@@ -15,31 +15,33 @@ const toggle = (el) => {
 
 hamburger.addEventListener('click', () => {
     show = !show;
-    toggle(sideMenu);
     hamburger.classList.toggle('close');
-    if(mainContent){
+    if (mainContent) {
         mainContent.classList.toggle('contentOpened');
     }
+    toggle(sideMenu);
 });
 
 
 
-window.addEventListener("resize",  () => {
-    console.log(sideMenu.style.display);
-  if (window.innerWidth > 700) {
-              if(mainContent.classList.contains('contentOpened')){
-                  mainContent.classList.remove('contentOpened');
-                  sideMenu.style.display = 'block';
-              }
-            else {
-                if (hamburger.classList.contains('close')) {
-                    hamburger.classList.remove('close');
-                }
-                if(hamburger.classList.contains('close') == false && window.innerWidth < 700 ){
-                    sideMenu.style.display = 'none';
-                }
-            }
-          }
+window.addEventListener("resize", () => {
+    if (window.innerWidth >= 768) {
+        if (hamburger.classList.contains('close')) {
+            hamburger.classList.remove('close');
+        }
+        if (mainContent.classList.contains('contentOpened')) {
+            mainContent.classList.remove('contentOpened');
+        }
+        if (sideMenu.style.display == 'none') {
+            sideMenu.style.display = 'block';
+        }
+    } else {
+        if (hamburger.classList.contains('close') === false) {
+            sideMenu.style.display = 'none';
+        } else {
+             sideMenu.style.display = 'block';
+        }
+    }
 }, true);
 
 

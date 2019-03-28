@@ -15,16 +15,23 @@
     --linear-gradient: linear-gradient(315deg, #FF0057, #E64A19);
     --transition: all 0.5s ease-in-out;
 }
+
 @font-face {
     font-family: DeliciousRoman;
     src: url(http://www.font-face.com/fonts/delicious/Delicious-Roman.otf);
 }
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
 html,
 body {
     height: 100%;
@@ -74,11 +81,11 @@ body::before {
 }
 
 .pageHero {
-     border-bottom: 2px solid rgba(235, 234, 234, 0.2);
+    border-bottom: 2px solid rgba(235, 234, 234, 0.2);
 }
 
 .hero h2 {
-     top: 5px;
+    top: 5px;
     display: inline-block;
 }
 
@@ -126,14 +133,14 @@ body::before {
 }
 
 #landingContent {
-     position: relative;
-     width: 90%;
-     top: 5em;
-     display: grid;
-     margin: auto;
-     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-     grid-template-rows: auto;
-     grid-gap: 0 40px;
+    position: relative;
+    width: 90%;
+    top: 5em;
+    display: grid;
+    margin: auto;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-rows: auto;
+    grid-gap: 0 40px;
 }
 
 #landingContent .box {
@@ -144,6 +151,7 @@ body::before {
     align-items: center;
     padding: 2em;
 }
+
 .content .homeGreeting {
     font-size: 1.2em;
     transform: rotate(357deg);
@@ -176,6 +184,7 @@ body::before {
     transition: var(--transition);
     color: var(--pinkie);
 }
+
 .services ul li:nth-child(1):before {
     font-family: 'Material Icons';
     content: '\e0af';
@@ -184,6 +193,7 @@ body::before {
     color: var(--pinkie);
     width: 1.3em;
 }
+
 .services ul li:nth-child(2):before {
     font-family: 'Material Icons';
     content: '\e850';
@@ -192,6 +202,7 @@ body::before {
     color: var(--pinkie);
     width: 1.3em;
 }
+
 .services ul li:nth-child(3):before {
     font-family: 'Material Icons';
     content: '\e263';
@@ -200,6 +211,7 @@ body::before {
     color: var(--pinkie);
     width: 1.3em;
 }
+
 .services ul li:nth-child(4):before {
     font-family: 'Material Icons';
     content: '\e870';
@@ -216,7 +228,7 @@ body::before {
     margin-top: 6em;
     margin-left: auto;
     margin-right: auto
-} 
+}
 
 .mainBottomSVG {
     position: absolute;
@@ -233,9 +245,11 @@ body::before {
 #signinModal {
     display: none;
 }
+
 #signupModal {
     display: none;
 }
+
 .modalHome {
     position: absolute;
     left: 0;
@@ -247,6 +261,7 @@ body::before {
     padding: 2em;
     z-index: 1;
 }
+
 .modalOverlay {
     position: absolute;
     left: 0;
@@ -255,6 +270,7 @@ body::before {
     height: inherit;
     background-color: rgba(0, 0, 0, 0.356);
 }
+
 .modalHome .formContent {
     position: relative;
     width: 350px;
@@ -270,11 +286,13 @@ body::before {
 }
 
 .signinForm {
- margin: 2.5em auto 0 auto;
+    margin: 2.5em auto 0 auto;
 }
+
 .signupForm {
     margin: 2.5em auto 0 auto;
 }
+
 .formHero {
     position: relative;
     width: 100%;
@@ -282,11 +300,13 @@ body::before {
     box-shadow: var(--box-shadow);
     padding: 1em;
 }
+
 .formHero h2 {
     display: inline-block;
     color: #333;
     font-size: 1.2em;
 }
+
 #closeBtn {
     position: absolute;
     bottom: 0;
@@ -296,77 +316,99 @@ body::before {
     cursor: pointer;
     color: rgb(13, 222, 135);
 }
+
 @keyframes openModal {
-    from{margin-top: -600px}
-    to {margin-top: 2.5em};
+    from {
+        margin-top: -600px
+    }
+
+    to {
+        margin-top: 2.5em
+    }
+
+    ;
 }
 
 form {
-        position: relative;
-        display: grid;
-        width: 90%;
-        margin: auto;
-        grid-template-columns: 1fr;
-        font-family: 'Josefin Slab', serif;
+    position: relative;
+    display: grid;
+    width: 90%;
+    margin: auto;
+    font-family: 'Josefin Slab', serif;
 }
+
 .signinForm form {
-top: 6em;
- grid-gap: 2em;
+    grid-template-columns: 1fr;
+    top: 6em;
+    grid-gap: 2em;
 }
+
 .signupForm form {
+    grid-template-columns: 1fr;
     top: 3em;
     grid-gap: 1.5em;
 
 }
+
+form .field {
+    position: relative;
+    margin-bottom: 2em;
+}
 .signinForm form .field {
-     position: relative;
-     margin-bottom: 2em;
+    position: relative;
+    margin-bottom: 2em;
 
 }
+
 .signupForm form .field {
-     position: relative;
- margin-bottom: 1em;
+    position: relative;
+    margin-bottom: 1em;
 }
+
 .field input {
-            width: 100%;
-            height: 40px;
+    width: 100%;
+    height: 40px;
 }
 
 label {
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding-left: 0.3em;
-            transition: all 200ms;
-            opacity: 0.8;
-        }
-        input {
-            padding: 1em 0 0 .3em;
-            border: none;
-            border-bottom: solid 0.1em var(--blackie);
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #FFFFFF 4%);
-        }
-            input:focus {
-                box-shadow: none;
-                outline: none;
-                border-bottom: 0.5em solid var(--blackie);
-            }
-        input:focus + label, input:valid + label {
-            transform: translate3d(0, -100%, 0);
-            opacity: 1;
-            font-size: 120%;
-        }
-      .formBtn button {
-          width: 100%;
-          height: 40px;
-          font-weight: 600;
-          text-align: center;
-          border: none;
-          color: #FFF;
-          border-radius: 5px;
-          transition: var(--transition);
-          cursor: pointer;
-          background-color: #d19592;
-          background-image: linear-gradient(315deg, #d19592 0%, #c81f70 74%);
-      }
-   
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 0.3em;
+    transition: all 200ms;
+    opacity: 0.8;
+}
+
+input {
+    padding: 1em 0 0 .3em;
+    border: none;
+    border-bottom: solid 0.1em var(--blackie);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #FFFFFF 4%);
+}
+
+input:focus {
+    box-shadow: none;
+    outline: none;
+    border-bottom: 0.5em solid var(--blackie);
+}
+
+input:focus+label,
+input:valid+label {
+    transform: translate3d(0, -100%, 0);
+    opacity: 1;
+    font-size: 120%;
+}
+
+.formBtn button {
+    width: 100%;
+    height: 40px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    color: #FFF;
+    border-radius: 5px;
+    transition: var(--transition);
+    cursor: pointer;
+    background-color: #d19592;
+    background-image: linear-gradient(315deg, #d19592 0%, #c81f70 74%);
+}
