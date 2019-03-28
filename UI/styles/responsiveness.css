@@ -11,14 +11,17 @@
          width: 50%;
          z-index: -1;
      }
+      #sideMenu {
+          display: block;
+      }
 
 }
 
-@media only screen and (min-width: 768px) {
+/* @media only screen and (min-width: 768px) {
     #sideMenu {
         display: block;
     }
-}
+} */
 
 @media only screen and (max-width: 767px) {
     .mainContainer {
