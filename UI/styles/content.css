@@ -1,5 +1,15 @@
 @import './main.css';
 
+
+
+
+/* Styles for content page */
+
+
+
+
+
+
 .content {
     position: relative;
     height: calc(100% - 70px);
@@ -28,6 +38,7 @@
 .contentHead #notification {
     position: relative;
     width: 200px;
+    margin-top: 1em;
     font-size: 1em;
     animation-name: go-left-right;
     animation-duration: 3s;
@@ -42,7 +53,7 @@
     }
 
     to {
-        left: calc(100% - 150px);
+        left: calc(100% - 250px);
     }
 }
 
@@ -55,6 +66,23 @@
     height: calc(100% - 60px);
     width: 100%;
 }
+
+
+
+
+
+
+
+
+
+/* Customer Dashboard */
+
+
+
+
+
+
+
 
 .contentBody .customerDashboard {
     position: relative;
@@ -198,13 +226,28 @@
     opacity: 0.6;
 }
 
+
+
+
+
+
+
+/* Create Acount */
+
+
+
+
+
+
+
+
 .contentBody .customerCreateAccount {
     position: relative;
     height: 100%;
     width: 100%;
-    display: grid;
     margin: auto;
 }
+
 .createAccountForm {
     position: relative;
     width: 95%;
@@ -212,17 +255,18 @@
     top: 2em;
     margin: auto;
 }
+
 .createAccountForm form {
-     position: relative;
-     height: 90%;
-     width: 100%;
-     display: grid;
-     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-     grid-template-rows: auto;
-     grid-gap: 2em;
+    position: relative;
+    height: 90%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-rows: auto;
+    grid-gap: 2em;
 }
 
- .customerCreateAccount input {
+.customerCreateAccount input {
     color: var(--whitey);
     padding: 1em 0 0 .3em;
     border: none;
@@ -230,8 +274,118 @@
     background: none;
 }
 
- .customerCreateAccount input:focus {
+.customerCreateAccount input:focus {
     box-shadow: none;
     outline: none;
     border-bottom: 0.5em solid var(--whitey);
+}
+
+
+
+
+
+/* Transaction History */
+
+
+
+
+
+
+.transactionHistory .transactionGraph {
+    width: 100%;
+    height: 100px;
+    padding: 20px 20px 20px 0;
+    margin-bottom: 2em;
+}
+
+.transactionGraph svg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.transactionHistory .transactionDetails {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.wideCard {
+    top: 20px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-rows: auto;
+    grid-gap: 1em;
+    opacity: 0.7;
+}
+.wideCard div {
+    padding: 1em 0;
+     box-shadow: var(--box-shadow);
+}
+
+/* Search Button */
+.search-contain {
+    position: absolute;
+    top: 0;
+    right: 4.5em;
+    width: 200px;
+    height: inherit;
+    padding: 0.5em;
+}
+
+
+.search-contain form {
+    position: relative;
+    transition: all 1s;
+    width: 40px;
+    height: 40px;
+    background: white;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border: 4px solid white;
+    padding: 5px;
+}
+
+.search-contain form input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 30px;
+    line-height: 15px;
+    outline: 0;
+    border: 0;
+    color: var(--blackie);
+    display: none;
+    font-size: 1em;
+    border-radius: 10px;
+    padding: 0 20px;
+}
+
+.search-contain form i {
+    box-sizing: border-box;
+    padding: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    color: #07051a;
+    text-align: center;
+    font-size: 1.5em;
+    transition: all 1s;
+}
+
+.search-contain form:hover {
+    width: 200px;
+    cursor: pointer;
+}
+
+.search-contain form:hover input {
+    display: block;
+    border-bottom: none;
+}
+.search-contain form:hover .fa {
+    background: #07051a;
+    color: white;
 }
