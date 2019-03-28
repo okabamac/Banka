@@ -124,7 +124,7 @@ span a:hover {
     color: var(--pinkie);
 }
 
-#menuItemsCustomer ul li:nth-child(1):before {
+#menuItemsCustomer ul li:nth-child(1) a:before {
     font-family: 'Material Icons';
     content: '\e88a';
     display: block;
@@ -133,7 +133,7 @@ span a:hover {
     font-size: 2em;
 }
 
-#menuItemsCustomer ul li:nth-child(2):before {
+#menuItemsCustomer ul li:nth-child(2) a:before {
     font-family: 'Material Icons';
     content: '\e150';
     display: block;
@@ -142,7 +142,7 @@ span a:hover {
     font-size: 2em;
 }
 
-#menuItemsCustomer ul li:nth-child(3):before {
+#menuItemsCustomer ul li:nth-child(3) a:before {
     font-family: 'Material Icons';
     content: '\e889';
     display: block;
@@ -151,7 +151,7 @@ span a:hover {
     font-size: 2em;
 }
 
-#menuItemsStaff ul li:nth-child(1):before {
+#menuItemsStaff ul li:nth-child(1) a:before {
     font-family: 'Material Icons';
     content: '\e7fc';
     display: block;
@@ -160,7 +160,7 @@ span a:hover {
     font-size: 2em;
 }
 
-#menuItemsStaff ul li:nth-child(2):before {
+#menuItemsStaff ul li:nth-child(2) a:before {
     font-family: 'Material Icons';
     content: '\e150';
     display: block;
@@ -169,7 +169,7 @@ span a:hover {
     font-size: 2em;
 }
 
-#menuItemsStaff ul li:nth-child(3):before {
+#menuItemsStaff ul li:nth-child(3) a:before {
     font-family: 'Material Icons';
     content: '\e55a';
     display: block;
@@ -178,7 +178,7 @@ span a:hover {
     font-size: 2em;
 }
 
-#menuItemsAdmin ul li:nth-child(1):before {
+#menuItemsAdmin ul li:nth-child(1) a:before {
     font-family: 'Material Icons';
     content: '\e7fc';
     display: block;
@@ -187,7 +187,7 @@ span a:hover {
     font-size: 2em;
 }
 
-#menuItemsAdmin ul li:nth-child(2):before {
+#menuItemsAdmin ul li:nth-child(2) a:before {
     font-family: 'Material Icons';
     content: '\e150';
     display: block;
@@ -196,7 +196,7 @@ span a:hover {
     font-size: 2em;
 }
 
-#menuItemsAdmin ul li:nth-child(3):before {
+#menuItemsAdmin ul li:nth-child(3) a:before {
     font-family: 'Material Icons';
     content: '\e55a';
     display: block;

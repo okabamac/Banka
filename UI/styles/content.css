@@ -28,6 +28,7 @@
 .contentHead #notification {
     position: relative;
     width: 200px;
+    font-size: 1em;
     animation-name: go-left-right;
     animation-duration: 3s;
     animation-direction: alternate;
@@ -41,7 +42,7 @@
     }
 
     to {
-        left: calc(100% - 50px);
+        left: calc(100% - 150px);
     }
 }
 
@@ -195,5 +196,42 @@
 .details span {
     font-weight: 700;
     opacity: 0.6;
-    /* color: var(--pinkie); */
+}
+
+.contentBody .customerCreateAccount {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    margin: auto;
+}
+.createAccountForm {
+    position: relative;
+    width: 95%;
+    height: 95%;
+    top: 2em;
+    margin: auto;
+}
+.createAccountForm form {
+     position: relative;
+     height: 90%;
+     width: 100%;
+     display: grid;
+     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+     grid-template-rows: auto;
+     grid-gap: 2em;
+}
+
+ .customerCreateAccount input {
+    color: var(--whitey);
+    padding: 1em 0 0 .3em;
+    border: none;
+    border-bottom: solid 0.1em var(--whitey);
+    background: none;
+}
+
+ .customerCreateAccount input:focus {
+    box-shadow: none;
+    outline: none;
+    border-bottom: 0.5em solid var(--whitey);
 }
