@@ -266,7 +266,8 @@
     grid-gap: 2em;
 }
 
-.customerCreateAccount input {
+.customerCreateAccount input,
+.creditDebitForm input {
     color: var(--whitey);
     padding: 1em 0 0 .3em;
     border: none;
@@ -274,7 +275,8 @@
     background: none;
 }
 
-.customerCreateAccount input:focus {
+.customerCreateAccount input:focus,
+.creditDebitForm input:focus {
     box-shadow: none;
     outline: none;
     border-bottom: 0.5em solid var(--whitey);
@@ -499,4 +501,29 @@
     cursor: pointer;
     background-color: #d19592;
     background-image: linear-gradient(315deg, #d19592 0%, #c81f70 74%);
+}
+
+
+/* Credit and Debit Form  */
+
+
+
+.creditDebitForm {
+    position: relative;
+    width: 70%;
+    margin: auto;
+    top: 4em;
+    box-shadow: var(--box-shadow);
+    padding-bottom: 2em;
+}
+
+.creditDebitForm form {
+    position: relative;
+    top: 4em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-rows: auto;
+    grid-gap: 2em;
+    padding: 1em;
+    margin-bottom: 2em;
 }
