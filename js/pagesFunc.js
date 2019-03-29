@@ -24,7 +24,7 @@ hamburger.addEventListener('click', () => {
 
 
 
-window.addEventListener("resize", () => {
+window.addEventListener('resize', () => {
     if (window.innerWidth >= 768) {
         if (hamburger.classList.contains('close')) {
             hamburger.classList.remove('close');
