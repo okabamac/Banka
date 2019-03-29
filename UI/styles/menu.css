@@ -198,6 +198,14 @@ span a:hover {
 
 #menuItemsAdmin ul li:nth-child(3) a:before {
     font-family: 'Material Icons';
+    content: '\e03b';
+    display: block;
+    margin: 0.1em auto;
+    color: var(--pinkie);
+    font-size: 2em;
+}
+#menuItemsAdmin ul li:nth-child(4) a:before {
+    font-family: 'Material Icons';
     content: '\e8a6';
     display: block;
     margin: 0.1em auto;

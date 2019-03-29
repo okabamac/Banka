@@ -52,9 +52,10 @@
             </div>
             <div class='menuItems' id='menuItemsAdmin'>
                 <ul>
-                    <li class='active'><a href='./staff-all-customers.html'>All Customers</a></li>
-                    <li><a href='./credit-debit.html'>Manage User</a></li>
-                    <li><a href='./staff-profile.html'>My Profile</a></li>
+                    <li class='active'><a href='./admin-all-customers.html'>All Customers</a></li>
+                    <li><a href='./manage-user.html'>Manage User</a></li>
+                    <li><a href='./add-user.html'>Add User</a></li>
+                    <li><a href='./admin-profile.html'>My Profile</a></li>
                 </ul>
             </div>
 
@@ -63,14 +64,14 @@
         <div class='content'>
             <div id='mainContent'>
                 <div class='contentHead'>
-                    <div id="notification">
-                        <p>All Customers</p>
+                    <div id='notification'>
+                        <h4>All Customers</h4>
                     </div>
 
-                    <div class="search-contain">
-                        <form action="">
-                            <input type="search">
-                            <i class="material-icons">
+                    <div class='search-contain'>
+                        <form action=''>
+                            <input type='search'>
+                            <i class='material-icons'>
                                 search
                             </i>
                         </form>
@@ -78,8 +79,76 @@
 
                 </div>
                 <div class='contentBody'>
-                    <div class="customerAllAccounts">
+                    <div class='customerAllAccounts'>
+                        <div class='customerList customerCard'>
+                            <div class='accountNumbers'>
+                                <div class='triangle'></div>
+                                <p>2088058375</p>
+                                <p>Umaru J.U</p>
+                            </div>
+                            <div class='accountNumbers'>
+                                <p>3025058375</p>
+                                <p>John Smith</p>
+                            </div>
+                            <div class='accountNumbers'>
+                                <p>7522585568</p>
+                                <p>Mar Lin</p>
+                            </div>
+                            <div class='accountNumbers'>
+                                <p>6326665589</p>
+                                <p>Henry Paid</p>
+                            </div>
+                            <div class='accountNumbers'>
+                                <p>8856223678</p>
+                                <p>Xin He</p>
+                            </div>
+                        </div>
+                        <div class='customerInfo customerCard'>
+                            <div class='info1 info'>
+                                <div class='cardHead'>
+                                    <div class='title'>
+                                        <h4>Account Summary</h4>
+                                    </div>
+                                    <i class='material-icons'>
+                                        card_travel
+                                    </i>
+                                </div>
+                                <div class='cardContent'>
+                                    <img src='../images/businesswoman-svgrepo-com.svg' alt='Profile Picture'
+                                        class='profilePic'>
+                                    <div class='details'>
+                                        <p class='name'><span>Name:</span> Umaru J.U</p>
+                                        <p class='age'><span>Date of Birth:</span> 26/06/1995</p>
+                                        <p class='phoneNumber'><span>Phone:</span> +15226338</p>
+                                        <p class='email'><span>Email:</span> cossyjl99@email.com</p>
+                                        <p class='primarySignature'><span>Primary Signature:</span> Self</p>
+                                        <p class='address'><span>Address:</span> 12 Road, 5th Avenue, FCT</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='info2 info'>
+                                <div class='cardHead'>
+                                    <div class='title'>
+                                        <h4>Account Summary</h4>
+                                    </div>
+                                    <i class='material-icons'>
+                                        question_answer
+                                    </i>
+                                </div>
+                                <div class='details'>
+                                    <p class='name'><span>Acc Balance:</span> $12, 755.23
+                                        <p class='name'><span>Total Deposit:</span> $253, 2336.7
+                                            <p class='name'><span>Total Withdrawal:</span> $12,755.2
+                                                <p class='name'><span>Last Deposit:</span> $12.75
+                                                    <p class='name'><span>Date of Last Deposit:</span> 2/2/18
+                                                        <p class='name'><span>Level of Debt:</span> 8/10
 
+                                </div>
+                                <div class='infoBtns'>
+                                    <span><button>Delete Account</button></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
