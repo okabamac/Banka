@@ -45,15 +45,19 @@
     animation-direction: alternate;
     animation-iteration-count: 2;
     animation-fill-mode: forwards;
+    opacity: 0;
+    animation-fill-mode: forwards;
 }
 
 @keyframes go-left-right {
     from {
         left: 0;
+        opacity: 1;
     }
 
     to {
         left: calc(100% - 350px);
+        opacity: 0;
     }
 }
 
@@ -398,7 +402,7 @@
     top: 15px;
     position: relative;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     grid-template-rows: auto;
     grid-gap: 0.5em;
     opacity: 0.7;
@@ -459,7 +463,7 @@
 .customerInfo {
     grid-column: auto / span 5;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-template-rows: auto;
     grid-gap: 1em;
     padding: 1em;
