@@ -23,7 +23,6 @@ hamburger.addEventListener('click', () => {
 });
 
 
-
 window.addEventListener('resize', () => {
     if (window.innerWidth >= 768) {
         if (hamburger.classList.contains('close')) {
@@ -66,5 +65,6 @@ window.addEventListener('resize', () => {
 
 (function () {
     const notification = document.querySelector('#notification');
+    if(notification)
     notification.classList.add('animate');
 })();
