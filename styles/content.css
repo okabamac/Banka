@@ -37,9 +37,9 @@
 
 .contentHead #notification {
     position: relative;
-    width: 200px;
-    margin-top: 1em;
-    font-size: 1em;
+    width: 250px;
+    margin-top: 0;
+    font-size: 1.3em;
     animation-name: go-left-right;
     animation-duration: 3s;
     animation-direction: alternate;
@@ -270,6 +270,8 @@
     grid-gap: 2em;
 }
 
+
+
 .customerCreateAccount input,
 .creditDebitForm input {
     color: var(--whitey);
@@ -301,7 +303,7 @@
     width: 100%;
     height: 100px;
     padding: 20px 20px 20px 0;
-    margin-bottom: 2em;
+    margin-bottom: 0em;
 }
 
 .transactionGraph svg {
@@ -310,26 +312,6 @@
     height: 100%;
 }
 
-.transactionHistory .transactionDetails {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.wideCard {
-    top: 20px;
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-template-rows: auto;
-    grid-gap: 1em;
-    opacity: 0.7;
-}
-
-.wideCard div {
-    padding: 1em 0;
-    box-shadow: var(--box-shadow);
-}
 
 /* Search Button */
 .search-contain {
@@ -403,24 +385,42 @@
     position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    grid-template-rows: auto;
+    grid-template-rows: 450px;
     grid-gap: 0.5em;
-    opacity: 0.7;
+    opacity: 1;
     width: 95%;
     margin: auto;
     height: 85%;
 }
 
 .customerList {
+    direction: rtl;
     position: relative;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     grid-gap: 1em;
-    opacity: 0.7;
+    opacity: 1;
     width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.customerList div {
+    direction: ltr;
 }
 
+.customerList::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.customerList::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.customerList::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
 .customerList div:hover {
     cursor: pointer;
     transition: var(--transition);
@@ -463,7 +463,7 @@
 .customerInfo {
     grid-column: auto / span 5;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-template-rows: auto;
     grid-gap: 1em;
     padding: 1em;
@@ -536,65 +536,64 @@
 
 
 
-
 /* Manage User */
-
-
-.userTitle {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-template-rows: auto;
-    grid-gap: 2em;
-    padding: 2em;
-    margin-bottom: 2em;
-    text-align: center;
-    width: 85%;
-    opacity: 0.7;
-    margin: auto;
-}
-
-.manageUser {
-    position: relative;
-    top: 0em;
-    opacity: 0.7;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(800px, 1fr));
-    grid-template-rows: auto;
-    grid-gap: 1em;
-    padding: 1em;
-    width: 90%;
-    margin: auto;
-    margin-bottom: 2em;
-}
-
-.manageUser .userInformation {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-template-rows: auto;
-    grid-gap: 2em;
-    padding: 2em;
-    margin-bottom: 2em;
-    text-align: center;
-    box-shadow: var(--box-shadow);
-    width: 100%;
-}
-
-.userInformation img {
-    width: 60px;
-    height: 60px;
-}
-
-.userInformation i:hover {
-    color: var(--pinkie);
-    cursor: pointer;
-    transition: var(--transition);
-}
 
 .adminAdd {
     top: 4em;
     width: 80%;
     height: 90%;
     margin: auto;
+}
+
+table {
+    position: relative;
+    width: 90%;
+    margin: auto;
+    top: 3em;
+    font-size: 1.2em;
+    border-collapse: collapse;
+    padding: 0;
+    table-layout: fixed;
+    opacity: 0.8;
+    overflow-y: auto;
+}
+
+table caption {
+    font-size: 1.2em;
+    margin: .5em 0 .75em;
+}
+
+table tr {
+    padding: .35em;
+    min-height: 120px;
+}
+
+tr:nth-child(odd) {
+    -webkit-box-shadow: 0 8px 6px -6px var(--blackie);
+    -moz-box-shadow: 0 8px 6px -6px var(--blackie);
+    box-shadow: 0 8px 6px -6px var(--blackie);
+}
+
+table th,
+table td {
+    padding: .625em;
+    text-align: left;
+}
+td img {
+    width: 50px;
+    height: 50px;
+}
+table th {
+    font-size: .8em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+td {
+    height: 100px;
+}
+
+.lastTransactionDetails {
+    position: relative;
+    width: 100%;
+    font-size: 0.8em;
 }
