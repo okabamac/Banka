@@ -272,7 +272,7 @@
 
 
 
-.customerCreateAccount input,
+.customerCreateAccount input, .customerCreateAccount select,
 .creditDebitForm input {
     color: var(--whitey);
     padding: 1em 0 0 .3em;
@@ -301,23 +301,33 @@
 
 .transactionHistory .transactionGraph {
     width: 100%;
-    height: 100px;
-    padding: 20px 20px 20px 0;
+    height: 200px;
+    padding: 20px;
     margin-bottom: 0em;
 }
 
 .transactionGraph svg {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
+    margin: auto;
 }
 
+.chart rect {
+    fill: steelblue;
+}
+
+.chart text {
+    fill: white;
+    font: 10px sans-serif;
+    text-anchor: end;
+}
 
 /* Search Button */
 .search-contain {
     position: absolute;
     top: 0;
-    right: -1em;
+    right: -0.5em;
     width: 200px;
     height: inherit;
     padding: 0.5em;
