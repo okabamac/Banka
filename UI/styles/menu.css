@@ -8,6 +8,7 @@
     border-top: 2px solid rgba(235, 234, 234, 0.2);
     z-index: 2;
     background-color: #1E2A39;
+    overflow-x: hidden;
 }
 
 .hamburger-icon {

@@ -28,9 +28,11 @@ window.addEventListener('resize', () => {
         if (hamburger.classList.contains('close')) {
             hamburger.classList.remove('close');
         }
-        if (mainContent.classList.contains('contentOpened')) {
-            mainContent.classList.remove('contentOpened');
-        }
+       if(mainContent){
+           if (mainContent.classList.contains('contentOpened')) {
+               mainContent.classList.remove('contentOpened');
+           }
+       }
         if (sideMenu.style.display == 'none') {
             sideMenu.style.display = 'block';
         }

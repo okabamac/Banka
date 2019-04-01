@@ -27,6 +27,7 @@ a {
     color: inherit;
     cursor: pointer;
 }
+
 html,
 body {
     height: 100%;
@@ -96,28 +97,26 @@ body::before {
 .buttonsDiv {
     position: absolute;
     right: 0;
-    padding: 1em;
+    padding: 0.8em 0;
     top: 0;
     height: 70px;
-    width: 400px;
+    width: 330px;
+    overflow: hidden;
 }
 
 .buttonsDiv button {
-    margin-right: 1.3em;
-    padding: 6px 12px;
+    margin-right: 1.1em;
+    padding: 6px 8px;
     background-color: transparent;
     outline: none;
-    width: 90px;
-    font-size: 1em;
+    width: 80px;
+    font-size: 0.95em;
     color: var(--whitey);
     border: 1px solid var(--lightdark);
     border-radius: 3px;
     cursor: pointer;
 }
 
-.buttonsDiv button:last-child {
-    margin-right: 0
-}
 
 .homeBtn:hover {
     background-color: #d19592;
@@ -348,6 +347,7 @@ form .field {
     position: relative;
     margin-bottom: 2em;
 }
+
 .signinForm form .field {
     position: relative;
     margin-bottom: 2em;
@@ -373,9 +373,26 @@ label {
     opacity: 0.8;
 }
 
+/* Style Select Field */
+select {
+    padding: 1em 0 0 .3em;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #FFFFFF 4%);
+    width: 100%;
+    height: 40px;
+    font-size: inherit;
+    color: var(--whitey);
+    border: none;
+    border-bottom: 1px solid var(--whitey);
+}
+
+/* Remove focus */
+select:focus {
+    outline: none;
+    border-bottom: 2px solid var(--whitey);
+}
+
 .signinForm input,
-.signupForm input
- {
+.signupForm input {
     padding: 1em 0 0 .3em;
     border: none;
     border-bottom: solid 0.1em var(--blackie);
@@ -389,7 +406,8 @@ input:focus {
 }
 
 input:focus+label,
-input:valid+label {
+input:valid+label,
+select:focus+label, select:valid + label {
     transform: translate3d(0, -100%, 0);
     opacity: 1;
     font-size: 120%;
@@ -407,4 +425,26 @@ input:valid+label {
     cursor: pointer;
     background-color: #d19592;
     background-image: linear-gradient(315deg, #d19592 0%, #c81f70 74%);
+}
+
+.forgetPassword {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    top: 7.5em;
+    opacity: 0.7;
+}
+
+.forgetPassword h3:hover {
+    color: var(--pinkie);
+}
+
+.NotFoundPage {
+    position: relative;
+    color: var(--blackie);
+    top: 50%;
+    width: 400px;
+    height: 400px;
+    text-align: center;
+    margin: auto;
 }
