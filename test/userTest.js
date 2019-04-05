@@ -21,18 +21,19 @@ describe('Users', () => {
         });
     });
 
-    it('should get a single user record', (done) => {
+    it('should not get a single user record', (done) => {
       const id = 1;
       chai
         .request(app)
         .get(`/api/v1/users/${id}`)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(404);
           res.body.should.be.a('object');
           done();
         });
     });
   });
+  
   describe('POST /', () => {
     it('it should POST a user ', (done) => {
       const user = {

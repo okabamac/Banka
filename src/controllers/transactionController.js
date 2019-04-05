@@ -9,9 +9,19 @@ const TransactionControl = {
       data: transactions,
     });
   }),
-  getOne: async (req, res, next) => {
-    console.log('zzzzzzzzzzzzzzzz');
-  },
+
+  getOne: asyncMiddleware(async (req, res, next) => {
+    const {transactionId} = req.params;
+    let transaction = await transactions.filter(transaction => transaction.id == transactionId);
+    if (transaction[0] == undefined) {
+      return next();
+    }
+    res.json({
+      status: 200,
+      data: transaction[0],
+    });
+  }),
+
   debit: async (req, res, next) => {
     console.log('zzzzzzzzzzzzzzzz');
   },

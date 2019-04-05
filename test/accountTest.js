@@ -21,13 +21,13 @@ describe('Accounts', () => {
         });
     });
 
-    it('should get a single user record', (done) => {
+    it('should not get a single account record', (done) => {
       const id = 1;
       chai
         .request(app)
         .get(`/api/v1/accounts/${id}`)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(404);
           res.body.should.be.a('object');
           done();
         });
