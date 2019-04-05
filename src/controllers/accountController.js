@@ -10,9 +10,18 @@ const AccountControl = {
       data: accounts,
     });
   }),
-  getOne: async (req, res, next) => {
-    console.log('zzzzzzzzzzzzzzzz');
-  },
+
+  getOne: asyncMiddleware(async (req, res, next) => {
+    const {accountNumber} = req.params;
+    const account = await accounts.filter(account => account.accountNumber == accountNumber);
+    if (account[0] == undefined) {
+      return next();
+    }
+    res.json({
+      status: 200,
+      data: account[0],
+    });
+  }),
   createAccount: async (req, res, next) => {
     console.log('zzzzzzzzzzzzzzzz');
   },
