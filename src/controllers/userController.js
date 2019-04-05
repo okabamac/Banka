@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const asyncMiddleware = require('../utilities/asyncMiddleware');
 const {
-  userSignupSchema
+  userSignupSchema,
+  userSigninSchema,
 } = require('../utilities/validations');
 
 const users = require('../models/userModel');
@@ -29,7 +30,7 @@ const UserControl = {
   }),
 
   signup: asyncMiddleware(async (req, res, next) => {
-    const validatedCedentials = await userSignupSchema.validate(req.body, {
+    const validSignup = await userSignupSchema.validate(req.body, {
       abortEarly: false,
     });
     const {
@@ -39,7 +40,7 @@ const UserControl = {
       password,
       type,
       admin,
-    } = validatedCedentials;
+    } = validSignup;
     const user = {
       id: Math.floor(100000 + Math.random() * 900000),
       firstName,
@@ -50,7 +51,7 @@ const UserControl = {
     };
     bcrypt.hash(password, 10, (err, hash) => {
       if (err) {
-        return next();
+        return next(new Error('Oops something went wrong!'));
       }
       user.password = hash;
       users.push(user);
@@ -60,9 +61,31 @@ const UserControl = {
       });
     });
   }),
-  signin: async (req, res, next) => {
-    console.log('zzzzzzzzzzzzzzzz');
-  },
+  signin: asyncMiddleware(async (req, res, next) => {
+    const validSignin = await userSigninSchema.validate(req.body, {
+      abortEarly: false,
+    });
+    const {
+      email,
+      password,
+    } = validSignin;
+    const user = await users.find(user => user.email === email);
+    if (user) {
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (result) {
+          return res.json({
+            status: 200,
+            data: user,
+          });
+        }
+        res.status(400);
+        next(new Error('Invalid Password'));
+      });
+    } else {
+      res.status(400);
+      next(new Error('User does not exist'));
+    }
+  }),
 };
 
 module.exports = UserControl;

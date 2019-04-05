@@ -60,7 +60,7 @@ describe('Users', () => {
           done();
         });
     });
-    it('it should login a user ', (done) => {
+    it('it should not login a user ', (done) => {
       const user = {
         email: 'aaminu@email.com',
         password: 'fkf999evvmmvjfjff',
@@ -70,9 +70,9 @@ describe('Users', () => {
         .post('/api/v1/users/signin')
         .send(user)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(400);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('User successfully logged in!');
+          res.body.should.have.property('error');
           done();
         });
     });

@@ -36,6 +36,17 @@ const userSignupSchema = Joi.object().keys({
   }),
 });
 
+const userSigninSchema = Joi.object().keys({
+  email: emailSchema.required(),
+  password: Joi.string()
+    .min(6)
+    .max(30)
+    .regex(/^[a-zA-Z0-9]{3,30}$/)
+    .required(),
+});
+
+
 module.exports = {
   userSignupSchema,
+  userSigninSchema,
 };
