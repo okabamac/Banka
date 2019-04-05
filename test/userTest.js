@@ -33,12 +33,15 @@ describe('Users', () => {
         });
     });
   });
-  
+
   describe('POST /', () => {
     it('it should POST a user ', (done) => {
       const user = {
         firstName: 'Aminu',
         lastName: 'Tolkien',
+        email: 'amin@tolkien.com',
+        password: 'johnbaby',
+        confirmPassword: 'johnbaby',
       };
       chai
         .request(app)
@@ -47,9 +50,13 @@ describe('Users', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('User successfully added!');
-          res.body.user.should.have.property('firstName');
-          res.body.user.should.have.property('lastName');
+          res.body.data.should.have.property('id');
+          res.body.data.should.have.property('firstName');
+          res.body.data.should.have.property('lastName');
+          res.body.data.should.have.property('email');
+          res.body.data.should.have.property('type');
+          res.body.data.should.have.property('admin');
+          res.body.data.should.have.property('password');
           done();
         });
     });
