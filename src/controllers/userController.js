@@ -23,11 +23,11 @@ const UserControl = {
     const {
       userId,
     } = req.params;
-    const user = await users.filter(user => user.id == userId);
-    if (user[0] == undefined) {
+    const user = await users.filter(user => user.id == userId)[0];
+    if (!user) {
       return next();
     }
-    res.json({
+    return res.json({
       status: 200,
       data: user[0],
     });
@@ -40,7 +40,7 @@ const UserControl = {
       firstName,
       lastName,
       email,
-      password,
+      password, 
       type,
       admin,
     } = validSignup;
@@ -58,7 +58,7 @@ const UserControl = {
       }
       user.password = hash;
       users.push(user);
-      res.json({
+      return res.json({
         status: 200,
         data: user,
       });
@@ -81,7 +81,7 @@ const UserControl = {
           });
         }
         res.status(400);
-        next(new Error('Invalid Password'));
+        return next(new Error('Invalid Password'));
       });
     } else {
       res.status(400);
