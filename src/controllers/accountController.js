@@ -20,13 +20,13 @@ const AccountControl = {
     const {
       accountNumber,
     } = req.params;
-    const account = await accounts.filter(account => account.accountNumber == accountNumber);
-    if (account[0] == undefined) {
+    const account = await accounts.filter(account => account.accountNumber == accountNumber)[0];
+    if (!account) {
       return next();
     }
     res.json({
       status: 200,
-      data: account[0],
+      data: account,
     });
   }),
   createAccount: asyncMiddleware(async (req, res, next) => {
@@ -61,12 +61,12 @@ const AccountControl = {
       data: account,
     });
   }),
-  modifyAccount: async (req, res, next) => {
+  modifyAccount: asyncMiddleware(async (req, res, next) => {
     const {
       accountNumber,
     } = req.params;
-    const account = await accounts.filter(account => account.accountNumber == accountNumber);
-    if (account[0] === undefined) {
+    const account = await accounts.filter(account => account.accountNumber == accountNumber)[0];
+    if (!account) {
       return next();
     }
     const validPatch = await joiHelper(req, res, patchAccountSchema);
@@ -82,10 +82,22 @@ const AccountControl = {
         status,
       },
     });
-  },
-  deleteAccount: async (req, res, next) => {
-    console.log('zzzzzzzzzzzzzzzz');
-  },
+  }),
+  deleteAccount: asyncMiddleware(async (req, res, next) => {
+    const {
+      accountNumber,
+    } = req.params;
+    const account = await accounts.filter(account => account.accountNumber == accountNumber)[0];
+    if (!account) {
+      return next();
+    }
+    const index = accounts.indexOf(account);
+    accounts.splice(index, 1);
+    res.json({
+      status: 200,
+      message: 'Account successfully deleted',
+    });
+  }),
 };
 
 module.exports = AccountControl;

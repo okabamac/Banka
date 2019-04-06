@@ -70,14 +70,13 @@ describe('Accounts', () => {
 
   describe('PATCH /', () => {
     it('it should PATCH a bank account ', (done) => {
-      const account = {
-        accountNumber: 2088058375,
-        status: 'activate',
+      const status = {
+        status: 'active',
       };
       chai
         .request(app)
-        .post(`/api/v1/account/${account.accountNumber}`)
-        .send(account.status)
+        .patch('/api/v1/accounts/2088058375')
+        .send(status)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
@@ -93,14 +92,11 @@ describe('Accounts', () => {
       const account = 2088058375;
       chai
         .request(app)
-        .post(`/api/v1/account/${account}`)
-        .send(account)
+        .delete(`/api/v1/accounts/${account}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Account successfully deleted!');
-          res.body.account.should.have.property('firstName');
-          res.body.account.should.have.property('lastName');
+          res.body.should.have.property('message').eql('Account successfully deleted');
           done();
         });
     });
