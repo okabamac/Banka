@@ -56,8 +56,14 @@ const createAccountSchema = Joi.object().keys({
   currency: Joi.string().valid('Naira', 'Dollar').required(),
   address: Joi.string().min(4).max(500).required(),
 });
+
+const patchAccountSchema = Joi.object().keys({
+  status: Joi.string().max(10).required(),
+});
+
 module.exports = {
   userSignupSchema,
   userSigninSchema,
   createAccountSchema,
+  patchAccountSchema,
 };
