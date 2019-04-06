@@ -5,7 +5,7 @@ const joiHelper = require('../utilities/joiHelper');
 const accounts = require('../models/accountModel');
 
 const {
-  createAccountSchema,
+  createAccountSchema, patchAccountSchema,
 } = require('../utilities/validations');
 
 const AccountControl = {
@@ -62,7 +62,26 @@ const AccountControl = {
     });
   }),
   modifyAccount: async (req, res, next) => {
-    console.log('zzzzzzzzzzzzzzzz');
+    const {
+      accountNumber,
+    } = req.params;
+    const account = await accounts.filter(account => account.accountNumber == accountNumber);
+    if (account[0] === undefined) {
+      return next();
+    }
+    const validPatch = await joiHelper(req, res, patchAccountSchema);
+    if (validPatch.statusCode === 422) return;
+    const {
+      status,
+    } = validPatch;
+    account.status = validPatch.status;
+    return res.json({
+      status: 200,
+      data: {
+        accountNumber,
+        status,
+      },
+    });
   },
   deleteAccount: async (req, res, next) => {
     console.log('zzzzzzzzzzzzzzzz');

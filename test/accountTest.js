@@ -72,18 +72,17 @@ describe('Accounts', () => {
     it('it should PATCH a bank account ', (done) => {
       const account = {
         accountNumber: 2088058375,
-        action: 'activate',
+        status: 'activate',
       };
       chai
         .request(app)
         .post(`/api/v1/account/${account.accountNumber}`)
-        .send(account)
+        .send(account.status)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Account successfully activated/deactivated!');
-          res.body.account.should.have.property('firstName');
-          res.body.account.should.have.property('lastName');
+          res.body.data.should.have.property('accountNumber');
+          res.body.data.should.have.property('status');
           done();
         });
     });
