@@ -22,7 +22,7 @@ const userSignupSchema = Joi.object().keys({
     .options({
       language: {
         any: {
-          allowOnly: 'Must match password',
+          allowOnly: 'must match password',
         },
       },
     }),
@@ -45,8 +45,19 @@ const userSigninSchema = Joi.object().keys({
     .required(),
 });
 
-
+const createAccountSchema = Joi.object().keys({
+  firstName: nameSchema.required(),
+  lastName: nameSchema.required(),
+  dob: Joi.string().required(),
+  sex: Joi.string().min(4).max(10).required(),
+  email: emailSchema.required(),
+  phone: Joi.string().required(),
+  type: Joi.string().valid('Savings', 'Current').required(),
+  currency: Joi.string().valid('Naira', 'Dollar').required(),
+  address: Joi.string().min(4).max(500).required(),
+});
 module.exports = {
   userSignupSchema,
   userSigninSchema,
+  createAccountSchema,
 };

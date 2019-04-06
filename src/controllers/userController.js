@@ -1,5 +1,9 @@
 const bcrypt = require('bcrypt');
+
 const asyncMiddleware = require('../utilities/asyncMiddleware');
+
+const joiHelper = require('../utilities/joiHelper');
+
 const {
   userSignupSchema,
   userSigninSchema,
@@ -30,9 +34,8 @@ const UserControl = {
   }),
 
   signup: asyncMiddleware(async (req, res, next) => {
-    const validSignup = await userSignupSchema.validate(req.body, {
-      abortEarly: false,
-    });
+    const validSignup = await joiHelper(req, res, userSignupSchema);
+    if (validSignup.statusCode === 422) return;
     const {
       firstName,
       lastName,
@@ -62,9 +65,8 @@ const UserControl = {
     });
   }),
   signin: asyncMiddleware(async (req, res, next) => {
-    const validSignin = await userSigninSchema.validate(req.body, {
-      abortEarly: false,
-    });
+    const validSignin = await joiHelper(req, res, userSigninSchema);
+    if (validSignin.statusCode === 422) return;
     const {
       email,
       password,
