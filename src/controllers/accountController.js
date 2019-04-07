@@ -88,9 +88,7 @@ const AccountControl = {
       accountNumber,
     } = req.params;
     const account = await accounts.filter(account => account.accountNumber == accountNumber)[0];
-    if (!account) {
-      return next();
-    }
+    if (!account) return next();
     const index = accounts.indexOf(account);
     accounts.splice(index, 1);
     res.json({

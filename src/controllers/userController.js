@@ -71,7 +71,7 @@ const UserControl = {
       email,
       password,
     } = validSignin;
-    const user = await users.find(user => user.email === email);
+    const user = await users.find(theUser => theUser.email === email);
     if (user) {
       bcrypt.compare(password, user.password, (err, result) => {
         if (result) {

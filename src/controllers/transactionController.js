@@ -71,12 +71,9 @@ const TransactionControl = {
     const {
       accountNumber,
     } = req.params;
-
-    const account = await accounts.filter(account => account.accountNumber == accountNumber)[0];
-    if (!account) {
-      return next();
-    }
-
+    const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
+    if (!account) return next();
+    
     const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
     if (validCreditAccount.statusCode === 422) return;
 
@@ -99,7 +96,7 @@ const TransactionControl = {
 
     transactions.unshift(transaction);
     account.balance = transaction.newBalance;
-    return res.status(200).json({
+    return res.json({
       status: 200,
       data: transaction,
     });
