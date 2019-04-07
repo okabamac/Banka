@@ -31,7 +31,41 @@ const TransactionControl = {
   }),
 
   debit: asyncMiddleware(async (req, res, next) => {
-    console.log('zzzzzzzzzzzzzzzz');
+    const {
+      accountNumber,
+    } = req.params;
+
+    const account = await accounts.filter(account => account.accountNumber == accountNumber)[0];
+    if (!account) {
+      return next();
+    }
+
+    const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
+    if (validCreditAccount.statusCode === 422) return;
+
+    const {
+      amount,
+      transactionType,
+    } = validCreditAccount;
+
+    const transaction = {
+      transactionId: Math.floor(100000 + Math.random() * 900000),
+      createdOn: new Date(Date.now()),
+      transactionType,
+      accountNumber,
+      cashier: 15663,
+      amount,
+      currency: account.currency,
+      oldBalance: account.balance,
+      newBalance: account.balance - amount,
+    };
+
+    transactions.unshift(transaction);
+    account.balance = transaction.newBalance;
+    return res.json({
+      status: 200,
+      data: transaction,
+    });
   }),
   credit: asyncMiddleware(async (req, res, next) => {
     const {
