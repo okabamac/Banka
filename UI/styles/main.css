@@ -2,10 +2,9 @@
     --primary-color: #101C28;
     --secondary-color: #222F3F;
     --whitey: #fff;
-    --blackie: #222F3F;
+    --blackie: #333;
     --pinkie: #F80652;
     --lightdark: #ADC4D6;
-    --lightblack: #222222;
     --box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12),
         0 2px 4px 0 rgba(0, 0, 0, 0.08);
     --box-shadow-lg: box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
@@ -14,38 +13,15 @@
     --max-width: 1250px;
     --min-height: 750px;
     --linear-gradient: linear-gradient(315deg, #FF0057, #E64A19);
-    --transition: all 0.3s ease-in-out;
 }
-
+@font-face {
+    font-family: DeliciousRoman;
+    src: url(http://www.font-face.com/fonts/delicious/Delicious-Roman.otf);
+}
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-@font-face {
-    font-family: 'Serverless1';
-    src:url(../fonts/soleil-bk.d7a483d3.otf);
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Serverless2';
-    src:url(../fonts/soleil.83ff22d6.otf);
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Serverless3';
-    src:url(../fonts/serverless.d9cbb00e.otf);
-    font-weight: normal;
-    font-style: normal;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
 }
 
 html,
@@ -57,9 +33,7 @@ body {
     width: 100%;
     background-color: var(--whitey);
     color: var(--whitey);
-    font-family: Serverless3;
-    font-weight: 100;
-    overflow-x: hidden;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 body::before {
@@ -97,12 +71,7 @@ body::before {
     padding: 1em;
 }
 
-.pageHero {
-    border-bottom: 2px solid rgba(235, 234, 234, 0.2);
-}
-
 .hero h2 {
-    top: 5px;
     display: inline-block;
 }
 
@@ -110,7 +79,7 @@ body::before {
     position: relative;
     width: 25px;
     height: 25px;
-    top: 5px;
+    top: 3px;
     margin-right: .2em;
     display: inline-block;
 }
@@ -118,44 +87,43 @@ body::before {
 .buttonsDiv {
     position: absolute;
     right: 0;
-    padding: 0.8em 0;
+    padding: 1em;
     top: 0;
-    height: 70px;
-    width: 330px;
-    overflow: hidden;
 }
 
 .buttonsDiv button {
-    margin-right: 1.1em;
-    padding: 6px 8px;
+    margin-right: 1.3em;
+    padding: 6px 12px;
     background-color: transparent;
     outline: none;
-    width: 80px;
-    font-size: 0.95em;
+    width: 90px;
+    font-size: 1em;
     color: var(--whitey);
     border: 1px solid var(--lightdark);
     border-radius: 3px;
     cursor: pointer;
 }
 
+.buttonsDiv button:last-child {
+    margin-right: 0
+}
 
 .homeBtn:hover {
-    background-color: #d19592;
-    background-image: linear-gradient(315deg, #d19592 0%, #c81f70 74%);
-    transition: var(--transition);
+    background-color: var(--pinkie);
+    transition: all 0.5s ease-in-out;
     border: none;
     color: var(--whitey);
 }
 
 #landingContent {
-    position: relative;
-    width: 90%;
-    top: 5em;
-    display: grid;
-    margin: auto;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    grid-template-rows: auto;
-    grid-gap: 0 40px;
+     position: relative;
+     width: 90%;
+     top: 5em;
+     display: grid;
+     margin: auto;
+     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+     grid-template-rows: auto;
+     grid-gap: 0 40px;
 }
 
 #landingContent .box {
@@ -166,20 +134,19 @@ body::before {
     align-items: center;
     padding: 2em;
 }
-
-.content .homeGreeting {
-    font-size: 1.1em;
+.content .welcome {
+    font-size: 1.2em;
     transform: rotate(357deg);
     margin-bottom: .6em;
 }
 
 .content .manifesto h2 {
-    font-size: 1.5em;
+    font-size: 2em;
     margin-bottom: .4em;
 }
 
 .manifesto p {
-    font-size: 1em;
+    font-size: 1.1em;
     line-height: 1.5;
 }
 
@@ -190,46 +157,42 @@ body::before {
 }
 
 .services ul li {
-    font-size: 1.1em;
+    font-size: 1.2em;
     list-style-type: none;
     cursor: pointer;
 }
 
 .services ul li:hover {
-    transition: var(--transition);
+    transition: all 0.5s ease-in-out;
     color: var(--pinkie);
 }
-
 .services ul li:nth-child(1):before {
     font-family: 'Material Icons';
-    content: '\e0af';
+    content: "\e0af";
     display: inline-block;
     margin: .5em .5em 0 -1.3em;
     color: var(--pinkie);
     width: 1.3em;
 }
-
 .services ul li:nth-child(2):before {
-    font-family: 'Material Icons';
-    content: '\e850';
+    font-family: "Material Icons";
+    content: "\e850";
     display: inline-block;
     margin: .5em .5em 0 -1.3em;
     color: var(--pinkie);
     width: 1.3em;
 }
-
 .services ul li:nth-child(3):before {
-    font-family: 'Material Icons';
-    content: '\e263';
+    font-family: "Material Icons";
+    content: "\e263";
     display: inline-block;
     margin: .5em .5em 0 -1.3em;
     color: var(--pinkie);
     width: 1.3em;
 }
-
 .services ul li:nth-child(4):before {
-    font-family: 'Material Icons';
-    content: '\e870';
+    font-family: "Material Icons";
+    content: "\e870";
     display: inline-block;
     margin: .5em .5em 0 -1.3em;
     color: var(--pinkie);
@@ -243,229 +206,15 @@ body::before {
     margin-top: 6em;
     margin-left: auto;
     margin-right: auto
-}
+} 
 
 .mainBottomSVG {
     position: absolute;
     bottom: 0;
-    z-index: 3;
 }
 
 .mainTopSVG {
     position: absolute;
     top: 0;
     right: 0;
-}
-
-#signinModal {
-    display: none;
-}
-
-#signupModal {
-    display: none;
-}
-
-.modalHome {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    opacity: 0.98;
-    overflow: auto;
-    padding: 2em;
-    z-index: 1;
-}
-
-.modalOverlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: inherit;
-    height: inherit;
-    background-color: rgba(0, 0, 0, 0.356);
-}
-
-.modalHome .formContent {
-    position: relative;
-    width: 350px;
-    height: 600px;
-    color: #333;
-    background-color: var(--whitey);
-    padding: 0;
-    overflow: auto;
-    box-shadow: var(--box-shadow);
-    animation-name: openModal;
-    animation-duration: 1.5s;
-    transition: var(--transition);
-}
-
-.signinForm {
-    margin: 2.5em auto 0 auto;
-}
-
-.signupForm {
-    margin: 2.5em auto 0 auto;
-}
-
-.formHero {
-    position: relative;
-    width: 100%;
-    height: 60px;
-    box-shadow: var(--box-shadow);
-    padding: 1em;
-}
-
-.formHero h2 {
-    display: inline-block;
-    color: #333;
-    font-size: 1.1em;
-}
-
-#closeBtn {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    font-size: 13px;
-    padding: 1em;
-    cursor: pointer;
-    color: rgb(13, 222, 135);
-}
-
-@keyframes openModal {
-    from {
-        margin-top: -600px
-    }
-
-    to {
-        margin-top: 2.5em
-    }
-
-    ;
-}
-
-form {
-    position: relative;
-    display: grid;
-    width: 90%;
-    margin: auto;
-}
-
-.signinForm form {
-    grid-template-columns: 1fr;
-    top: 6em;
-    grid-gap: 2em;
-}
-
-.signupForm form {
-    grid-template-columns: 1fr;
-    top: 3em;
-    grid-gap: 1.5em;
-
-}
-
-form .field {
-    position: relative;
-    margin-bottom: 2em;
-}
-
-.signinForm form .field {
-    position: relative;
-    margin-bottom: 2em;
-
-}
-
-.signupForm form .field {
-    position: relative;
-    margin-bottom: 1em;
-}
-
-.field input {
-    width: 100%;
-    height: 40px;
-}
-
-label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding-left: 0.3em;
-    transition: all 200ms;
-    opacity: 0.8;
-}
-
-/* Style Select Field */
-select {
-    padding: 1em 0 0 .3em;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #FFFFFF 4%);
-    width: 100%;
-    height: 40px;
-    font-size: inherit;
-    color: var(--whitey);
-    border: none;
-    border-bottom: 1px solid var(--whitey);
-}
-
-/* Remove focus */
-select:focus {
-    outline: none;
-    border-bottom: 2px solid var(--whitey);
-}
-
-.signinForm input,
-.signupForm input {
-    padding: 1em 0 0 .3em;
-    border: none;
-    border-bottom: solid 0.1em var(--blackie);
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #FFFFFF 4%);
-}
-
-input:focus {
-    box-shadow: none;
-    outline: none;
-    border-bottom: 0.5em solid var(--blackie);
-}
-
-input:focus+label,
-input:valid+label,
-select:focus+label, select:valid + label {
-    transform: translate3d(0, -100%, 0);
-    opacity: 1;
-    font-size: 120%;
-}
-
-.formBtn button {
-    width: 100%;
-    height: 40px;
-    font-weight: 600;
-    text-align: center;
-    border: none;
-    color: #FFF;
-    border-radius: 5px;
-    transition: var(--transition);
-    cursor: pointer;
-    background-color: #d19592;
-    background-image: linear-gradient(315deg, #d19592 0%, #c81f70 74%);
-}
-
-.forgetPassword {
-    position: relative;
-    text-align: center;
-    width: 100%;
-    top: 7.5em;
-    opacity: 0.7;
-}
-
-.forgetPassword h3:hover {
-    color: var(--pinkie);
-}
-
-.NotFoundPage {
-    position: relative;
-    color: var(--blackie);
-    top: 50%;
-    width: 400px;
-    height: 400px;
-    text-align: center;
-    margin: auto;
 }
