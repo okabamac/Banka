@@ -14,8 +14,5 @@
                                     <path fill="#FFF" d="M245.092 218l9.378 22.092-22.093 9.378L223 227.378z" style="mix-blend-mode:multiply;filter:url(#dropshadow-2)"/>
                                     <path fill="#222F3F" d="M245.092 218l9.378 22.092-22.093 9.378L223 227.378z"/>
                                     <path fill="#FFF" d="M270 96H170v100z" style="mix-blend-mode:multiply;filter:url(#dropshadow-2)"/>
-                                    <path fill="#0EB3CE" d="M270 96H170v100z"/>
-                                    <circle fill="#FFF" cx="296" cy="177" r="32" style="mix-blend-mode:multiply;filter:url(#dropshadow-2)"/>
-                                    <circle fill="#1E2A39" cx="296" cy="177" r="32" style="mix-blend-mode:multiply"/>
                                 </svg>
                                 

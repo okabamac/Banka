@@ -1,0 +1,609 @@
+@import './main.css';
+
+
+
+
+/* Styles for content page */
+
+
+
+
+
+
+.content {
+    position: relative;
+    height: calc(100% - 70px);
+    padding: 0.5em 0 1em 130px;
+    width: 100%;
+}
+
+#mainContent {
+    position: relative;
+    height: 100%;
+    width: 95%;
+    margin: auto;
+    transition: var(--transition);
+}
+
+.contentOpened {
+    transform: perspective(400px) rotateY(350deg) scale(0.5);
+}
+
+.contentHead {
+    width: 100%;
+    height: 60px;
+    padding: 1em;
+}
+
+.contentHead #notification {
+    position: relative;
+    width: 250px;
+    margin-top: 0;
+    font-size: 1.1em;
+    animation-name: go-left-right;
+    animation-duration: 3s;
+    animation-direction: alternate;
+    animation-iteration-count: 2;
+    animation-fill-mode: forwards;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+@keyframes go-left-right {
+    from {
+        left: 0;
+        opacity: 1;
+    }
+
+    to {
+        left: calc(100% - 350px);
+        opacity: 0;
+    }
+}
+
+.contentHead span {
+    color: var(--pinkie);
+}
+
+.contentBody {
+    position: relative;
+    height: calc(100% - 60px);
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+/* Customer Dashboard */
+
+
+
+
+
+
+
+
+.contentBody .customerDashboard {
+    position: relative;
+    height: 100%;
+    width: inherit;
+    display: grid;
+    margin: auto;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-rows: auto;
+    grid-gap: 40px;
+}
+
+.customerDashboard .card {
+    position: relative;
+    height: 470px;
+    opacity: 0;
+    top: 35px;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.card:nth-child(1) {
+    animation-name: showSlowly;
+    animation-duration: 3s;
+    animation-delay: 100ms;
+    animation-fill-mode: forwards;
+}
+
+.card:nth-child(2) {
+    animation-name: showSlowly;
+    animation-duration: 3s;
+    animation-delay: 110ms;
+    animation-fill-mode: forwards;
+}
+
+.card:nth-child(3) {
+    animation-name: showSlowly;
+    animation-duration: 3s;
+    animation-delay: 120ms;
+    animation-fill-mode: forwards;
+}
+
+@keyframes showSlowly {
+    from {
+        opacity: 0;
+        top: 100px;
+    }
+
+    to {
+        opacity: 1;
+        top: 35px;
+    }
+}
+
+.cardHead {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    box-shadow: var(--box-shadow);
+}
+
+.cardHead .title {
+    position: absolute;
+    left: 1em;
+    margin-top: -2em;
+    opacity: 0.7;
+}
+
+.cardHead i {
+    font-size: 2.3em;
+    opacity: 0.7;
+}
+
+.card .cardContent {
+    padding: 0.2em 2em;
+}
+
+.cardContent img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+}
+
+.cardContent .changeProfile {
+    display: block;
+    padding: 0 4.1em;
+}
+
+.changeProfile form {
+    margin-top: 1em;
+}
+
+.profile-wrapper {
+    position: relative;
+    display: block;
+    width: 200px;
+    margin: auto;
+}
+
+.profile-wrapper span.label {
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    color: var(--pinkie);
+    padding: 10px 5px;
+    font-size: 15px;
+}
+
+#upload {
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 40px;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#upload:hover+span.label {
+    color: var(--pinkie);
+}
+
+.cardContent .details {
+    position: relative;
+    top: 1em;
+    line-height: 2;
+}
+
+.details span {
+    font-weight: 700;
+    opacity: 0.7;
+}
+
+
+
+
+
+
+
+/* Create Acount */
+
+
+
+
+
+
+
+
+.contentBody .customerCreateAccount {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+}
+
+.createAccountForm {
+    position: relative;
+    width: 95%;
+    height: 95%;
+    top: 2em;
+    margin: auto;
+}
+
+.createAccountForm form {
+    position: relative;
+    height: 90%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-rows: auto;
+    grid-gap: 2em;
+}
+
+
+
+.customerCreateAccount input, .customerCreateAccount select,
+.creditDebitForm input {
+    color: var(--whitey);
+    padding: 1em 0 0 .3em;
+    border: none;
+    border-bottom: solid 0.1em var(--whitey);
+    background: none;
+}
+
+.customerCreateAccount input:focus,
+.creditDebitForm input:focus {
+    box-shadow: none;
+    outline: none;
+    border-bottom: 0.5em solid var(--whitey);
+}
+
+
+
+
+
+/* Transaction History */
+
+
+
+
+
+
+.transactionHistory .transactionGraph {
+    width: 100%;
+    height: 200px;
+    padding: 20px;
+    margin-bottom: 0em;
+}
+
+.transactionGraph svg {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    margin: auto;
+}
+
+.chart rect {
+    fill: steelblue;
+}
+
+.chart text {
+    fill: white;
+    font: 10px sans-serif;
+    text-anchor: end;
+}
+
+/* Search Button */
+.search-contain {
+    position: absolute;
+    top: 0;
+    right: -0.5em;
+    width: 200px;
+    height: inherit;
+    padding: 0.5em;
+}
+
+
+.search-contain form {
+    position: relative;
+    transition: all 1s;
+    width: 40px;
+    height: 40px;
+    background: white;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border: 4px solid white;
+    padding: 5px;
+}
+
+.search-contain form input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 75%;
+    height: 30px;
+    line-height: 15px;
+    outline: 0;
+    border: 0;
+    color: var(--blackie);
+    display: none;
+    font-size: 1em;
+    border-radius: 10px;
+    padding: 0 20px;
+}
+
+.search-contain form i {
+    box-sizing: border-box;
+    padding: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    color: #07051a;
+    text-align: center;
+    font-size: 1.3em;
+    transition: all 1s;
+}
+
+.search-contain form:hover {
+    width: 200px;
+    cursor: pointer;
+}
+
+.search-contain form:hover input {
+    display: block;
+    border-bottom: none;
+}
+
+.search-contain form:hover .fa {
+    background: #07051a;
+    color: white;
+}
+
+.customerAllAccounts {
+    top: 15px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-rows: 450px;
+    grid-gap: 0.5em;
+    opacity: 1;
+    width: 95%;
+    margin: auto;
+    height: 85%;
+}
+
+.customerList {
+    direction: rtl;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-gap: 1em;
+    opacity: 1;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.customerList div {
+    direction: ltr;
+}
+
+.customerList::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.customerList::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.customerList::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
+.customerList div:hover {
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid rgba(235, 234, 234, 0.2);
+}
+
+.accountNumbers:nth-child(1) {
+    border: 1px solid rgba(235, 234, 234, 0.2);
+}
+
+.customerList .accountNumbers:nth-child(odd) {
+    box-shadow: var(--box-shadow);
+}
+
+.accountNumbers {
+    position: relative;
+    padding: 1em;
+}
+
+
+.accountNumbers .triangle {
+    position: absolute;
+    top: 35%;
+    right: 0;
+    width: 10px;
+    height: 20px;
+    margin-right: -0.5em;
+    border-left: solid 10px rgb(126, 125, 125);
+    border-bottom: solid 10px transparent;
+    border-top: solid 10px transparent;
+}
+
+.customerAllAccounts .customerCard {
+    top: 2em;
+    position: relative;
+    text-align: center;
+    padding: 1em;
+}
+
+.customerInfo {
+    grid-column: auto / span 5;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-rows: auto;
+    grid-gap: 1em;
+    padding: 1em;
+}
+
+.customerInfo .info {
+    box-shadow: var(--box-shadow);
+    height: 100%;
+}
+
+.customerInfo .info {
+    padding-top: 2em;
+}
+
+.customerInfo .info .details {
+    text-align: left;
+    margin: 0.7em 0 0 1em;
+}
+
+.customerInfo .info1 .details {
+    margin-top: -1em;
+    margin-bottom: 1em;
+}
+
+.customerInfo .info2 {
+    line-height: 2.7;
+    text-align: left;
+}
+
+.info2 button {
+    width: 50%;
+    height: 30px;
+    margin-left: 1em;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    color: #FFF;
+    border-radius: 5px;
+    transition: var(--transition);
+    cursor: pointer;
+    background-color: #d19592;
+    background-image: linear-gradient(315deg, #d19592 0%, #c81f70 74%);
+}
+
+
+/* Credit and Debit Form  */
+
+
+
+.creditDebitForm {
+    position: relative;
+    width: 70%;
+    margin: auto;
+    top: 4em;
+    box-shadow: var(--box-shadow);
+    padding-bottom: 2em;
+}
+
+.creditDebitForm form {
+    position: relative;
+    top: 4em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-rows: auto;
+    grid-gap: 2em;
+    padding: 1em;
+    margin-bottom: 2em;
+}
+
+
+
+
+/* Manage User */
+
+.adminAdd {
+    top: 4em;
+    width: 80%;
+    height: 90%;
+    margin: auto;
+}
+
+table {
+    position: relative;
+    width: 90%;
+    margin: auto;
+    top: 3em;
+    font-size: 1.1em;
+    border-collapse: collapse;
+    padding: 0;
+    table-layout: fixed;
+    opacity: 0.8;
+    overflow-y: auto;
+}
+
+table caption {
+    font-size: 1.1em;
+    margin: .5em 0 .75em;
+}
+
+table tr {
+    padding: .35em;
+    min-height: 120px;
+}
+
+tr:nth-child(odd) {
+    -webkit-box-shadow: 0 8px 6px -6px var(--blackie);
+    -moz-box-shadow: 0 8px 6px -6px var(--blackie);
+    box-shadow: 0 8px 6px -6px var(--blackie);
+}
+
+table th,
+table td {
+    padding: .625em;
+    text-align: left;
+}
+td img {
+    width: 50px;
+    height: 50px;
+}
+table th {
+    font-size: .8em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+td {
+    height: 100px;
+}
+
+.lastTransactionDetails {
+    position: relative;
+    width: 100%;
+    font-size: 0.8em;
+}
