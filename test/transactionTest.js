@@ -33,45 +33,58 @@ describe('Transactions', () => {
         });
     });
   });
-  
-  //Debit
+
+  // Credit
   describe('POST /', () => {
-    it('it should DEBIT a bank account', (done) => {
+    it('it should CREDIT a bank account ', (done) => {
       const account = {
-        firstName: 'Aminu',
-        lastName: 'Tolkien',
+        amount: '375',
+        transactionType: 'credit',
       };
       chai
         .request(app)
-        .post(`/api/v1/transactions/${account}/debit`)
+        .post('/api/v1/transactions/2088058375/credit')
         .send(account)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Account successfully added!');
-          res.body.account.should.have.property('firstName');
-          res.body.account.should.have.property('lastName');
+          res.body.data.should.have.property('transactionId');
+          res.body.data.should.have.property('accountNumber');
+          res.body.data.should.have.property('amount');
+          res.body.data.should.have.property('cashier');
+          res.body.data.should.have.property('transactionType');
+          res.body.data.should.have.property('createdOn');
+          res.body.data.should.have.property('currency');
+          res.body.data.should.have.property('oldBalance');
+          res.body.data.should.have.property('newBalance');
           done();
         });
     });
-    it('it should CREDIT a bank account', (done) => {
+
+
+    // Debit
+    it('it should DEBIT a bank account', (done) => {
       const account = {
-        firstName: 'Aminu',
-        lastName: 'Tolkien',
+        accountNumber: 'Aminu',
+        amount: 'Tolkien',
+        cashier: 'Tolkien',
+        transactionType: 'Tolkien',
       };
       chai
         .request(app)
-        .post(`/api/v1/transactions/${account}/credit`)
+        .post(`/api/v1/transactions/${account.accountNumber}/debit`)
         .send(account)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Account successfully added!');
-          res.body.account.should.have.property('firstName');
-          res.body.account.should.have.property('lastName');
+          res.body.data.should.have.property('transactionId');
+          res.body.data.should.have.property('accountNumber');
+          res.body.data.should.have.property('amount');
+          res.body.data.should.have.property('cashier');
+          res.body.data.should.have.property('transactionType');
+          res.body.data.should.have.property('accountBalance');
           done();
         });
     });
   });
-
 });

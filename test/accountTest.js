@@ -39,7 +39,7 @@ describe('Accounts', () => {
       const account = {
         firstName: 'Aminu',
         lastName: 'Tolkien',
-        dob: '25-06-1995',
+        dob: '1995-06-25',
         sex: 'Male',
         email: 'amini@amini.com',
         phone: '+2349059564447',

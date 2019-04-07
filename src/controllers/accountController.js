@@ -55,7 +55,7 @@ const AccountControl = {
     };
     account.openingBalance = 0.00;
     account.status = 'active';
-    accounts.push(account);
+    accounts.unshift(account);
     res.json({
       status: 200,
       data: account,
