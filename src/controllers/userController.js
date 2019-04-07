@@ -57,7 +57,7 @@ const UserControl = {
         return next(new Error('Oops something went wrong!'));
       }
       user.password = hash;
-      users.push(user);
+      users.unshift(user);
       return res.json({
         status: 200,
         data: user,

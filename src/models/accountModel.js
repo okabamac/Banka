@@ -6,7 +6,8 @@ const accounts = [
     owner: 123456,
     type: 'savings',
     status: 'active',
-    balance: '$234567',
+    currency: 'Naira',
+    balance: 234567,
   },
 ];
 

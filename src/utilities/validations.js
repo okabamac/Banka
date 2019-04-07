@@ -48,7 +48,7 @@ const userSigninSchema = Joi.object().keys({
 const createAccountSchema = Joi.object().keys({
   firstName: nameSchema.required(),
   lastName: nameSchema.required(),
-  dob: Joi.string().required(),
+  dob: Joi.date().min('1-1-1900').iso().required(),
   sex: Joi.string().min(4).max(10).required(),
   email: emailSchema.required(),
   phone: Joi.string().required(),
@@ -61,9 +61,15 @@ const patchAccountSchema = Joi.object().keys({
   status: Joi.string().max(10).required(),
 });
 
+const creditAccountSchema = Joi.object().keys({
+  amount: Joi.number().integer().required(),
+  transactionType: Joi.string().max(10).required(),
+});
+
 module.exports = {
   userSignupSchema,
   userSigninSchema,
   createAccountSchema,
   patchAccountSchema,
+  creditAccountSchema,
 };
