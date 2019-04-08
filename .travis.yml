@@ -8,7 +8,7 @@ node_js:
 install: 
 npm ci
 
-  script:
+script:
    - npm test
 
 notification:
