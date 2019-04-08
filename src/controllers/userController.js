@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-const asyncMiddleware = require('../utilities/asyncMiddleware');
+const asyncMiddleware = require('../utilities/asyncMiddleWare');
 
 const joiHelper = require('../utilities/joiHelper');
 

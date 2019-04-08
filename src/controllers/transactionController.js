@@ -1,4 +1,4 @@
-const asyncMiddleware = require('../utilities/asyncMiddleware');
+const asyncMiddleware = require('../utilities/asyncMiddleWare');
 
 const transactions = require('../models/transactionModel');
 
