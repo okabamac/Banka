@@ -3,14 +3,13 @@ sudo: false
 language: node_js
 
 node_js:
- - node
+  - node
 
-install: 
-npm ci
+install:
+  - npm ci
 
 script:
-   - npm run lint
-   - npm run test
+  - npm run lint
+  - npm run test
 
-notification:
-  false
+notification: false
