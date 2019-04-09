@@ -15,6 +15,22 @@ const {
 
 const users = require('../models/userModel');
 
+
+const doToken = (user) => {
+  const token = jwt.sign({
+    username: user.email,
+  },
+  config.secret, {
+    expiresIn: '24h', // expires in 24 hours
+  });
+  const data = {
+    token,
+    ...user,
+  };
+  // return the JWT token for the future API calls
+  return data;
+};
+
 const UserControl = {
   getAll: asyncMiddleware(async (req, res, next) => {
     res.json({
@@ -39,13 +55,8 @@ const UserControl = {
     const validSignup = await joiHelper(req, res, userSignupSchema);
     if (validSignup.statusCode === 422) return;
     const {
-      firstName,
-      lastName,
-      email,
-      password,
-      type,
-      admin,
-    } = validSignup;
+ firstName, lastName, email, password, type, admin 
+} = validSignup;
     const user = {
       id: Math.floor(100000 + Math.random() * 900000),
       firstName,
@@ -55,25 +66,14 @@ const UserControl = {
       admin,
     };
     bcrypt.hash(password, 10, (err, hash) => {
-      if (err) {
-        return next(new Error('Oops something went wrong!'));
-      }
+      if (err) return next(new Error('Oops something went wrong!'));
       user.password = hash;
       users.unshift(user);
-      const token = jwt.sign({
-        username: email,
-      },
-      config.secret, {
-        expiresIn: '24h', // expires in 24 hours
-      });
-      const result = {
-        token,
-        ...user,
-      };
       // return the JWT token for the future API calls
+      const tokenized = doToken(user);
       return res.json({
         status: 200,
-        data: result,
+        data: tokenized,
       });
     });
   }),
@@ -88,19 +88,10 @@ const UserControl = {
     if (user) {
       bcrypt.compare(password, user.password, (err, result) => {
         if (result) {
-          const token = jwt.sign({
-            username: email,
-          },
-          config.secret, {
-            expiresIn: '24h', // expires in 24 hours
-          });
-          const result = {
-            token, ...user,
-          };
-          // return the JWT token for the future API calls
+          const tokenized = doToken(user);
           return res.json({
             status: 200,
-            data: result,
+            data: tokenized,
           });
         }
         res.status(400);
