@@ -1,5 +1,9 @@
 sudo: false
 
+env:
+  global:
+    - CC_TEST_REPORTER_ID=08a28dc631f4cbb95f5649bb607b54ff64a3ae7cc39aef41c85f8d33f5cbca0c
+
 language: node_js
 
 node_js:
@@ -9,10 +13,18 @@ install:
   - npm ci
   - npm install --no-save nyc coveralls
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 script:
   - nyc npm test
 
 after_script:
   - nyc report --reporter=text-lcov | coveralls
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 notification: false
+
+
