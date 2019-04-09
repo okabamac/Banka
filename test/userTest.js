@@ -5,13 +5,14 @@ const chaiHttp = require('chai-http');
 const app = require('../app');
 
 const Users = require('../src/models/userModel');
+
 chai.use(chaiHttp);
 chai.should();
 
 describe('Users', () => {
   beforeEach((done) => { // Before each test we empty the database
     Users.length = 0;
-      done();
+    done();
   });
   describe('Users', () => {
     describe('GET /', () => {
@@ -19,7 +20,7 @@ describe('Users', () => {
       it('should get all users record', (done) => {
         chai
           .request(app)
-          .get('/api/v1/users')
+          .get('/api/v1/auth')
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
@@ -31,7 +32,7 @@ describe('Users', () => {
         const id = 1;
         chai
           .request(app)
-          .get(`/api/v1/users/${id}`)
+          .get(`/api/v1/auth/${id}`)
           .end((err, res) => {
             res.should.have.status(404);
             res.body.should.be.a('object');
@@ -51,7 +52,7 @@ describe('Users', () => {
         };
         chai
           .request(app)
-          .post('/api/v1/users/signup')
+          .post('/api/v1/auth/signup')
           .send(user)
           .end((err, res) => {
             res.should.have.status(200);
@@ -73,7 +74,7 @@ describe('Users', () => {
         };
         chai
           .request(app)
-          .post('/api/v1/users/signin')
+          .post('/api/v1/auth/signin')
           .send(user)
           .end((err, res) => {
             res.should.have.status(400);

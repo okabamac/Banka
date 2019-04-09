@@ -1,8 +1,12 @@
 const bcrypt = require('bcrypt');
 
+const jwt = require('jsonwebtoken');
+
 const asyncMiddleware = require('../utilities/asyncMiddleWare');
 
 const joiHelper = require('../utilities/joiHelper');
+
+const config = require('../utilities/config');
 
 const {
   userSignupSchema,
@@ -23,13 +27,11 @@ const UserControl = {
     const {
       userId,
     } = req.params;
-    const user = await users.filter(user => user.id == userId)[0];
-    if (!user) {
-      return next();
-    }
+    const user = await users.filter(theUser => theUser.id == userId)[0];
+    if (!user) return next();
     return res.json({
       status: 200,
-      data: user[0],
+      data: user,
     });
   }),
 
@@ -40,7 +42,7 @@ const UserControl = {
       firstName,
       lastName,
       email,
-      password, 
+      password,
       type,
       admin,
     } = validSignup;
@@ -58,9 +60,20 @@ const UserControl = {
       }
       user.password = hash;
       users.unshift(user);
+      const token = jwt.sign({
+        username: email,
+      },
+      config.secret, {
+        expiresIn: '24h', // expires in 24 hours
+      });
+      const result = {
+        token,
+        ...user,
+      };
+      // return the JWT token for the future API calls
       return res.json({
         status: 200,
-        data: user,
+        data: result,
       });
     });
   }),
@@ -75,9 +88,19 @@ const UserControl = {
     if (user) {
       bcrypt.compare(password, user.password, (err, result) => {
         if (result) {
+          const token = jwt.sign({
+            username: email,
+          },
+          config.secret, {
+            expiresIn: '24h', // expires in 24 hours
+          });
+          const result = {
+            token, ...user,
+          };
+          // return the JWT token for the future API calls
           return res.json({
             status: 200,
-            data: user,
+            data: result,
           });
         }
         res.status(400);
