@@ -23,7 +23,7 @@ app.use(
   }),
 );
 
-app.use('/api/v1/users', userRoute);
+app.use('/api/v1/auth', userRoute);
 app.use('/api/v1/accounts', accountRoute);
 app.use('/api/v1/transactions', transactionRoute);
 

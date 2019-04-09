@@ -6,6 +6,18 @@ const app = require('../app');
 
 const Accounts = require('../src/models/accountModel');
 
+const account = {
+  firstName: 'Aminu',
+  lastName: 'Tolkien',
+  dob: '1995-06-25',
+  sex: 'Male',
+  email: 'amini@amini.com',
+  phone: '+2349059564447',
+  type: 'Savings',
+  currency: 'Naira',
+  address: 'No 12 Movida Crescent, Kubwa, Abuja',
+};
+
 chai.use(chaiHttp);
 chai.should();
 describe('Accounts', () => {
@@ -42,17 +54,7 @@ describe('Accounts', () => {
 
     describe('POST /', () => {
       it('it should POST a new bank account ', (done) => {
-        const account = {
-          firstName: 'Aminu',
-          lastName: 'Tolkien',
-          dob: '1995-06-25',
-          sex: 'Male',
-          email: 'amini@amini.com',
-          phone: '+2349059564447',
-          type: 'Savings',
-          currency: 'Naira',
-          address: 'No 12 Movida Crescent, Kubwa, Abuja',
-        };
+        Accounts.push(account);
         chai
           .request(app)
           .post('/api/v1/accounts')
@@ -76,20 +78,8 @@ describe('Accounts', () => {
 
     describe('PATCH /', () => {
       it('it should PATCH a bank account ', (done) => {
-        const account = {
-          accountNumber: 2088058375,
-          firstName: 'Aminu',
-          lastName: 'Tolkien',
-          dob: '1995-06-25',
-          sex: 'Male',
-          email: 'amini@amini.com',
-          phone: '+2349059564447',
-          type: 'Savings',
-          currency: 'Naira',
-          address: 'No 12 Movida Crescent, Kubwa, Abuja',
-          status: 'dormant',
-        };
-        Accounts.push(account);
+       const account2 = {...account,  accountNumber: 2088058375, status: 'dormant'};
+        Accounts.push(account2);
         const status = {
           status: 'active',
         };
@@ -109,23 +99,11 @@ describe('Accounts', () => {
 
     describe('DELETE /', () => {
       it('it should DELETE a bank account ', (done) => {
-        const account = {
-          accountNumber: 2088058375,
-          firstName: 'Aminu',
-          lastName: 'Tolkien',
-          dob: '1995-06-25',
-          sex: 'Male',
-          email: 'amini@amini.com',
-          phone: '+2349059564447',
-          type: 'Savings',
-          currency: 'Naira',
-          address: 'No 12 Movida Crescent, Kubwa, Abuja',
-          status: 'dormant',
-        };
-        Accounts.push(account);
+        const newAcc = {accountNumber: 2088058375, ...account, status: 'active'};
+        Accounts.push(newAcc);
         chai
           .request(app)
-          .delete(`/api/v1/accounts/${account.accountNumber}`)
+          .delete(`/api/v1/accounts/${newAcc.accountNumber}`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
