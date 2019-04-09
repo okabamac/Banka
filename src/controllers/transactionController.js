@@ -17,7 +17,7 @@ const TransactionControl = {
       data: transactions,
     });
   }),
-
+ 
   getOne: asyncMiddleware(async (req, res, next) => {
     const {
       transactionId,
@@ -31,14 +31,10 @@ const TransactionControl = {
   }),
 
   debit: asyncMiddleware(async (req, res, next) => {
-    const {
-      accountNumber,
-    } = req.params;
+    const { accountNumber } = req.params;
 
-    const account = await accounts.filter(account => account.accountNumber == accountNumber)[0];
-    if (!account) {
-      return next();
-    }
+    const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
+    if (!account) return next();
 
     const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
     if (validCreditAccount.statusCode === 422) return;

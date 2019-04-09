@@ -32,26 +32,9 @@ const AccountControl = {
   createAccount: asyncMiddleware(async (req, res, next) => {
     const validCreateAccount = await joiHelper(req, res, createAccountSchema);
     if (validCreateAccount.statusCode === 422) return;
-    const {
-      firstName,
-      lastName,
-      sex,
-      dob,
-      email,
-      phone,
-      type,
-      currency,
-    } = validCreateAccount;
+    const {firstName, lastName, sex, dob, email, phone, type, currency} = validCreateAccount;
     const account = {
-      accountNumber: Math.floor(100000 + Math.random() * 9000000000),
-      firstName,
-      lastName,
-      sex,
-      dob,
-      email,
-      phone,
-      type,
-      currency,
+      accountNumber: Math.floor(100000 + Math.random() * 9000000000), firstName, lastName, sex, dob, email, phone, type, currency,
     };
     account.openingBalance = 0.00;
     account.status = 'active';
