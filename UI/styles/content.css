@@ -272,7 +272,8 @@
 
 
 
-.customerCreateAccount input, .customerCreateAccount select,
+.customerCreateAccount input,
+.customerCreateAccount select,
 .creditDebitForm input {
     color: var(--whitey);
     padding: 1em 0 0 .3em;
@@ -415,6 +416,7 @@
     overflow-x: hidden;
     overflow-y: auto;
 }
+
 .customerList div {
     direction: ltr;
 }
@@ -431,6 +433,7 @@
     background-color: darkgrey;
     outline: 1px solid slategrey;
 }
+
 .customerList div:hover {
     cursor: pointer;
     transition: var(--transition);
@@ -559,7 +562,7 @@ table {
     position: relative;
     width: 90%;
     margin: auto;
-    top: 3em;
+    top: 1em;
     font-size: 1.1em;
     border-collapse: collapse;
     padding: 0;
@@ -589,15 +592,18 @@ table td {
     padding: .625em;
     text-align: left;
 }
+
 td img {
     width: 50px;
     height: 50px;
 }
+
 table th {
     font-size: .8em;
     letter-spacing: .1em;
     text-transform: uppercase;
 }
+
 td {
     height: 100px;
 }
