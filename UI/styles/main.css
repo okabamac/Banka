@@ -12,7 +12,7 @@
         0 5px 15px 0 rgba(0, 0, 0, 0.08);
     --main-linear-gradient: linear-gradient(var(--primary-color), var(--secondary-color));
     --max-width: 1250px;
-    --min-height: 750px;
+    --min-height: 730px;
     --linear-gradient: linear-gradient(315deg, #FF0057, #E64A19);
     --transition: all 0.3s ease-in-out;
 }
@@ -25,19 +25,21 @@
 
 @font-face {
     font-family: 'Serverless1';
-    src:url(../fonts/soleil-bk.d7a483d3.otf);
+    src: url(../fonts/soleil-bk.d7a483d3.otf);
     font-weight: normal;
     font-style: normal;
 }
+
 @font-face {
     font-family: 'Serverless2';
-    src:url(../fonts/soleil.83ff22d6.otf);
+    src: url(../fonts/soleil.83ff22d6.otf);
     font-weight: normal;
     font-style: normal;
 }
+
 @font-face {
     font-family: 'Serverless3';
-    src:url(../fonts/serverless.d9cbb00e.otf);
+    src: url(../fonts/serverless.d9cbb00e.otf);
     font-weight: normal;
     font-style: normal;
 }
@@ -57,7 +59,7 @@ body {
     width: 100%;
     background-color: var(--whitey);
     color: var(--whitey);
-    font-family: Serverless3;
+    font-family: 'Cardo';
     font-weight: 100;
     overflow-x: hidden;
 }
@@ -428,7 +430,8 @@ input:focus {
 
 input:focus+label,
 input:valid+label,
-select:focus+label, select:valid + label {
+select:focus+label,
+select:valid+label {
     transform: translate3d(0, -100%, 0);
     opacity: 1;
     font-size: 120%;

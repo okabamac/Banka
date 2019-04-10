@@ -69,49 +69,61 @@
                     </div>
 
                 </div>
-                  <div class='contentBody'>
-                      <div class='customerCreateAccount'>
-                          <div class='createAccountForm adminAdd'>
-                              <form action='#'>
-                                  <div class='field'>
-                                      <input type='text' name='Firstname' required>
-                                      <label for='Firstname'>First Name</label>
-                                  </div>
-                                  <div class='field'>
-                                      <input type='text' name='Lastname' required>
-                                      <label for='Lastname'>Last Name</label>
-                                  </div>
-                                  <div class='field'>
-                                      <input type='text' name='Position' required>
-                                      <label for='Position'>Position</label>
-                                  </div>
-                                  <div class='field'>
-                                      <input type='text' name='Sex' required>
-                                      <label for='Sex'>Sex</label>
-                                  </div>
-                                  <div class='field'>
-                                      <input type='email' name='username' required>
-                                      <label for='username'>Email</label>
-                                  </div>
-                                  <div class='field'>
-                                      <input type='text' name='Phone' required>
-                                      <label for='Phone'>Phone</label>
-                                  </div>
-                                  <div class='field'>
-                                      <input type='text' name='Administrator' required>
-                                      <label for='Administrator'>Administrator</label>
-                                  </div>
-                                  <div class='field'>
-                                      <input type='text' name='Address' required>
-                                      <label for='Address'>Address</label>
-                                  </div>
-                                  <div class='formBtn'>
-                                      <button type='submit'>Submit</button>
-                                  </div>
-                              </form>
-                          </div>
-                      </div>
-                  </div>
+                <div class='contentBody'>
+                    <div class='customerCreateAccount'>
+                        <div class='createAccountForm adminAdd'>
+                            <form action='#'>
+                                <div class='field'>
+                                    <input type='text' name='Firstname' required>
+                                    <label for='Firstname'>First Name</label>
+                                </div>
+                                <div class='field'>
+                                    <input type='text' name='Lastname' required>
+                                    <label for='Lastname'>Last Name</label>
+                                </div>
+                                <div class='field'>
+                                    <select name="Type" required>
+                                        <option value=""></option>
+                                        <option value="staff">Staff</option>
+                                        <option value="client">Client</option>
+                                    </select>
+                                    <label for='Type'>Type</label>
+                                </div>
+                                <div class='field'>
+                                    <select name="Sex" required>
+                                        <option value=""></option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                    <label for='Sex'>Sex</label>
+                                </div>
+                                <div class='field'>
+                                    <input type='email' name='username' required>
+                                    <label for='username'>Email</label>
+                                </div>
+                                <div class='field'>
+                                    <input type='text' name='Phone' required>
+                                    <label for='Phone'>Phone</label>
+                                </div>
+                                <div class='field'>
+                                    <select name="Administrator" required>
+                                        <option value=""></option>
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
+                                    </select>
+                                    <label for='Administrator'>Administrator</label>
+                                </div>
+                                <div class='field'>
+                                    <input type='text' name='Address' required>
+                                    <label for='Address'>Address</label>
+                                </div>
+                                <div class='formBtn'>
+                                    <button type='submit'>Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
