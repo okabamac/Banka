@@ -36,22 +36,9 @@ const AuthControl = {
   signup: asyncMiddleware(async (req, res, next) => {
     const validSignup = await joiHelper(req, res, userSignupSchema);
     if (validSignup.statusCode === 422) return;
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      type,
-      admin,
-    } = validSignup;
+    const { firstName, lastName, email, password, type, admin } = validSignup;
     const user = {
-      id: Math.floor(100000 + Math.random() * 900000),
-      firstName,
-      lastName,
-      email,
-      type,
-      admin,
-    };
+      id: Math.floor(100000 + Math.random() * 900000), firstName, lastName, email, type, admin };
     bcrypt.hash(password, 10, (err, hash) => {
       if (err) return next(new Error('Oops something went wrong!'));
       user.password = hash;
@@ -67,10 +54,7 @@ const AuthControl = {
   signin: asyncMiddleware(async (req, res, next) => {
     const validSignin = await joiHelper(req, res, userSigninSchema);
     if (validSignin.statusCode === 422) return;
-    const {
-      email,
-      password,
-    } = validSignin;
+    const { email, password } = validSignin;
     const user = await users.find(theUser => theUser.email === email);
     if (user) {
       bcrypt.compare(password, user.password, (err, result) => {
