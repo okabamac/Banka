@@ -82,11 +82,19 @@
                                       <label for='Lastname'>Last Name</label>
                                   </div>
                                   <div class='field'>
-                                      <input type='text' name='Position' required>
-                                      <label for='Position'>Position</label>
+                                      <select name="Type" required>
+                                          <option value=""></option>
+                                          <option value="staff">Staff</option>
+                                          <option value="client">Client</option>
+                                      </select>
+                                      <label for='Type'>Type</label>
                                   </div>
                                   <div class='field'>
-                                      <input type='text' name='Sex' required>
+                                      <select name="Sex" required>
+                                          <option value=""></option>
+                                          <option value="male">Male</option>
+                                          <option value="female">Female</option>
+                                      </select>
                                       <label for='Sex'>Sex</label>
                                   </div>
                                   <div class='field'>
@@ -98,7 +106,11 @@
                                       <label for='Phone'>Phone</label>
                                   </div>
                                   <div class='field'>
-                                      <input type='text' name='Administrator' required>
+                                      <select name="Administrator" required>
+                                          <option value=""></option>
+                                          <option value="true">True</option>
+                                          <option value="false">False</option>
+                                      </select>
                                       <label for='Administrator'>Administrator</label>
                                   </div>
                                   <div class='field'>
