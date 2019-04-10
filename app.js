@@ -8,6 +8,8 @@ const cors = require('cors');
 
 const userRoute = require('./src/routes/userRoute');
 
+const authRoute = require('./src/routes/authRoute');
+
 const accountRoute = require('./src/routes/accountRoute');
 
 const transactionRoute = require('./src/routes/transactionRoute');
@@ -23,7 +25,8 @@ app.use(
   }),
 );
 
-app.use('/api/v1/auth', userRoute);
+app.use('/api/v1/auth', authRoute);
+app.use('/api/v1/users', userRoute);
 app.use('/api/v1/accounts', accountRoute);
 app.use('/api/v1/transactions', transactionRoute);
 

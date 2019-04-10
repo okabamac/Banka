@@ -20,7 +20,7 @@ describe('Users', () => {
       it('should get all users record', (done) => {
         chai
           .request(app)
-          .get('/api/v1/auth')
+          .get('/api/v1/users')
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
@@ -32,7 +32,7 @@ describe('Users', () => {
         const id = 1;
         chai
           .request(app)
-          .get(`/api/v1/auth/${id}`)
+          .get(`/api/v1/users/${id}`)
           .end((err, res) => {
             res.should.have.status(404);
             res.body.should.be.a('object');
