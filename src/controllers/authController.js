@@ -6,7 +6,7 @@ const asyncMiddleware = require('../utilities/asyncMiddleWare');
 
 const joiHelper = require('../utilities/joiHelper');
 
-const config = require('../utilities/config');
+const { jwt_secret } = require('../../config');
 
 const {
   userSignupSchema,
@@ -20,7 +20,7 @@ const doToken = (user) => {
   const token = jwt.sign({
     username: user.email,
   },
-  config.secret, {
+  jwt_secret, {
     expiresIn: '24h', // expires in 24 hours
   });
   const data = {
