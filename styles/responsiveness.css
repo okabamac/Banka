@@ -1,5 +1,10 @@
 @import './main.css';
 
+@media only screen and (min-width: 1199px) {
+#sideMenu {
+    display: block;
+}
+}
 @media only screen and (max-width: 1199px) {
 
     .mainContainer {
