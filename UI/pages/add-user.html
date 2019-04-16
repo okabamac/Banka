@@ -21,7 +21,6 @@
         <div class='hero pageHero'>
             <img src='../images/logo.svg' class='logo' alt='logo'>
             <h2>Banka</h2>
-            <img src='../images/path1a.svg' alt='SVG' class='mainTopSVG'>
 
             <div class='hamburger-icon'>
                 <div class='btn-line line-1'></div>
@@ -31,7 +30,7 @@
 
 
             <div class='rightHeroItems'>
-                <span>AQ396BK</span>
+                <span>AdminID</span>
                 <span><a><i class='material-icons'>
                             notification_important
                         </i></a></span>
@@ -43,7 +42,7 @@
             <div class='userName'>
                 <h4>Amin Hakeem</h4>
                 <div class='small-vp-info'>
-                    <span>AQ396BK</span>
+                    <span>AdminID</span>
                     <span><a><i class='material-icons'>
                                 notification_important
                             </i></a></span>
@@ -82,20 +81,12 @@
                                     <label for='Lastname'>Last Name</label>
                                 </div>
                                 <div class='field'>
-                                    <select name="Type" required>
+                                    <select name="isAdmin" required>
                                         <option value=""></option>
-                                        <option value="staff">Staff</option>
-                                        <option value="client">Client</option>
+                                        <option value="true">Administrator</option>
+                                        <option value="false">Staff</option>
                                     </select>
-                                    <label for='Type'>Type</label>
-                                </div>
-                                <div class='field'>
-                                    <select name="Sex" required>
-                                        <option value=""></option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                    </select>
-                                    <label for='Sex'>Sex</label>
+                                    <label for='isAdmin'>Type</label>
                                 </div>
                                 <div class='field'>
                                     <input type='email' name='username' required>
@@ -104,18 +95,6 @@
                                 <div class='field'>
                                     <input type='text' name='Phone' required>
                                     <label for='Phone'>Phone</label>
-                                </div>
-                                <div class='field'>
-                                    <select name="Administrator" required>
-                                        <option value=""></option>
-                                        <option value="true">True</option>
-                                        <option value="false">False</option>
-                                    </select>
-                                    <label for='Administrator'>Administrator</label>
-                                </div>
-                                <div class='field'>
-                                    <input type='text' name='Address' required>
-                                    <label for='Address'>Address</label>
                                 </div>
                                 <div class='formBtn'>
                                     <button type='submit'>Submit</button>
@@ -135,7 +114,7 @@
 
 
 
-        <img src='../images/path3b.svg' class='mainBottomSVG' alt='SVG'>
+        
 
     </div>
     <script src='../js/pagesFunc.js'></script>
