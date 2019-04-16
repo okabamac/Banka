@@ -110,10 +110,10 @@
     padding: 2em;
     position: relative;
      height: 100%;
-     width: 95%;
+     width: 100%;
      display: grid;
      margin: auto;
-     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
      grid-template-rows: auto;
      grid-gap: 40px;
 }
