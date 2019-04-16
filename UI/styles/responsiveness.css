@@ -5,13 +5,7 @@
     .mainContainer {
         width: 100vw;
         height: 100%;
-        padding-top: 2em;
         overflow: hidden;
-    }
-
-    .mainBottomSVG {
-        width: 50%;
-        z-index: -1;
     }
 
     #sideMenu {
@@ -50,21 +44,7 @@
         height: 100vh;
     }
 
-    .mainBottomSVG {
-        width: 50%;
-        z-index: -1;
-    }
-
-    .companyImg {
-        margin-top: 0;
-    }
-
-    .mainTopSVG {
-        width: 85%;
-    }
-
     .buttonsDiv {
-        top: 40px;
         right: 1em;
         transition: .5s all linear;
     }
@@ -99,8 +79,10 @@
     }
 
     .customerAllAccounts {
+        top: -5em;
         grid-template-columns: 1fr;
-        grid-template-rows: 150px 450px;
+        /* grid-template-rows: 150px 450px; */
+        grid-gap: 6em;
     }
 
     .customerList {
@@ -108,7 +90,8 @@
         margin: auto;
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
         overflow-x: auto;
-        height: 100px;
+        height: 200px;
+        width: 60vw;
     }
 
     .customerList div {
@@ -116,7 +99,7 @@
     }
 
     table {
-        border: 0;
+        border: 1px solid var(--whitey);
     }
 
     table caption {

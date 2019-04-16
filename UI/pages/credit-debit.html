@@ -21,7 +21,6 @@
         <div class='hero pageHero'>
             <img src='../images/logo.svg' class='logo' alt='logo'>
             <h2>Banka</h2>
-            <img src='../images/path1a.svg' alt='SVG' class='mainTopSVG'>
 
             <div class='hamburger-icon'>
                 <div class='btn-line line-1'></div>
@@ -31,7 +30,7 @@
 
 
             <div class='rightHeroItems'>
-                <span>1839Banka</span>
+                <span>StaffID</span>
                 <span><a><i class='material-icons'>
                             notification_important
                         </i></a></span>
@@ -43,7 +42,7 @@
             <div class='userName'>
                 <h4>Saffy Martins</h4>
                 <div class='small-vp-info'>
-                    <span>1839Banka</span>
+                    <span>StaffID</span>
                     <span><a><i class='material-icons'>
                                 notification_important
                             </i></a></span>
@@ -54,6 +53,7 @@
                 <ul>
                     <li><a href='./staff-all-customers.html'>All Customers</a></li>
                     <li class='active'><a href='./credit-debit.html'>Credit/Debit</a></li>
+                    <li><a href='./manage-user-staff.html'>Manage User</a></li>
                     <li><a href='./staff-profile.html'>My Profile</a></li>
                 </ul>
             </div>
@@ -90,18 +90,22 @@
                                     <input type='text' name='Account Number' required>
                                     <label for='Account Number'>Account Number</label>
                                 </div>
-                                <div class='field'>
-                                    <input type='text' name='Transaction Type' required>
-                                    <label for='Transaction Type'>Transaction Type</label>
-                                </div>
-                                <div class='field'>
-                                    <input type='text' name='Account Type' required>
-                                    <label for='Account Type'>Account Type</label>
-                                </div>
-                                <div class='field'>
-                                    <input type='text' name='Currency' required>
-                                    <label for='Currency'>Currency</label>
-                                </div>
+                                 <div class='field'>
+                                     <select name="Transaction Type" required>
+                                         <option value=""></option>
+                                         <option value="credit">Credit</option>
+                                         <option value="debit">Debit</option>
+                                     </select>
+                                     <label for='Transaction Type'>Transaction Type</label>
+                                 </div>
+                                 <div class='field'>
+                                     <select name="Account Type" required>
+                                         <option value=""></option>
+                                         <option value="savings">Savings</option>
+                                         <option value="current">Current</option>
+                                     </select>
+                                     <label for='Account Type'>Account Type</label>
+                                 </div>
                                 <div class='field'>
                                     <input type='text' name='Amount' required>
                                     <label for='Amount'>Amount</label>
@@ -124,7 +128,7 @@
 
 
 
-        <img src='../images/path3b.svg' class='mainBottomSVG' alt='SVG'>
+
 
     </div>
     <script src='../js/pagesFunc.js'></script>
