@@ -143,6 +143,7 @@ body {
     top: -9em;
     background-color: var(--whitey);
     margin: auto;
+    font-family: 'Roboto'
     box-shadow: var(--box-shadow);
     transform: skew(350deg);
     text-align: center;
@@ -167,8 +168,12 @@ body {
     box-shadow: var(--box-shadow);
     padding: 1em;
     cursor: pointer;
+    transform: skew(10deg);
 }
-
+.services i {
+    margin-bottom: 0.5em;
+    font-size: 1.6em;
+}
 .services .service:hover {
     color: var(--newBlue);
 }
@@ -392,4 +397,15 @@ select:valid+label {
     height: 400px;
     text-align: center;
     margin: auto;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    height: 50px;
+    text-align: center;
+    width: 100%;
+    background-color: var(--newBlue);
+    color: var(--whitey);
+    padding: 0.5em;
 }
