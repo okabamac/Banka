@@ -21,7 +21,6 @@
         <div class='hero pageHero'>
             <img src='../images/logo.svg' class='logo' alt='logo'>
             <h2>Banka</h2>
-            <img src='../images/path1a.svg' alt='SVG' class='mainTopSVG'>
 
             <div class='hamburger-icon'>
                 <div class='btn-line line-1'></div>
@@ -45,7 +44,7 @@
             <div class='userName'>
                 <h4>Cossy J.L</h4>
                 <div class='small-vp-info'>
-                    <span>2088058375</span>
+                    <span>Account Number</span>
                     <span><a><i class='material-icons'>
                                 notification_important
                             </i></a></span>
@@ -110,6 +109,14 @@
                                     <label for='Marital Status'>Marital Status</label>
                                 </div>
                                 <div class='field'>
+                                   <select name="Account Type" required>
+                                       <option value=""></option>
+                                       <option value="current">Current</option>
+                                       <option value="savings">Savings</option>
+                                   </select>
+                                    <label for='Account Type'>Account Type</label>
+                                </div>
+                                <div class='field'>
                                     <input type='text' name='BVN' required>
                                     <label for='BVN'>BVN</label>
                                 </div>
@@ -124,26 +131,6 @@
                                 <div class='field'>
                                     <input type='text' name='Country' required>
                                     <label for='Country'>Country</label>
-                                </div>
-                                <div class='field'>
-                                    <input type='text' name='State' required>
-                                    <label for='State'>State</label>
-                                </div>
-                                <div class='field'>
-                                    <input type='text' name='LGA' required>
-                                    <label for='LGA'>LGA</label>
-                                </div>
-                                <div class='field'>
-                                    <input type='text' name='Next of Kin' required>
-                                    <label for='Next of Kin'>Next of KIn</label>
-                                </div>
-                                <div class='field'>
-                                    <input type='text' name='Next of Kin Phone' required>
-                                    <label for='Next of Kin Phone'>Next of Kin Phone</label>
-                                </div>
-                                <div class='field'>
-                                    <input type='email' name='Next of Kin Email' required>
-                                    <label for='Next of Kin Email'>Next of Kin Email</label>
                                 </div>
                                 <div class='field'>
                                     <input type='text' name='Address' required>
@@ -167,7 +154,7 @@
 
 
 
-        <img src='../images/path3b.svg' class='mainBottomSVG' alt='SVG'>
+      
 
     </div>
     <script src='../js/pagesFunc.js'></script>

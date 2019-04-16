@@ -3,12 +3,13 @@
 .sideMenu {
     position: absolute;
     width: 125px;
-    height: calc(100% - 100px);
+    height: calc(100% - 70px);
     border-right: 2px solid rgba(235, 234, 234, 0.2);
     border-top: 2px solid rgba(235, 234, 234, 0.2);
     z-index: 2;
-    background-color: #1E2A39;
+    background-color: var(--newBlue);
     overflow-x: hidden;
+    color: var(--whitey);
 }
 
 .hamburger-icon {
@@ -171,6 +172,15 @@ span a:hover {
 }
 
 #menuItemsStaff ul li:nth-child(3) a:before {
+   font-family: 'Material Icons';
+   content: '\e150';
+   display: block;
+   margin: 0.1em auto;
+   color: var(--pinkie);
+   font-size: 2em;
+}
+
+#menuItemsStaff ul li:nth-child(4) a:before {
     font-family: 'Material Icons';
     content: '\e8a6';
     display: block;

@@ -30,9 +30,12 @@
 }
 
 .contentHead {
-    width: 100%;
+    width: 80%;
     height: 60px;
     padding: 1em;
+    margin: auto;
+    position: relative;
+    top: 2em;
 }
 
 .contentHead #notification {
@@ -68,7 +71,8 @@
 .contentBody {
     position: relative;
     height: calc(100% - 60px);
-    width: 100%;
+    width: 90%;
+    top: 2em;
 }
 
 
@@ -90,18 +94,32 @@
 
 .contentBody .customerDashboard {
     position: relative;
-    height: 100%;
-    width: inherit;
-    display: grid;
+    height: 90%;
+    width: 85%;
     margin: auto;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-template-rows: auto;
-    grid-gap: 40px;
 }
 
+.flexDiv {
+    position: relative;
+    top: 3em;
+    width: 90%;
+    height: 80%;
+    margin-bottom: 2em;
+}
+.cardShow {
+    padding: 2em;
+    position: relative;
+     height: 100%;
+     width: 95%;
+     display: grid;
+     margin: auto;
+     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+     grid-template-rows: auto;
+     grid-gap: 40px;
+}
 .customerDashboard .card {
     position: relative;
-    height: 470px;
+    min-height: 490px;
     opacity: 0;
     top: 35px;
     box-shadow: var(--box-shadow);
@@ -149,13 +167,15 @@
     justify-content: center;
     align-items: center;
     padding: 2em;
+    color: var(--whitey);
     box-shadow: var(--box-shadow);
+    background-color: #2E2786;
 }
 
 .cardHead .title {
     position: absolute;
     left: 1em;
-    margin-top: -2em;
+    margin-top: -1.5em;
     opacity: 0.7;
 }
 
@@ -165,7 +185,7 @@
 }
 
 .card .cardContent {
-    padding: 0.2em 2em;
+    padding: 0.5em 2em 2em 2em;
 }
 
 .cardContent img {
@@ -247,17 +267,20 @@
 
 .contentBody .customerCreateAccount {
     position: relative;
-    height: 100%;
-    width: 100%;
+    min-height: 70%;
+    width: 80%;
     margin: auto;
+    box-shadow: var(--box-shadow);
+    top: 5em;
 }
 
 .createAccountForm {
     position: relative;
     width: 95%;
-    height: 95%;
+    min-height: 95%;
     top: 2em;
     margin: auto;
+    padding-bottom: 2em;
 }
 
 .createAccountForm form {
@@ -265,6 +288,7 @@
     height: 90%;
     width: 100%;
     display: grid;
+    margin-bottom: 6em;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-template-rows: auto;
     grid-gap: 2em;
@@ -272,12 +296,13 @@
 
 
 
-.customerCreateAccount input, .customerCreateAccount select,
+.customerCreateAccount input,
+.customerCreateAccount select,
 .creditDebitForm input {
-    color: var(--whitey);
+    color: var(--blackie);
     padding: 1em 0 0 .3em;
     border: none;
-    border-bottom: solid 0.1em var(--whitey);
+    border-bottom: solid 0.1em var(--blackie);
     background: none;
 }
 
@@ -285,7 +310,7 @@
 .creditDebitForm input:focus {
     box-shadow: none;
     outline: none;
-    border-bottom: 0.5em solid var(--whitey);
+    border-bottom: 0.5em solid var(--blackie);
 }
 
 
@@ -294,34 +319,6 @@
 
 /* Transaction History */
 
-
-
-
-
-
-.transactionHistory .transactionGraph {
-    width: 100%;
-    height: 200px;
-    padding: 20px;
-    margin-bottom: 0em;
-}
-
-.transactionGraph svg {
-    position: relative;
-    width: 80%;
-    height: 80%;
-    margin: auto;
-}
-
-.chart rect {
-    fill: steelblue;
-}
-
-.chart text {
-    fill: white;
-    font: 10px sans-serif;
-    text-anchor: end;
-}
 
 /* Search Button */
 .search-contain {
@@ -342,7 +339,7 @@
     background: white;
     box-sizing: border-box;
     border-radius: 25px;
-    border: 4px solid white;
+    border: 1px solid var(--blackie);
     padding: 5px;
 }
 
@@ -393,16 +390,24 @@
 .customerAllAccounts {
     top: 15px;
     position: relative;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    grid-template-rows: 450px;
-    grid-gap: 0.5em;
-    opacity: 1;
-    width: 95%;
     margin: auto;
     height: 85%;
 }
 
+.flexDiv2 {
+     top: 15px;
+     position: relative;
+     margin: auto;
+     display: grid;
+     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+     grid-template-rows: 450px;
+     grid-gap: 3em;
+     opacity: 1;
+     width: 80%;
+     height: 85%;
+     margin: 2em auto;
+
+}
 .customerList {
     direction: rtl;
     position: relative;
@@ -415,6 +420,7 @@
     overflow-x: hidden;
     overflow-y: auto;
 }
+
 .customerList div {
     direction: ltr;
 }
@@ -431,6 +437,7 @@
     background-color: darkgrey;
     outline: 1px solid slategrey;
 }
+
 .customerList div:hover {
     cursor: pointer;
     transition: var(--transition);
@@ -467,7 +474,7 @@
     top: 2em;
     position: relative;
     text-align: center;
-    padding: 1em;
+    padding: 1em 1em 2em 1em;
 }
 
 .customerInfo {
@@ -476,7 +483,7 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-template-rows: auto;
     grid-gap: 1em;
-    padding: 1em;
+    padding: 1em 1em 4em 1em;
 }
 
 .customerInfo .info {
@@ -485,7 +492,7 @@
 }
 
 .customerInfo .info {
-    padding-top: 2em;
+    padding-bottom: 2em;
 }
 
 .customerInfo .info .details {
@@ -495,7 +502,7 @@
 
 .customerInfo .info1 .details {
     margin-top: -1em;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
 }
 
 .customerInfo .info2 {
@@ -566,6 +573,7 @@ table {
     table-layout: fixed;
     opacity: 0.8;
     overflow-y: auto;
+    margin-bottom: 2em;
 }
 
 table caption {
@@ -577,33 +585,47 @@ table tr {
     padding: .35em;
     min-height: 120px;
 }
-
-tr:nth-child(odd) {
-    -webkit-box-shadow: 0 8px 6px -6px var(--blackie);
-    -moz-box-shadow: 0 8px 6px -6px var(--blackie);
-    box-shadow: 0 8px 6px -6px var(--blackie);
+th {
+    background-color: #2E2786;
+    color: var(--whitey);
 }
-
 table th,
 table td {
     padding: .625em;
     text-align: left;
 }
+
 td img {
     width: 50px;
     height: 50px;
 }
+
 table th {
     font-size: .8em;
     letter-spacing: .1em;
     text-transform: uppercase;
 }
+
 td {
     height: 100px;
+}
+
+tr:nth-child(even) {
+    background-color: #EBEBEB;
 }
 
 .lastTransactionDetails {
     position: relative;
     width: 100%;
     font-size: 0.8em;
+    padding: 1em;
+    margin-bottom: 3em;
+}
+
+.manageUserTable {
+    position: relative;
+    width: 85%;
+    top: 2em;
+    margin: auto;
+    padding: 1em;
 }
