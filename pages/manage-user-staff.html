@@ -31,7 +31,7 @@
 
 
             <div class='rightHeroItems'>
-                <span>StaffID</span>
+                <span>Staff ID-123456</span>
                 <span><a><i class='material-icons'>
                             notification_important
                         </i></a></span>
@@ -43,7 +43,7 @@
             <div class='userName'>
                 <h4>Saffy Martins</h4>
                 <div class='small-vp-info'>
-                    <span>StaffID</span>
+                    <span>Staff ID-123456</span>
                     <span><a><i class='material-icons'>
                                 notification_important
                             </i></a></span>
@@ -71,7 +71,7 @@
 
                     <div class='search-contain'>
                         <form action=''>
-                            <input type='search'>
+                            <input type='search' placeholder="Enter ID">
                             <i class='material-icons'>
                                 search
                             </i>
@@ -79,85 +79,106 @@
                     </div>
 
                 </div>
-                <div class='contentBody'>
-                    <div class="manageUserTable">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Avatar</th>
-                                    <th scope="col">Full Names</th>
-                                    <th scope="col">Role</th>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                              <tbody>
-                                  <tr>
-                                      <td data-label="Avatar"><img src="../images/woman-svgrepo-com.svg" alt="picture"
-                                              class="userImage"></td>
-                                      <td data-label="Full Names">
-                                          Ndikak Ndang
-                                      </td>
-                                      <td data-label="Role">Staff</td>
-                                      <td data-label="ID">186Banka</td>
-                                      <td data-label="Status">Active</td>
-                                      <td data-label="Actions"> <span><i class="material-icons">lock_open</i></span>
-                                          <span><i class="material-icons">lock</i></span>
-                                          <span><i class="material-icons">
-                                                  delete
-                                              </i></span></td>
-                                  </tr>
-                                  <tr>
-                                      <td scope="row" data-label="Avatar"><img src="../images/man.svg" alt="picture"
-                                              class="userImage"></td>
-                                      <td data-label="Full Names">
-                                          Kemel Iloui
-                                      </td>
-                                      <td data-label="Role">Admin</td>
-                                      <td data-label="ID">186Banka</td>
-                                      <td data-label="Status">Inactive</td>
-                                      <td data-label="Actions"> <span><i class="material-icons">lock_open</i></span>
-                                          <span><i class="material-icons">lock</i></span>
-                                          <span><i class="material-icons">
-                                                  delete
-                                              </i></span></td>
-                                  </tr>
-                                  <tr>
-                                      <td scope="row" data-label="Avatar"><img src="../images/woman-svgrepo-com.svg"
-                                              alt="picture" class="userImage"></td>
-                                      <td data-label="Full Names">
-                                          Ndikak Ndan
-                                      </td>
-                                      <td data-label="Role">Staff</td>
-                                      <td data-label="ID">186Banka</td>
-                                      <td data-label="Status">Active</td>
-                                      <td data-label="Actions"> <span><i class="material-icons">lock_open</i></span>
-                                          <span><i class="material-icons">lock</i></span>
-                                          <span><i class="material-icons">
-                                                  delete
-                                              </i></span></td>
-                                  </tr>
-                                  <tr>
-                                      <td scope="row" data-label="Avatar"><img src="../images/man.svg" alt="picture"
-                                              class="userImage"></td>
-                                      <td data-label="Full Names">
-                                          Kemel Iloui
-                                      </td>
-                                      <td data-label="Role">Staff</td>
-                                      <td data-label="ID">186Banka</td>
-                                      <td data-label="Status">Active</td>
-                                      <td data-label="Actions"> <span><i class="material-icons">lock_open</i></span>
-                                          <span><i class="material-icons">lock</i></span>
-                                          <span><i class="material-icons">
-                                                  delete
-                                              </i></span></td>
-                                  </tr>
-                              </tbody>
-                        </table>
-                    </div>
-
-                </div>
+               <div class='contentBody'>
+                   <div class="manageUserTable">
+                       <table>
+                           <thead>
+                               <tr>
+                                   <th scope="col">Full Name</th>
+                                   <th scope="col">Role</th>
+                                   <th scope="col">ID</th>
+                                   <th scope="col">Status</th>
+                                   <th scope="col">Actions</th>
+                                    <th scope="col">View Details</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               <tr>
+                                   <td data-label="Full Names">
+                                       Ndikak Ndang
+                                   </td>
+                                   <td data-label="Role">Staff</td>
+                                   <td data-label="ID">186Banka</td>
+                                   <td data-label="Status">Active</td>
+                                   <td data-label="Actions"> <span><i class="material-icons">lock_open</i>
+                                           <p>Activate</p>
+                                       </span>
+                                       <span><i class="material-icons">lock</i>
+                                           <p>Deactivate</p>
+                                       </span>
+                                       <span><i class="material-icons">
+                                               delete
+                                           </i>
+                                           <p>Delete</p>
+                                       </span></td>
+                                       <td data-label="View" class="viewBtn"><button>View</button></td>
+                               </tr>
+                               <tr>
+                                   <td data-label="Full Names">
+                                       Kemel Iloui
+                                   </td>
+                                   <td data-label="Role">Admin</td>
+                                   <td data-label="ID">186Banka</td>
+                                   <td data-label="Status">Inactive</td>
+                                   <td data-label="Actions"><span><i class="material-icons">lock_open</i>
+                                           <p>Activate</p>
+                                       </span>
+                                       <span><i class="material-icons">lock</i>
+                                           <p>Deactivate</p>
+                                       </span>
+                                       <span><i class="material-icons">
+                                               delete
+                                           </i>
+                                           <p>Delete</p>
+                                       </span>
+                                   </td>
+                                   <td data-label="View" class="viewBtn"><button>View</button></td>
+                               </tr>
+                               <tr>
+                                   <td data-label="Full Names">
+                                       Ndikak Ndan
+                                   </td>
+                                   <td data-label="Role">Staff</td>
+                                   <td data-label="ID">186Banka</td>
+                                   <td data-label="Status">Active</td>
+                                   <td data-label="Actions"> <span><i class="material-icons">lock_open</i>
+                                           <p>Activate</p>
+                                       </span>
+                                       <span><i class="material-icons">lock</i>
+                                           <p>Deactivate</p>
+                                       </span>
+                                       <span><i class="material-icons">
+                                               delete
+                                           </i>
+                                           <p>Delete</p>
+                                       </span></td>
+                                       <td data-label="View" class="viewBtn"><button>View</button></td>
+                               </tr>
+                               <tr>
+                                   <td data-label="Full Names">
+                                       Kemel Iloui
+                                   </td>
+                                   <td data-label="Role">Staff</td>
+                                   <td data-label="ID">186Banka</td>
+                                   <td data-label="Status">Active</td>
+                                   <td data-label="Actions"><span><i class="material-icons">lock_open</i>
+                                           <p>Activate</p>
+                                       </span>
+                                       <span><i class="material-icons">lock</i>
+                                           <p>Deactivate</p>
+                                       </span>
+                                       <span><i class="material-icons">
+                                               delete
+                                           </i>
+                                           <p>Delete</p>
+                                       </span></td>
+                                       <td data-label="View" class="viewBtn"><button>View</button></td>
+                            
+                               </tr>
+                           </tbody>
+                       </table>
+                   </div>
+               </div>
             </div>
         </div>
 

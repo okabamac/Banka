@@ -81,7 +81,6 @@
     .customerAllAccounts {
         top: -5em;
         grid-template-columns: 1fr;
-        /* grid-template-rows: 150px 450px; */
         grid-gap: 6em;
     }
 
