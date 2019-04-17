@@ -139,5 +139,9 @@
     table td:last-child {
         border-bottom: 0;
     }
+    .bottomContent {
+        width: 90%;
+    }
+   
 }
 

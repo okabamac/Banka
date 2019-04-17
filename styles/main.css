@@ -173,6 +173,7 @@ body {
 .services i {
     margin-bottom: 0.5em;
     font-size: 1.6em;
+    color: var(--newBlue);
 }
 .services .service:hover {
     color: var(--newBlue);
@@ -184,6 +185,7 @@ body {
     top: 7em;
     color: var(--whitey);
     font-size: 1.5em;
+    padding: 1em;
 }
 #signinModal {
     display: none;
@@ -400,7 +402,8 @@ select:valid+label {
 }
 
 .footer {
-    position: absolute;
+    position: fixed;
+    left: 0;
     bottom: 0;
     height: 50px;
     text-align: center;
