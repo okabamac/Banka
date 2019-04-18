@@ -170,6 +170,10 @@ body {
     cursor: pointer;
     transform: skew(10deg);
 }
+.service:hover{
+    border: 1px solid var(--newBlue);
+    transition: var(--transition);
+}
 .services i {
     margin-bottom: 0.5em;
     font-size: 1.6em;
