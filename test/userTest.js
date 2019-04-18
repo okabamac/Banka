@@ -5,6 +5,19 @@ import chaiHttp from 'chai-http';
 import app from '../app';
 
 import Users from '../src/models/userModel';
+import Accounts from '../src/models/accountModel';
+
+const account = {
+  firstName: 'Aminu',
+  lastName: 'Tolkien',
+  dob: '1995-06-25',
+  sex: 'Male',
+  email: 'amini@amini.com',
+  phone: '+2349059564447',
+  type: 'Savings',
+  currency: 'Naira',
+  address: 'No 12 Movida Crescent, Kubwa, Abuja',
+};
 
 chai.use(chaiHttp);
 chai.should();
@@ -21,6 +34,18 @@ describe('Users', () => {
         chai
           .request(app)
           .get('/api/v1/users')
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+          });
+      });
+      it('should get all accounts by a user', (done) => {
+        Accounts.length = 0;
+        Accounts.push(account);
+        chai
+          .request(app)
+          .get(`/api/v1/users/${account.email}/accounts`)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
