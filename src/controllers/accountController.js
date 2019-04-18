@@ -14,7 +14,6 @@ class AccountControl {
       data: accounts,
     });
   }
-
   static async getOne(req, res, next) {
     const {
       accountNumber,

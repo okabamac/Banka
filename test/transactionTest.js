@@ -64,19 +64,17 @@ describe('Transactions', () => {
         };
         Accounts.push(account);
         const credit = {
-          amount: '375',
-          transactionType: 'credit',
+          amount: '375'
         };
         chai
           .request(app)
-          .post(`/api/v1/transactions/${account.accountNumber}/credit`)
+          .post('/api/v1/transactions/2088058375/credit')
           .send(credit)
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
             res.body.data.should.have.property('transactionId');
             res.body.data.should.have.property('accountNumber');
-            res.body.data.should.have.property('amount');
             res.body.data.should.have.property('cashier');
             res.body.data.should.have.property('transactionType');
             res.body.data.should.have.property('createdOn');
@@ -86,7 +84,6 @@ describe('Transactions', () => {
             done();
           });
       });
-
 
       // Debit
       it('it should DEBIT a bank account', (done) => {

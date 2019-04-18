@@ -39,17 +39,17 @@ describe('Accounts', () => {
           });
       });
 
-      it('should not get a single account record', (done) => {
-        const id = 'ccc';
-        chai
-          .request(app)
-          .get(`/api/v1/accounts/${id}`)
-          .end((err, res) => {
-            res.should.have.status(400);
-            res.body.should.be.a('object');
-            done();
-          });
-      });
+    it('should not get a single account record', (done) => {
+      const id = 'ccc';
+      chai
+        .request(app)
+        .get(`/api/v1/accounts/${id}`)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.be.a('object');
+          done();
+        });
+    });
     });
 
     describe('POST /', () => {
