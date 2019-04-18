@@ -64,8 +64,9 @@ describe('Transactions', () => {
         };
         Accounts.push(account);
         const credit = {
-          amount: '375'
-        };
+          amount: '200',
+            transactionType: 'credit',
+          };
         chai
           .request(app)
           .post('/api/v1/transactions/2088058375/credit')
