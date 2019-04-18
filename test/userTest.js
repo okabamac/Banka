@@ -1,10 +1,10 @@
-const chai = require('chai');
+import chai from 'chai';
 
-const chaiHttp = require('chai-http');
+import chaiHttp from 'chai-http';
 
-const app = require('../app');
+import app from '../app';
 
-const Users = require('../src/models/userModel');
+import Users from '../src/models/userModel';
 
 chai.use(chaiHttp);
 chai.should();

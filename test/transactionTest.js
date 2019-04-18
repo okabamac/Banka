@@ -1,12 +1,12 @@
-const chai = require('chai');
+import chai from 'chai';
 
-const chaiHttp = require('chai-http');
+import chaiHttp from 'chai-http';
 
-const app = require('../app');
+import app from '../app';
 
-const Transactions = require('../src/models/transactionModel');
+import Transactions from '../src/models/transactionModel';
 
-const Accounts = require('../src/models/accountModel');
+import Accounts from '../src/models/accountModel';
 
 chai.use(chaiHttp);
 chai.should();

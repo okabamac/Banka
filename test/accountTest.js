@@ -1,10 +1,10 @@
-const chai = require('chai');
+import chai from 'chai';
 
-const chaiHttp = require('chai-http');
+import chaiHttp from 'chai-http';
 
-const app = require('../app');
+import app from '../app';
 
-const Accounts = require('../src/models/accountModel');
+import Accounts from '../src/models/accountModel';
 
 const account = {
   firstName: 'Aminu',
@@ -40,12 +40,12 @@ describe('Accounts', () => {
       });
 
       it('should not get a single account record', (done) => {
-        const id = 1;
+        const id = ccc;
         chai
           .request(app)
           .get(`/api/v1/accounts/${id}`)
           .end((err, res) => {
-            res.should.have.status(404);
+            res.should.have.status(400);
             res.body.should.be.a('object');
             done();
           });

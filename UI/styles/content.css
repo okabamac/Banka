@@ -30,7 +30,7 @@
 }
 
 .contentHead {
-    width: 80%;
+    width: 77%;
     height: 60px;
     padding: 1em;
     margin: auto;
@@ -95,7 +95,7 @@
 .contentBody .customerDashboard {
     position: relative;
     height: 90%;
-    width: 85%;
+    width: 90%;
     margin: auto;
 }
 
@@ -110,10 +110,10 @@
     padding: 2em;
     position: relative;
      height: 100%;
-     width: 95%;
+     width: 100%;
      display: grid;
      margin: auto;
-     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
      grid-template-rows: auto;
      grid-gap: 40px;
 }
@@ -162,7 +162,8 @@
 .cardHead {
     position: relative;
     width: 100%;
-    height: 60px;
+    height: 80px;
+    padding-top: 0.4em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -324,67 +325,28 @@
 .search-contain {
     position: absolute;
     top: 0;
-    right: -0.5em;
+    right: 7em;
     width: 200px;
-    height: inherit;
-    padding: 0.5em;
-}
-
-
-.search-contain form {
-    position: relative;
-    transition: all 1s;
-    width: 40px;
     height: 40px;
-    background: white;
-    box-sizing: border-box;
-    border-radius: 25px;
-    border: 1px solid var(--blackie);
-    padding: 5px;
 }
 
 .search-contain form input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 75%;
-    height: 30px;
-    line-height: 15px;
-    outline: 0;
-    border: 0;
-    color: var(--blackie);
-    display: none;
-    font-size: 1em;
-    border-radius: 10px;
-    padding: 0 20px;
+    position: relative;
+     width: 200px;
+     height: 35px;
+     padding: 0.3em;
+     border-radius: 10px;
+     border: 1px solid var(--newBlue);
 }
 
 .search-contain form i {
-    box-sizing: border-box;
-    padding: 5px;
     position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 50%;
-    color: #07051a;
-    text-align: center;
-    font-size: 1.3em;
-    transition: all 1s;
+    right: -0.5em;
+    top: 0.2em;
 }
 
-.search-contain form:hover {
-    width: 200px;
-    cursor: pointer;
-}
+.search-contain form {
 
-.search-contain form:hover input {
-    display: block;
-    border-bottom: none;
-}
-
-.search-contain form:hover .fa {
-    background: #07051a;
-    color: white;
 }
 
 .customerAllAccounts {
@@ -624,8 +586,36 @@ tr:nth-child(even) {
 
 .manageUserTable {
     position: relative;
-    width: 85%;
+    width: 95%;
     top: 2em;
     margin: auto;
     padding: 1em;
+}
+
+.manageUserTable td span {
+    display: inline-block;
+    margin-right: 0.5em;
+}
+.manageUserTable td span i:hover {
+    font-size: 200%;
+    transition: var(--transition);
+    color: var(--newBlue);
+    cursor: pointer;
+}
+.manageUserTable td span p {
+    font-size: 70%;
+}
+
+.viewBtn button {
+width: 60px;
+height: 25px;
+outline: none;
+cursor: pointer;
+border: none;
+background: var(--newBlue);
+color: white;
+}
+
+table tr td:last-child {
+    text-align: center;
 }

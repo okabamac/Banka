@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
-const config = require('./config');
+import config from './config';
 
 const checkToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase
@@ -30,6 +30,6 @@ const checkToken = (req, res, next) => {
   }
 };
 
-module.exports = {
+export default {
   checkToken,
 };

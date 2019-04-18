@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 // avatar: Joi.binary().encoding('base64').max(2 * 1024 * 1024)
 
 const alphaNum = Joi.string().alphanum();
@@ -66,7 +66,7 @@ const creditAccountSchema = Joi.object().keys({
   transactionType: Joi.string().max(10).required(),
 });
 
-module.exports = {
+module.exports =  {
   userSignupSchema,
   userSigninSchema,
   createAccountSchema,

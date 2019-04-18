@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
+
+import transactionControl from '../controllers/transactionController';
 
 const router = express.Router();
-
-const transactionControl = require('../controllers/transactionController');
 
 router.get('/', transactionControl.getAll);
 router.get('/:transactionId', transactionControl.getOne);
 router.post('/:accountNumber/debit', transactionControl.debit);
 router.post('/:accountNumber/credit', transactionControl.credit);
 
-module.exports = router;
+export default router;

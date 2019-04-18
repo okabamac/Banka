@@ -1,26 +1,29 @@
-const asyncMiddleware = require('../utilities/asyncMiddleWare');
 
-const joiHelper = require('../utilities/joiHelper');
+import joiHelper from '../utilities/joiHelper';
 
-const accounts = require('../models/accountModel');
+import accounts from '../models/accountModel';
 
-const {
+import {
   createAccountSchema, patchAccountSchema,
-} = require('../utilities/validations');
+} from '../utilities/validations';
 
-const AccountControl = {
-  getAll: asyncMiddleware(async (req, res, next) => {
+class AccountControl {
+  static async getAll(req, res, next) {
     res.json({
       status: 200,
       data: accounts,
     });
-  }),
+  }
 
-  getOne: asyncMiddleware(async (req, res, next) => {
+  static async getOne(req, res, next) {
     const {
       accountNumber,
     } = req.params;
-    const account = await accounts.filter(account => account.accountNumber == accountNumber)[0];
+     if (typeof accountNumber != 'number') {
+       res.status(400);
+       return next(new Error('Account Number must be an integer'));
+     }
+    const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) {
       return next();
     }
@@ -28,11 +31,15 @@ const AccountControl = {
       status: 200,
       data: account,
     });
-  }),
-  createAccount: asyncMiddleware(async (req, res, next) => {
+  }
+
+  static async createAccount(req, res, next) {
     const validCreateAccount = await joiHelper(req, res, createAccountSchema);
+
     if (validCreateAccount.statusCode === 422) return;
-    const {firstName, lastName, sex, dob, email, phone, type, currency} = validCreateAccount;
+    const {
+      firstName, lastName, sex, dob, email, phone, type, currency,
+    } = validCreateAccount;
     const account = {
       accountNumber: Math.floor(100000 + Math.random() * 9000000000), firstName, lastName, sex, dob, email, phone, type, currency,
     };
@@ -43,12 +50,18 @@ const AccountControl = {
       status: 200,
       data: account,
     });
-  }),
-  modifyAccount: asyncMiddleware(async (req, res, next) => {
+  }
+
+  static async modifyAccount(req, res, next) {
     const {
       accountNumber,
     } = req.params;
-    const account = await accounts.filter(account => account.accountNumber == accountNumber)[0];
+
+    if (typeof accountNumber != 'number') {
+      res.status(400);
+      return next(new Error('Account Number must be an integer'));
+    }
+    const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) {
       return next();
     }
@@ -65,11 +78,16 @@ const AccountControl = {
         status,
       },
     });
-  }),
-  deleteAccount: asyncMiddleware(async (req, res, next) => {
+  }
+
+  static async deleteAccount(req, res, next) {
     const {
       accountNumber,
     } = req.params;
+    if (typeof accountNumber != 'number') {
+      res.status(400);
+      return next(new Error('Account Number must be an integer'));
+    }
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
     const index = accounts.indexOf(account);
@@ -78,7 +96,7 @@ const AccountControl = {
       status: 200,
       message: 'Account successfully deleted',
     });
-  }),
-};
+  }
+}
 
-module.exports = AccountControl;
+export default AccountControl;

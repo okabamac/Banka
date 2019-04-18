@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
+
+import accountControl from '../controllers/accountController';
 
 const router = express.Router();
-
-const accountControl = require('../controllers/accountController');
 
 router.get('/', accountControl.getAll);
 router.get('/:accountNumber', accountControl.getOne);
@@ -10,4 +10,4 @@ router.post('/', accountControl.createAccount);
 router.patch('/:accountNumber', accountControl.modifyAccount);
 router.delete('/:accountNumber', accountControl.deleteAccount);
 
-module.exports = router;
+export default router;

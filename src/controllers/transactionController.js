@@ -1,14 +1,13 @@
-const asyncMiddleware = require('../utilities/asyncMiddleWare');
 
-const transactions = require('../models/transactionModel');
+import transactions from '../models/transactionModel';
 
-const accounts = require('../models/accountModel');
+import accounts from '../models/accountModel';
 
-const joiHelper = require('../utilities/joiHelper');
+import joiHelper from '../utilities/joiHelper';
 
-const {
+import {
   creditAccountSchema,
-} = require('../utilities/validations');
+} from '../utilities/validations';
 
 
 const createTransaction = (account, transactionType, accountNumber, amount) => ({
@@ -22,29 +21,36 @@ const createTransaction = (account, transactionType, accountNumber, amount) => (
   oldBalance: account.balance,
 });
 
-const TransactionControl = {
-  getAll: asyncMiddleware(async (req, res, next) => {
+class TransactionControl {
+  static async getAll (req, res, next) {
     res.json({
       status: 200,
       data: transactions,
     });
-  }),
+  }
 
-  getOne: asyncMiddleware(async (req, res, next) => {
+  static async getOne (req, res, next) {
     const {
       transactionId,
     } = req.params;
+      if (typeof transactionId != 'number') {
+        res.status(400);
+        return next(new Error('ID must be an integer'));
+      }
     const transaction = await transactions.filter(transaction => transaction.id == transactionId)[0];
     if (!transaction) return next();
     res.json({
       status: 200,
       data: transaction,
     });
-  }),
+  }
 
-  debit: asyncMiddleware(async (req, res, next) => {
+  static async debit (req, res, next) {
     const { accountNumber } = req.params;
-
+  if (typeof accountNumber != 'number') {
+    res.status(400);
+    return next(new Error('Account Number must be an integer'));
+  }
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
 
@@ -56,7 +62,7 @@ const TransactionControl = {
       transactionType,
     } = validCreditAccount;
 
-    const transaction = await createTransaction(account, transactionType, accountNumber, amount);
+    const transaction = createTransaction(account, transactionType, accountNumber, amount);
     transaction.newBalance = account.balance - amount;
 
     transactions.unshift(transaction);
@@ -65,16 +71,20 @@ const TransactionControl = {
       status: 200,
       data: transaction,
     });
-  }),
+  }
 
-  credit: asyncMiddleware(async (req, res, next) => {
+  static async credit (req, res, next) {
     const {
       accountNumber,
     } = req.params;
+      if (typeof accountNumber != 'number') {
+        res.status(400);
+        return next(new Error('Account Number must be an integer'));
+      }
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
 
-    const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
+    const validCreditAccount = joiHelper(req, res, creditAccountSchema);
     if (validCreditAccount.statusCode === 422) return;
 
     const {
@@ -90,6 +100,6 @@ const TransactionControl = {
       status: 200,
       data: transaction,
     });
-  }),
-};
-module.exports = TransactionControl;
+  }
+}
+export default TransactionControl;
