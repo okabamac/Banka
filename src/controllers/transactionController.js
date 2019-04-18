@@ -65,23 +65,20 @@ class TransactionControl {
     });
   }
 
-  static async credit (req, res, next) {
+  static async credit(req, res, next) {
     const {
       accountNumber,
     } = req.params;
-
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
 
     const validCreditAccount = joiHelper(req, res, creditAccountSchema);
     if (validCreditAccount.statusCode === 422) return;
-
+    const type = 'credit';
     const {
       amount,
-      transactionType,
     } = validCreditAccount;
-
-    const transaction = await createTransaction(account, transactionType, accountNumber, amount);
+    const transaction = createTransaction(account, type, accountNumber, amount);
     transaction.newBalance = account.balance + amount;
     transactions.unshift(transaction);
     account.balance = transaction.newBalance;
