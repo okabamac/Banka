@@ -13,10 +13,6 @@ class UserControl {
     const {
       userId,
     } = req.params;
-      if (typeof userId != 'number') {
-        res.status(400);
-        return next(new Error('ID must be an integer'));
-      }
     const user = users.filter(theUser => theUser.id == userId)[0];
     if (!user) return next();
     return res.json({

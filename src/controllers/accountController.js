@@ -3,6 +3,8 @@ import joiHelper from '../utilities/joiHelper';
 
 import accounts from '../models/accountModel';
 
+import transactions from '../models/transactionModel';
+
 import {
   createAccountSchema, patchAccountSchema,
 } from '../utilities/validations';
@@ -19,10 +21,6 @@ class AccountControl {
     const {
       accountNumber,
     } = req.params;
-     if (typeof accountNumber != 'number') {
-       res.status(400);
-       return next(new Error('Account Number must be an integer'));
-     }
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) {
       return next();
@@ -30,6 +28,21 @@ class AccountControl {
     res.json({
       status: 200,
       data: account,
+    });
+  }
+
+  // Set up test1
+  static async getAllTransactions(req, res, next) {
+    const {
+      accountNumber,
+    } = req.params;
+    const allTransactions = await transactions.filter(allTrans => allTrans.accountNumber == accountNumber);
+    if (allTransactions.length == 0) {
+      return next();
+    }
+    res.json({
+      status: 200,
+      data: allTransactions,
     });
   }
 
@@ -57,10 +70,6 @@ class AccountControl {
       accountNumber,
     } = req.params;
 
-    if (typeof accountNumber != 'number') {
-      res.status(400);
-      return next(new Error('Account Number must be an integer'));
-    }
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) {
       return next();
@@ -84,10 +93,6 @@ class AccountControl {
     const {
       accountNumber,
     } = req.params;
-    if (typeof accountNumber != 'number') {
-      res.status(400);
-      return next(new Error('Account Number must be an integer'));
-    }
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
     const index = accounts.indexOf(account);

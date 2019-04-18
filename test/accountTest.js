@@ -39,13 +39,24 @@ describe('Accounts', () => {
           });
       });
 
+      it('should get all transaction record by account number', (done) => {
+        chai
+          .request(app)
+          .get('/api/v1/accounts/2088058375/transactions')
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+          });
+      });
+
       it('should not get a single account record', (done) => {
-        const id = ccc;
+        const id = 'ccc';
         chai
           .request(app)
           .get(`/api/v1/accounts/${id}`)
           .end((err, res) => {
-            res.should.have.status(400);
+            res.should.have.status(404);
             res.body.should.be.a('object');
             done();
           });
