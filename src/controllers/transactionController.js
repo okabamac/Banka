@@ -33,10 +33,6 @@ class TransactionControl {
     const {
       transactionId,
     } = req.params;
-      if (typeof transactionId != 'number') {
-        res.status(400);
-        return next(new Error('ID must be an integer'));
-      }
     const transaction = await transactions.filter(transaction => transaction.id == transactionId)[0];
     if (!transaction) return next();
     res.json({
@@ -47,10 +43,6 @@ class TransactionControl {
 
   static async debit (req, res, next) {
     const { accountNumber } = req.params;
-  if (typeof accountNumber != 'number') {
-    res.status(400);
-    return next(new Error('Account Number must be an integer'));
-  }
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
 
@@ -77,10 +69,7 @@ class TransactionControl {
     const {
       accountNumber,
     } = req.params;
-      if (typeof accountNumber != 'number') {
-        res.status(400);
-        return next(new Error('Account Number must be an integer'));
-      }
+
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
 

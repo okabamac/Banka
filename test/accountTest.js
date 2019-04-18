@@ -40,7 +40,7 @@ describe('Accounts', () => {
       });
 
       it('should not get a single account record', (done) => {
-        const id = ccc;
+        const id = 'ccc';
         chai
           .request(app)
           .get(`/api/v1/accounts/${id}`)

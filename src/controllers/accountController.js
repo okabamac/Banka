@@ -19,10 +19,6 @@ class AccountControl {
     const {
       accountNumber,
     } = req.params;
-     if (typeof accountNumber != 'number') {
-       res.status(400);
-       return next(new Error('Account Number must be an integer'));
-     }
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) {
       return next();
@@ -56,11 +52,6 @@ class AccountControl {
     const {
       accountNumber,
     } = req.params;
-
-    if (typeof accountNumber != 'number') {
-      res.status(400);
-      return next(new Error('Account Number must be an integer'));
-    }
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) {
       return next();
@@ -84,10 +75,6 @@ class AccountControl {
     const {
       accountNumber,
     } = req.params;
-    if (typeof accountNumber != 'number') {
-      res.status(400);
-      return next(new Error('Account Number must be an integer'));
-    }
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
     const index = accounts.indexOf(account);
