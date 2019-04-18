@@ -1,4 +1,3 @@
-
 import transactions from '../models/transactionModel';
 
 import accounts from '../models/accountModel';
@@ -10,10 +9,10 @@ import {
 } from '../utilities/validations';
 
 
-const createTransaction = (account, transactionType, accountNumber, amount) => ({
+const createTransaction = (account, type, accountNumber, amount) => ({
   transactionId: Math.floor(100000 + Math.random() * 900000),
   createdOn: new Date(Date.now()),
-  transactionType,
+  transactionType: type,
   accountNumber,
   cashier: 15663,
   amount,
@@ -22,18 +21,18 @@ const createTransaction = (account, transactionType, accountNumber, amount) => (
 });
 
 class TransactionControl {
-  static async getAll (req, res, next) {
+  static async getAll(req, res, next) {
     res.json({
       status: 200,
       data: transactions,
     });
   }
 
-  static async getOne (req, res, next) {
+  static async getOne(req, res, next) {
     const {
       transactionId,
     } = req.params;
-    const transaction = await transactions.filter(transaction => transaction.id == transactionId)[0];
+    const transaction = await transactions.filter(theTransaction => theTransaction.id == transactionId)[0];
     if (!transaction) return next();
     res.json({
       status: 200,
@@ -41,8 +40,10 @@ class TransactionControl {
     });
   }
 
-  static async debit (req, res, next) {
-    const { accountNumber } = req.params;
+  static async debit(req, res, next) {
+    const {
+      accountNumber,
+    } = req.params;
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
 
@@ -51,10 +52,9 @@ class TransactionControl {
 
     const {
       amount,
-      transactionType,
     } = validCreditAccount;
-
-    const transaction = createTransaction(account, transactionType, accountNumber, amount);
+    const type = 'debit';
+    const transaction = createTransaction(account, type, accountNumber, amount);
     transaction.newBalance = account.balance - amount;
 
     transactions.unshift(transaction);
@@ -65,7 +65,7 @@ class TransactionControl {
     });
   }
 
-  static async credit (req, res, next) {
+  static async credit(req, res, next) {
     const {
       accountNumber,
     } = req.params;
@@ -74,13 +74,11 @@ class TransactionControl {
 
     const validCreditAccount = joiHelper(req, res, creditAccountSchema);
     if (validCreditAccount.statusCode === 422) return;
-
+    const type = 'credit';
     const {
       amount,
-      transactionType,
     } = validCreditAccount;
-
-    const transaction = await createTransaction(account, transactionType, accountNumber, amount);
+    const transaction = createTransaction(account, type, accountNumber, amount);
     transaction.newBalance = account.balance + amount;
     transactions.unshift(transaction);
     account.balance = transaction.newBalance;
