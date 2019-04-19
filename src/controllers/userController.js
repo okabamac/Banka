@@ -2,14 +2,14 @@
 import users from '../models/userModel';
 
 class UserControl {
-  static async getAll(req, res, next)  {
+  static getAll (req, res, next)  {
     res.json({
       status: 200,
       data: users,
     });
   }
 
-  static async getOne(req, res, next)  {
+  static getOne (req, res, next)  {
     const {
       userId,
     } = req.params;
