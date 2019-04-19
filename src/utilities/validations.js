@@ -62,8 +62,7 @@ const patchAccountSchema = Joi.object().keys({
 });
 
 const creditAccountSchema = Joi.object().keys({
-  amount: Joi.number().integer().required(),
-  transactionType: Joi.string().max(10).required(),
+  amount: Joi.number().integer().min(0).required(),
 });
 
 module.exports =  {

@@ -65,7 +65,6 @@ describe('Transactions', () => {
         Accounts.push(account);
         const credit = {
           amount: '200',
-            transactionType: 'credit',
           };
         chai
           .request(app)
@@ -90,7 +89,6 @@ describe('Transactions', () => {
       it('it should DEBIT a bank account', (done) => {
         const debit = {
           amount: '200',
-          transactionType: 'debit',
         };
         chai
           .request(app)

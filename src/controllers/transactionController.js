@@ -51,10 +51,14 @@ class TransactionControl {
 
     const {
       amount,
-      transactionType,
     } = validCreditAccount;
 
     const transaction = createTransaction(account, transactionType, accountNumber, amount);
+    if(account.balance >= amount ){
+      res.status(400);
+      next(new Error('Insufficient fund'));
+      return;
+    }
     transaction.newBalance = account.balance - amount;
 
     transactions.unshift(transaction);
