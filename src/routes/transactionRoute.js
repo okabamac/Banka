@@ -6,9 +6,9 @@ import transactionControl from '../controllers/transactionController';
 
 const router = express.Router();
 
-router.get('/', checkToken, transactionControl.getAll);
-router.get('/:transactionId', checkToken, transactionControl.getOne);
-router.post('/:accountNumber/debit', checkToken, transactionControl.debit);
-router.post('/:accountNumber/credit', checkToken, transactionControl.credit);
+router.get('/', transactionControl.getAll);
+router.get('/:transactionId', transactionControl.getOne);
+router.post('/:accountNumber/debit', transactionControl.debit);
+router.post('/:accountNumber/credit', transactionControl.credit);
 
 export default router;
