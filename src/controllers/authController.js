@@ -37,7 +37,7 @@ class AuthControl {
     const {
       firstName, lastName, email, password, type, admin,
     } = validSignup;
-    const checkExist = await users.filter(theUser => theUser.email == email)[0];
+    const checkExist = await users.filter(theUser => theUser.email == email);
     if (checkExist.length != 0) {
       res.status(400);
       next(new Error('Email is already in use'));

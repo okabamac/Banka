@@ -1,6 +1,8 @@
+//Credit to https://medium.com/dev-bits/a-guide-for-adding-jwt-token-based-authentication-to-your-single-page-nodejs-applications-c403f7cf04f4
+
 import jwt from 'jsonwebtoken';
 
-import config from './config';
+import config from '../../config';
 
 const checkToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers.authorization; // Express headers are auto converted to lowercase
@@ -14,8 +16,8 @@ const checkToken = (req, res, next) => {
       if (err) {
         res.status(422);
         return res.json({
-          success: false,
-          message: 'Token is not valid',
+          status: 422,
+          error: 'Token is not valid',
         });
       }
       req.decoded = decoded;
@@ -24,8 +26,8 @@ const checkToken = (req, res, next) => {
     });
   } else {
     return res.json({
-      success: false,
-      message: 'Auth token is not supplied',
+      status: 400,
+      error: 'Auth token is not supplied',
     });
   }
 };

@@ -1,4 +1,3 @@
-
 import transactions from '../models/transactionModel';
 
 import accounts from '../models/accountModel';
@@ -22,14 +21,14 @@ const createTransaction = (account, transactionType, accountNumber, amount) => (
 });
 
 class TransactionControl {
-  static async getAll (req, res, next) {
+  static async getAll(req, res, next) {
     res.json({
       status: 200,
       data: transactions,
     });
   }
 
-  static async getOne (req, res, next) {
+  static async getOne(req, res, next) {
     const {
       transactionId,
     } = req.params;
@@ -41,24 +40,25 @@ class TransactionControl {
     });
   }
 
-  static async debit (req, res, next) {
-    const { accountNumber } = req.params;
+  static async debit(req, res, next) {
+    const {
+      accountNumber
+    } = req.params;
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
 
     const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
     if (validCreditAccount.statusCode === 422) return;
 
+    const type = 'debit';
     const {
       amount,
     } = validCreditAccount;
-
-    const transaction = createTransaction(account, transactionType, accountNumber, amount);
-    if(account.balance >= amount ){
+    const transaction = createTransaction(account, type, accountNumber, amount);
+    if (account.balance >= amount) {
       res.status(400);
-      next(new Error('Insufficient fund'));
-      return;
-    }
+       return next(new Error('Insufficient fund'));
+    };
     transaction.newBalance = account.balance - amount;
 
     transactions.unshift(transaction);
