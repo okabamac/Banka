@@ -12,7 +12,6 @@ chai.should();
 describe('Users', () => {
   beforeEach((done) => { // Before each test we empty the database
     process.env.NODE_ENV = 'test';
-    Users.length = 0;
     done();
   });
   describe('Users', () => {
@@ -68,6 +67,25 @@ describe('Users', () => {
             done();
           });
       });
+      it('it should not POST a user ', (done) => {
+        const user = {
+          firstName: 'John',
+          lastName: 'Doe',
+          email: 'amin@tolkien.com',
+          password: 'jgbhvnknvkvkv',
+          confirmPassword: 'jgbhvnknvkvkv',
+        };
+        chai
+          .request(app)
+          .post('/api/v1/auth/signup')
+          .send(user)
+          .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            res.body.should.have.property('error');
+            done();
+          });
+      });
       it('it should not login a user ', (done) => {
         const user = {
           email: 'aaminu@email.com',
@@ -81,6 +99,52 @@ describe('Users', () => {
             res.should.have.status(400);
             res.body.should.be.a('object');
             res.body.should.have.property('error');
+            done();
+          });
+      });
+      it('it should not login a user ', (done) => {
+        const user = {
+          email: 'abminu@email.com',
+          password: 'fkf999evvmmvjfjff',
+        };
+        chai
+          .request(app)
+          .post('/api/v1/auth/signin')
+          .send(user)
+          .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
+            res.body.should.have.property('error');
+            done();
+          });
+      });
+      it('it should login a user ', (done) => {
+        const user = {
+          email: 'amin@tolkien.com',
+          password: 'johnbaby',
+        };
+        chai
+          .request(app)
+          .post('/api/v1/auth/signin')
+          .send(user)
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+          });
+      });
+      it('it should not login a user ', (done) => {
+        const user = {
+          email: 'amin@tolkien.com',
+          password: 'johnbabys',
+        };
+        chai
+          .request(app)
+          .post('/api/v1/auth/signin')
+          .send(user)
+          .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
             done();
           });
       });

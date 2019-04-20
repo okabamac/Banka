@@ -66,7 +66,7 @@ describe('Transactions', () => {
         Accounts.push(account);
         const credit = {
           amount: '200',
-          };
+        };
         chai
           .request(app)
           .post('/api/v1/transactions/2088058375/credit')
@@ -91,6 +91,7 @@ describe('Transactions', () => {
         const debit = {
           amount: '200',
         };
+        
         chai
           .request(app)
           .post('/api/v1/transactions/2088058375/debit')
@@ -105,6 +106,20 @@ describe('Transactions', () => {
             res.body.data.should.have.property('transactionType');
             res.body.data.should.have.property('oldBalance');
             res.body.data.should.have.property('newBalance');
+            done();
+          });
+      });
+      it('it should not DEBIT a bank account', (done) => {
+        const debit = {
+          amount: 4222553333,
+        };
+        chai
+          .request(app)
+          .post('/api/v1/transactions/2088058375/debit')
+          .send(debit)
+          .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.be.a('object');
             done();
           });
       });

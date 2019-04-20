@@ -41,21 +41,36 @@ describe('Accounts', () => {
           });
       });
 
-    it('should not get a single account record', (done) => {
-      const id = 'ccc';
-      chai
-        .request(app)
-        .get(`/api/v1/accounts/${id}`)
-        .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.be.a('object');
-          done();
-        });
-    });
+      it('should not get a single account record', (done) => {
+        const id = 'ccc';
+        chai
+          .request(app)
+          .get(`/api/v1/accounts/${id}`)
+          .end((err, res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
+            done();
+          });
+      });
+      it('should get a single account record', (done) => {
+        Accounts.length = 0;
+        const accountNumber = 2088058375;
+        account.accountNumber = accountNumber;
+        Accounts.push(account);
+        chai
+          .request(app)
+          .get(`/api/v1/accounts/${accountNumber}`)
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            done();
+          });
+      });
     });
 
     describe('POST /', () => {
       it('it should POST a new bank account ', (done) => {
+        delete account.accountNumber;
         Accounts.push(account);
         chai
           .request(app)
@@ -80,7 +95,7 @@ describe('Accounts', () => {
 
     describe('PATCH /', () => {
       it('it should PATCH a bank account ', (done) => {
-       const account2 = {...account,  accountNumber: 2088058375, status: 'dormant'};
+        const account2 = { ...account, accountNumber: 2088058375, status: 'dormant' };
         Accounts.push(account2);
         const status = {
           status: 'active',
@@ -97,11 +112,27 @@ describe('Accounts', () => {
             done();
           });
       });
+      it('it should not PATCH a bank account ', (done) => {
+        const account2 = { ...account, accountNumber: 2088058376, status: 'dormant' };
+        Accounts.push(account2);
+        const status = {
+          status: 'active',
+        };
+        chai
+          .request(app)
+          .patch('/api/v1/accounts/2088058375')
+          .send(status)
+          .end((err, res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
+            done();
+          });
+      });
     });
 
     describe('DELETE /', () => {
       it('it should DELETE a bank account ', (done) => {
-        const newAcc = {accountNumber: 2088058375, ...account, status: 'active'};
+        const newAcc = { accountNumber: 2088058375, ...account, status: 'active' };
         Accounts.push(newAcc);
         chai
           .request(app)
@@ -110,6 +141,16 @@ describe('Accounts', () => {
             res.should.have.status(200);
             res.body.should.be.a('object');
             res.body.should.have.property('message').eql('Account successfully deleted');
+            done();
+          });
+      });
+      it('it should not DELETE a bank account ', (done) => {
+        chai
+          .request(app)
+          .delete('/api/v1/accounts/2088058375')
+          .end((err, res) => {
+            res.should.have.status(404);
+            res.body.should.be.a('object');
             done();
           });
       });

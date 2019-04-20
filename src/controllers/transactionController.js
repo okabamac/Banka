@@ -33,7 +33,8 @@ class TransactionControl {
     const {
       transactionId,
     } = req.params;
-    const transaction = await transactions.filter(transaction => transaction.id == transactionId)[0];
+    const transaction = await transactions.filter(theTransaction => theTransaction.id == transactionId)[0];
+    console.log(transaction);
     if (!transaction) return next();
     res.json({
       status: 200,
