@@ -8,12 +8,13 @@ import {
 } from '../utilities/validations';
 
 class AccountControl {
-  static async getAll(req, res, next) {
+  static async getAll (req, res, next) {
     res.json({
       status: 200,
       data: accounts,
     });
   }
+
   static async getOne(req, res, next) {
     const {
       accountNumber,
@@ -47,7 +48,7 @@ class AccountControl {
     });
   }
 
-  static async modifyAccount(req, res, next) {
+  static async modifyAccount (req, res, next) {
     const {
       accountNumber,
     } = req.params;
@@ -70,7 +71,7 @@ class AccountControl {
     });
   }
 
-  static async deleteAccount(req, res, next) {
+  static async deleteAccount (req, res, next) {
     const {
       accountNumber,
     } = req.params;

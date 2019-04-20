@@ -1,3 +1,4 @@
+
 import chai from 'chai';
 
 import chaiHttp from 'chai-http';
@@ -22,6 +23,7 @@ chai.use(chaiHttp);
 chai.should();
 describe('Accounts', () => {
   beforeEach((done) => { // Before each test we empty the database
+    process.env.NODE_ENV = 'test';
     Accounts.length = 0;
     done();
   });

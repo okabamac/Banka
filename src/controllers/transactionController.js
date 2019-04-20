@@ -18,6 +18,7 @@ const createTransaction = (account, transactionType, accountNumber, amount) => (
   amount,
   currency: account.currency,
   oldBalance: account.balance,
+  newBalance: transactionType === 'credit' ? account.balance + amount : account.balance - amount,
 });
 
 class TransactionControl {
@@ -54,13 +55,11 @@ class TransactionControl {
     const {
       amount,
     } = validCreditAccount;
-    const transaction = createTransaction(account, type, accountNumber, amount);
-    if (account.balance >= amount) {
+    if (account.balance <= amount) {
       res.status(400);
-       return next(new Error('Insufficient fund'));
-    };
-    transaction.newBalance = account.balance - amount;
-
+      return next(new Error('Insufficient fund'));
+    }
+    const transaction = createTransaction(account, type, accountNumber, amount);
     transactions.unshift(transaction);
     account.balance = transaction.newBalance;
     return res.json({
@@ -76,14 +75,13 @@ class TransactionControl {
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
 
-    const validCreditAccount = joiHelper(req, res, creditAccountSchema);
+    const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
     if (validCreditAccount.statusCode === 422) return;
     const type = 'credit';
     const {
       amount,
     } = validCreditAccount;
     const transaction = createTransaction(account, type, accountNumber, amount);
-    transaction.newBalance = account.balance + amount;
     transactions.unshift(transaction);
     account.balance = transaction.newBalance;
     return res.json({

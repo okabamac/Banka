@@ -13,6 +13,7 @@ chai.should();
 // Our parent block
 describe('Transactions', () => {
   beforeEach((done) => { // Before each test we empty the database
+    process.env.NODE_ENV = 'test';
     Transactions.length = 0;
     done();
   });
@@ -59,7 +60,7 @@ describe('Transactions', () => {
           phone: '+2349059564447',
           type: 'Savings',
           currency: 'Naira',
-          balance: 0,
+          balance: 6000,
           address: 'No 12 Movida Crescent, Kubwa, Abuja',
         };
         Accounts.push(account);

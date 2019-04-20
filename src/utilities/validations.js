@@ -53,7 +53,9 @@ const createAccountSchema = Joi.object().keys({
   email: emailSchema.required(),
   phone: Joi.string().required(),
   type: Joi.string().valid('Savings', 'Current').required(),
-  currency: Joi.string().valid('Naira', 'Dollar').required(),
+  currency: Joi.string().default('Naira', {
+    invalid: true,
+  }),
   address: Joi.string().min(4).max(500).required(),
 });
 

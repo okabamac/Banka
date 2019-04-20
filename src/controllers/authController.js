@@ -17,7 +17,9 @@ import users from '../models/userModel';
 
 const doToken = (user) => {
   const token = jwt.sign({
-    username: user.email,
+    email: user.email,
+    id: user.id,
+    type: user.type,
   },
   jwt_secret, {
     expiresIn: '24h', // expires in 24 hours

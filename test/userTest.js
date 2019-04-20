@@ -11,6 +11,7 @@ chai.should();
 
 describe('Users', () => {
   beforeEach((done) => { // Before each test we empty the database
+    process.env.NODE_ENV = 'test';
     Users.length = 0;
     done();
   });
