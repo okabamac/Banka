@@ -8,7 +8,11 @@ import {
 } from '../utilities/validations';
 
 class AccountControl {
-  static async getAll (req, res, next) {
+  static async getAll(req, res, next) {
+    if (req.decoded.type === 'client') {
+      res.status(401);
+      return next(new Error('Only staff and admins can view all accounts'));
+    }
     res.json({
       status: 200,
       data: accounts,
@@ -16,6 +20,10 @@ class AccountControl {
   }
 
   static async getOne(req, res, next) {
+    if (req.decoded.type === 'client') {
+      res.status(401);
+      return next(new Error('Only staff and admins can view a specific account'));
+    }
     const {
       accountNumber,
     } = req.params;
@@ -30,6 +38,10 @@ class AccountControl {
   }
 
   static async createAccount(req, res, next) {
+    if (req.decoded.type !== 'client') {
+      res.status(401);
+      return next(new Error('Only clients can create bank accounts'));
+    }
     const validCreateAccount = await joiHelper(req, res, createAccountSchema);
 
     if (validCreateAccount.statusCode === 422) return;
@@ -48,7 +60,11 @@ class AccountControl {
     });
   }
 
-  static async modifyAccount (req, res, next) {
+  static async modifyAccount(req, res, next) {
+    if (req.decoded.type === 'client') {
+      res.status(401);
+      return next(new Error('Only staff and admins can modify accounts'));
+    }
     const {
       accountNumber,
     } = req.params;
@@ -71,7 +87,11 @@ class AccountControl {
     });
   }
 
-  static async deleteAccount (req, res, next) {
+  static async deleteAccount(req, res, next) {
+    if (req.decoded.type === 'client') {
+      res.status(401);
+      return next(new Error('Only staff and admins can delete accounts'));
+    }
     const {
       accountNumber,
     } = req.params;

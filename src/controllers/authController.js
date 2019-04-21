@@ -39,6 +39,10 @@ class AuthControl {
     const {
       firstName, lastName, email, password, type, admin,
     } = validSignup;
+    if (admin && req.decoded === undefined) {
+      res.status(400);
+      return next(new Error('Sorry, only admins can give admin rights'));
+    }
     const checkExist = await users.filter(theUser => theUser.email == email);
     if (checkExist.length != 0) {
       res.status(400);

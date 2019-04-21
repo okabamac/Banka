@@ -23,10 +23,34 @@ const createTransaction = (account, transactionType, accountNumber, amount) => (
 
 class TransactionControl {
   static async getAll(req, res, next) {
+    if (req.decoded.type === 'client') {
+      res.status(401);
+      return next(new Error('Only staff and admins can view all transactions'));
+    }
     res.json({
       status: 200,
       data: transactions,
     });
+  }
+
+  static async getAllByClient(req, res, next) {
+    if (req.decoded.type !== 'client') {
+      res.status(401);
+      return next(new Error('Only clients can access this route'));
+    }
+    try {
+      const {
+        accountNumber,
+      } = req.params;
+      const allTransactionsByClient = await transactions.filter(all => all.accountNumber == accountNumber);
+      if (allTransactionsByClient.length == 0) return next();
+      res.json({
+        status: 200,
+        data: allTransactionsByClient,
+      });
+    } catch (e) {
+      next();
+    }
   }
 
   static async getOne(req, res, next) {
@@ -34,7 +58,6 @@ class TransactionControl {
       transactionId,
     } = req.params;
     const transaction = await transactions.filter(theTransaction => theTransaction.id == transactionId)[0];
-    console.log(transaction);
     if (!transaction) return next();
     res.json({
       status: 200,
@@ -43,8 +66,12 @@ class TransactionControl {
   }
 
   static async debit(req, res, next) {
+    if (req.decoded.type !== 'staff') {
+      res.status(401);
+      return next(new Error('Only staff cand debit'));
+    }
     const {
-      accountNumber
+      accountNumber,
     } = req.params;
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
     if (!account) return next();
@@ -70,7 +97,11 @@ class TransactionControl {
   }
 
   static async credit(req, res, next) {
-    const {
+    if (req.decoded.type !== 'staff') {
+      res.status(401);
+      return next(new Error('Only staff can credit'));
+    }
+   const {
       accountNumber,
     } = req.params;
     const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
