@@ -190,7 +190,26 @@ describe('/POST Register', () => {
                                                           .end((err, res) => {
                                                             res.should.have.status(401);
                                                             res.body.should.be.a('object');
-                                                            done();
+
+
+                                                            chai.request(app)
+                                                              .get('/api/v1/users')
+                                                              // we set the auth header with our token
+                                                              .set('Authorization', token)
+                                                              .end((err, res) => {
+                                                                res.should.have.status(401);
+                                                                res.body.should.be.a('object');
+
+                                                                chai.request(app)
+                                                                  .get('/api/v1/users/1')
+                                                                // we set the auth header with our token
+                                                                  .set('Authorization', token)
+                                                                  .end((err, res) => {
+                                                                    res.should.have.status(401);
+                                                                    res.body.should.be.a('object');
+                                                                    done();
+                                                                  });
+                                                              });
                                                           });
                                                       });
                                                   });
