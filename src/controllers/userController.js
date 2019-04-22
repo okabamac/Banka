@@ -28,6 +28,24 @@ class UserControl {
       data: user,
     });
   }
+
+  static async deleteUser(req, res, next) {
+    if (req.decoded.type == 'client') {
+      res.status(401);
+      return next(new Error('Only staff and admins can access this routes'));
+    }
+    const {
+      userId,
+    } = req.params;
+    const user = await users.filter(theUser => theUser.id == userId)[0];
+    if (!user) return next();
+    const index = users.indexOf(user);
+    users.splice(index, 1);
+    res.json({
+      status: 200,
+      message: 'User successfully deleted',
+    });
+  }
 }
 
 export default UserControl;
