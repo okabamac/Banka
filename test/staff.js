@@ -52,6 +52,7 @@ const realAcc = {
   balance: 234567,
 };
 
+let theToken;
 
 describe('Act as staff', () => {
   beforeEach((done) => {
@@ -63,8 +64,8 @@ describe('Act as staff', () => {
   });
 });
 
-describe('/Staff', () => {
-  it('Do all routes staff will want to do', (done) => {
+describe('Do all staff will want to do', () => {
+  it('should signin staff', (done) => {
     // follow up with login
     chai.request(app)
       .post('/api/v1/auth/signin')
@@ -79,164 +80,197 @@ describe('/Staff', () => {
           token,
         } = res.body.data;
 
-        // follow up with get requests
-        chai.request(app)
-          .get('/api/v1/accounts/')
-        // we set the auth header with our token
-          .set('Authorization', token)
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a('object');
+        theToken = token;
+        done();
+      });
+  });
+  it('should get all accounts', (done) => {
+    // follow up with get requests
+    chai.request(app)
+      .get('/api/v1/accounts/')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should get specific account', (done) => {
+    chai.request(app)
+      .get('/api/v1/accounts/2088058375')
 
-            chai.request(app)
-              .get('/api/v1/accounts/2088058375')
-            // we set the auth header with our token
-              .set('Authorization', token)
-              .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.be.a('object');
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not get specific account', (done) => {
+    chai.request(app)
+      .get('/api/v1/accounts/ccddldlld')
 
-                chai.request(app)
-                  .get('/api/v1/accounts/ccddldlld')
-                // we set the auth header with our token
-                  .set('Authorization', token)
-                  .end((err, res) => {
-                    res.should.have.status(404);
-                    res.body.should.be.a('object');
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should get all trans', (done) => {
+    chai.request(app)
+      .get('/api/v1/transactions/')
 
-                    chai.request(app)
-                      .get('/api/v1/transactions/')
-                    // we set the auth header with our token
-                      .set('Authorization', token)
-                      .end((err, res) => {
-                        res.should.have.status(200);
-                        res.body.should.be.a('object');
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
 
-                        chai.request(app)
-                          .get('/api/v1/transactions/jdjdjdjdjdj')
-                        // we set the auth header with our token
-                          .set('Authorization', token)
-                          .end((err, res) => {
-                            res.should.have.status(404);
-                            res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not get specific trans', (done) => {
+    chai.request(app)
+      .get('/api/v1/transactions/jdjdjdjdjdj')
 
-                            chai.request(app)
-                              .post('/api/v1/accounts/')
-                              .send(account)
-                            // we set the auth header with our token
-                              .set('Authorization', token)
-                              .end((err, res) => {
-                                res.should.have.status(401);
-                                res.body.should.be.a('object');
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should get all accounts', (done) => {
+    chai.request(app)
+      .post('/api/v1/accounts/')
+      .send(account)
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should modify account status', (done) => {
+    chai.request(app)
+      .patch('/api/v1/accounts/2088058375')
+      .send({ status: 'dormant' })
 
-                                chai.request(app)
-                                  .patch('/api/v1/accounts/2088058375')
-                                  .send({ status: 'dormant' })
-                                // we set the auth header with our token
-                                  .set('Authorization', token)
-                                  .end((err, res) => {
-                                    res.should.have.status(200);
-                                    res.body.should.be.a('object');
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
 
-                                    chai.request(app)
-                                      .patch('/api/v1/accounts/20880583df')
-                                      .send({
-                                        status: 'dormant',
-                                      })
-                                    // we set the auth header with our token
-                                      .set('Authorization', token)
-                                      .end((err, res) => {
-                                        res.should.have.status(404);
-                                        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not modify account', (done) => {
+    chai.request(app)
+      .patch('/api/v1/accounts/20880583df')
+      .send({
+        status: 'dormant',
+      })
 
-                                        chai.request(app)
-                                          .delete('/api/v1/accounts/2088058375')
-                                        // we set the auth header with our token
-                                          .set('Authorization', token)
-                                          .end((err, res) => {
-                                            res.should.have.status(200);
-                                            res.body.should.be.a('object');
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should delete account', (done) => {
+    chai.request(app)
+      .delete('/api/v1/accounts/2088058375')
 
-                                            chai.request(app)
-                                              .delete('/api/v1/accounts/208805228375')
-                                            // we set the auth header with our token
-                                              .set('Authorization', token)
-                                              .end((err, res) => {
-                                                res.should.have.status(404);
-                                                res.body.should.be.a('object');
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not delete account', (done) => {
+    chai.request(app)
+      .delete('/api/v1/accounts/208805228375')
 
-                                                chai.request(app)
-                                                  .post('/api/v1/transactions/2088058377/credit')
-                                                  .send({ amount: 200 })
-                                                // we set the auth header with our token
-                                                  .set('Authorization', token)
-                                                  .end((err, res) => {
-                                                    res.should.have.status(200);
-                                                    res.body.should.be.a('object');
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should credit a bank account', (done) => {
+    chai.request(app)
+      .post('/api/v1/transactions/2088058377/credit')
+      .send({ amount: 200 })
 
-                                                    chai.request(app)
-                                                      .post('/api/v1/transactions/2088058377/debit')
-                                                      .send({
-                                                        amount: 200,
-                                                      })
-                                                    // we set the auth header with our token
-                                                      .set('Authorization', token)
-                                                      .end((err, res) => {
-                                                        res.should.have.status(200);
-                                                        res.body.should.be.a('object');
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should debit a bank account', (done) => {
+    chai.request(app)
+      .post('/api/v1/transactions/2088058377/debit')
+      .send({
+        amount: 200,
+      })
 
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
 
-                                                        chai.request(app)
-                                                          .post('/api/v1/transactions/2088058377/debit')
-                                                          .send({
-                                                            amount: 25555555,
-                                                          })
-                                                        // we set the auth header with our token
-                                                          .set('Authorization', token)
-                                                          .end((err, res) => {
-                                                            res.should.have.status(400);
-                                                            res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not debit a bank account', (done) => {
+    chai.request(app)
+      .post('/api/v1/transactions/2088058377/debit')
+      .send({
+        amount: 25555555,
+      })
 
-                                                            chai.request(app)
-                                                              .get('/api/v1/users')
-                                                            // we set the auth header with our token
-                                                              .set('Authorization', token)
-                                                              .end((err, res) => {
-                                                                res.should.have.status(200);
-                                                                res.body.should.be.a('object');
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should get all users', (done) => {
+    chai.request(app)
+      .get('/api/v1/users')
 
-                                                                chai.request(app)
-                                                                  .get('/api/v1/users/123456')
-                                                                  // we set the auth header with our token
-                                                                  .set('Authorization', token)
-                                                                  .end((err, res) => {
-                                                                    res.should.have.status(200);
-                                                                    res.body.should.be.a('object');
-
-                                                                    chai.request(app)
-                                                                      .delete('/api/v1/users/123456')
-                                                                      // we set the auth header with our token
-                                                                      .set('Authorization', token)
-                                                                      .end((err, res) => {
-                                                                        res.should.have.status(200);
-                                                                        res.body.should.be.a('object');
-                                                                        done();
-                                                                      });
-                                                                  });
-                                                              });
-                                                          });
-                                                      });
-                                                  });
-                                              });
-                                          });
-                                      });
-                                  });
-                              });
-                          });
-                      });
-                  });
-              });
-          });
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should get a specific user', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/123456')
+    // we set the auth header with our theToken
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not get a specific user', (done) => {
+    chai.request(app)
+      .delete('/api/v1/users/12345fr6')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.be.a('object');
+        done();
       });
   });
 });
