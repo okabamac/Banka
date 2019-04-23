@@ -1,24 +1,25 @@
-const bcrypt = require('bcrypt');
 
-const jwt = require('jsonwebtoken');
+import bcrypt from 'bcrypt';
 
-const asyncMiddleware = require('../utilities/asyncMiddleWare');
+import jwt from 'jsonwebtoken';
 
-const joiHelper = require('../utilities/joiHelper');
+import joiHelper from '../utilities/joiHelper';
 
-const { jwt_secret } = require('../../config');
+import { jwt_secret } from '../../config';
 
-const {
+import {
   userSignupSchema,
   userSigninSchema,
-} = require('../utilities/validations');
+} from '../utilities/validations';
 
-const users = require('../models/userModel');
+import users from '../models/userModel';
 
 
 const doToken = (user) => {
   const token = jwt.sign({
-    username: user.email,
+    email: user.email,
+    id: user.id,
+    type: user.type,
   },
   jwt_secret, {
     expiresIn: '24h', // expires in 24 hours
@@ -31,14 +32,22 @@ const doToken = (user) => {
   return data;
 };
 
-const AuthControl = {
- 
-  signup: asyncMiddleware(async (req, res, next) => {
+class AuthControl {
+  static async signup(req, res, next) {
     const validSignup = await joiHelper(req, res, userSignupSchema);
     if (validSignup.statusCode === 422) return;
-    const { firstName, lastName, email, password, type, admin } = validSignup;
+    const {
+      firstName, lastName, email, password, type, admin,
+    } = validSignup;
+    const checkExist = await users.filter(theUser => theUser.email == email);
+    if (checkExist.length != 0) {
+      res.status(400);
+      next(new Error('Email is already in use'));
+      return;
+    }
     const user = {
-      id: Math.floor(100000 + Math.random() * 900000), firstName, lastName, email, type, admin };
+      id: Math.floor(100000 + Math.random() * 900000), firstName, lastName, email, type, admin,
+    };
     bcrypt.hash(password, 10, (err, hash) => {
       if (err) return next(new Error('Oops something went wrong!'));
       user.password = hash;
@@ -50,12 +59,13 @@ const AuthControl = {
         data: tokenized,
       });
     });
-  }),
-  signin: asyncMiddleware(async (req, res, next) => {
+  }
+
+  static async signin(req, res, next) {
     const validSignin = await joiHelper(req, res, userSigninSchema);
     if (validSignin.statusCode === 422) return;
     const { email, password } = validSignin;
-    const user = await users.find(theUser => theUser.email === email);
+    const user = users.find(theUser => theUser.email === email);
     if (user) {
       bcrypt.compare(password, user.password, (err, result) => {
         if (result) {
@@ -66,13 +76,13 @@ const AuthControl = {
           });
         }
         res.status(400);
-        return next(new Error('Invalid Password'));
+        return next(new Error('Invalid credentials'));
       });
     } else {
       res.status(400);
-      next(new Error('User does not exist'));
+      next(new Error('Invalid credentials'));
     }
-  }),
-};
+  }
+}
 
-module.exports = AuthControl;
+export default AuthControl;

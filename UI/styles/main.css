@@ -143,6 +143,7 @@ body {
     top: -9em;
     background-color: var(--whitey);
     margin: auto;
+    font-family: 'Roboto'
     box-shadow: var(--box-shadow);
     transform: skew(350deg);
     text-align: center;
@@ -167,8 +168,17 @@ body {
     box-shadow: var(--box-shadow);
     padding: 1em;
     cursor: pointer;
+    transform: skew(10deg);
 }
-
+.service:hover{
+    border: 1px solid var(--newBlue);
+    transition: var(--transition);
+}
+.services i {
+    margin-bottom: 0.5em;
+    font-size: 1.6em;
+    color: var(--newBlue);
+}
 .services .service:hover {
     color: var(--newBlue);
 }
@@ -179,6 +189,7 @@ body {
     top: 7em;
     color: var(--whitey);
     font-size: 1.5em;
+    padding: 1em;
 }
 #signinModal {
     display: none;
@@ -392,4 +403,16 @@ select:valid+label {
     height: 400px;
     text-align: center;
     margin: auto;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    text-align: center;
+    width: 100%;
+    background-color: var(--newBlue);
+    color: var(--whitey);
+    padding: 0.5em;
 }

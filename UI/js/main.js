@@ -42,11 +42,11 @@ window.addEventListener('click', (e) => {
     let greeting;
     const hour = new Date().getHours();
     if (hour < 12) {
-        greeting = 'Goodmorning,';
+        greeting = 'Good Morning,';
     } else if ((hour >= 12) && (hour < 16)) {
-        greeting = 'Goodafternoon,';
+        greeting = 'Good Afternoon,';
     } else {
-        greeting = 'Goodevening,';
+        greeting = 'Good Evening,';
     }
     document.getElementById('day').innerHTML = greeting;
 })();

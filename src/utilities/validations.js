@@ -1,4 +1,4 @@
-const Joi = require('joi');
+import Joi from 'joi';
 // avatar: Joi.binary().encoding('base64').max(2 * 1024 * 1024)
 
 const alphaNum = Joi.string().alphanum();
@@ -53,7 +53,9 @@ const createAccountSchema = Joi.object().keys({
   email: emailSchema.required(),
   phone: Joi.string().required(),
   type: Joi.string().valid('Savings', 'Current').required(),
-  currency: Joi.string().valid('Naira', 'Dollar').required(),
+  currency: Joi.string().default('Naira', {
+    invalid: true,
+  }),
   address: Joi.string().min(4).max(500).required(),
 });
 
@@ -62,11 +64,10 @@ const patchAccountSchema = Joi.object().keys({
 });
 
 const creditAccountSchema = Joi.object().keys({
-  amount: Joi.number().integer().required(),
-  transactionType: Joi.string().max(10).required(),
+  amount: Joi.number().integer().min(0).required(),
 });
 
-module.exports = {
+module.exports =  {
   userSignupSchema,
   userSigninSchema,
   createAccountSchema,

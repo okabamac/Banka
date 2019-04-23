@@ -1,18 +1,18 @@
-const express = require('express');
+import express from 'express';
 
-const morgan = require('morgan');
+import morgan from 'morgan';
+
+import cors from 'cors';
+
+import userRoute from './src/routes/userRoute';
+
+import authRoute from './src/routes/authRoute';
+
+import accountRoute from './src/routes/accountRoute';
+
+import transactionRoute from './src/routes/transactionRoute';
 
 const app = express();
-
-const cors = require('cors');
-
-const userRoute = require('./src/routes/userRoute');
-
-const authRoute = require('./src/routes/authRoute');
-
-const accountRoute = require('./src/routes/accountRoute');
-
-const transactionRoute = require('./src/routes/transactionRoute');
 
 app.use(morgan('dev'));
 
@@ -46,4 +46,4 @@ app.use((error, req, res, next) => {
 });
 
 
-module.exports = app;
+export default app;

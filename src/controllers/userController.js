@@ -1,16 +1,23 @@
-const asyncMiddleware = require('../utilities/asyncMiddleWare');
 
-const users = require('../models/userModel');
+import users from '../models/userModel';
 
-const UserControl = {
-  getAll: asyncMiddleware(async (req, res, next) => {
+class UserControl {
+  static async getAll(req, res, next) {
+    if (req.decoded.type == 'client') {
+      res.status(401);
+      return next(new Error('Only staff and admins can access this routes'));
+    }
     res.json({
       status: 200,
       data: users,
     });
-  }),
+  }
 
-  getOne: asyncMiddleware(async (req, res, next) => {
+  static async getOne(req, res, next) {
+    if (req.decoded.type == 'client') {
+      res.status(401);
+      return next(new Error('Only staff and admins can access this routes'));
+    }
     const {
       userId,
     } = req.params;
@@ -20,7 +27,25 @@ const UserControl = {
       status: 200,
       data: user,
     });
-  }),
-};
+  }
 
-module.exports = UserControl;
+  static async deleteUser(req, res, next) {
+    if (req.decoded.type == 'client') {
+      res.status(401);
+      return next(new Error('Only staff and admins can access this routes'));
+    }
+    const {
+      userId,
+    } = req.params;
+    const user = await users.filter(theUser => theUser.id == userId)[0];
+    if (!user) return next();
+    const index = users.indexOf(user);
+    users.splice(index, 1);
+    res.json({
+      status: 200,
+      message: 'User successfully deleted',
+    });
+  }
+}
+
+export default UserControl;

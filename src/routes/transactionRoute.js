@@ -1,12 +1,15 @@
-const express = require('express');
+import express from 'express';
+
+import checkToken from '../utilities/jwt';
+
+import transactionControl from '../controllers/transactionController';
 
 const router = express.Router();
 
-const transactionControl = require('../controllers/transactionController');
+router.get('/', checkToken, transactionControl.getAll);
+router.get('/:transactionId', checkToken, transactionControl.getOne);
+router.get('/client/:accountNumber', checkToken, transactionControl.getAllByClient);
+router.post('/:accountNumber/debit', checkToken, transactionControl.debit);
+router.post('/:accountNumber/credit', checkToken, transactionControl.credit);
 
-router.get('/', transactionControl.getAll);
-router.get('/:transactionId', transactionControl.getOne);
-router.post('/:accountNumber/debit', transactionControl.debit);
-router.post('/:accountNumber/credit', transactionControl.credit);
-
-module.exports = router;
+export default router;

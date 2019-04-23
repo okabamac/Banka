@@ -31,4 +31,4 @@ const transactions = [
   },
 ];
 
-module.exports = transactions;
+export default transactions;

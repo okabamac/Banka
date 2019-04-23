@@ -1,10 +1,13 @@
-const express = require('express');
+import express from 'express';
+
+import checkToken from '../utilities/jwt';
+
+import userControl from '../controllers/userController';
 
 const router = express.Router();
 
-const userControl = require('../controllers/userController');
+router.get('/', checkToken, userControl.getAll);
+router.get('/:userId', checkToken, userControl.getOne);
+router.delete('/:userId', checkToken, userControl.deleteUser);
 
-router.get('/', userControl.getAll);
-router.get('/:userId', userControl.getOne);
-
-module.exports = router;
+export default router;
