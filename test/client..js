@@ -4,12 +4,6 @@ import chaiHttp from 'chai-http';
 
 import app from '../app';
 
-<<<<<<< HEAD
-=======
-import Users from '../src/models/userModel';
-
-process.env.NODE_ENV = 'test';
->>>>>>> ebf5ee963cf8f8b99af4a31a9e00754d2e96d260
 
 chai.use(chaiHttp);
 chai.should();
@@ -34,7 +28,6 @@ const invalid_login_details = {
 };
 
 const account = {
-<<<<<<< HEAD
   type: 'Savings',
   email: 'amin@tolkien.com',
 };
@@ -42,34 +35,6 @@ const account = {
 let theToken;
 
 
-=======
-  firstName: 'Aminu',
-  lastName: 'Tolkien',
-  dob: '1995-06-25',
-  sex: 'Male',
-  email: 'amini@amini.com',
-  phone: '+2349059564447',
-  type: 'Savings',
-  currency: 'Naira',
-  address: 'No 12 Movida Crescent, Kubwa, Abuja',
-};
-
-/**
- * Test the following in on scoop:
- * - Create an account, login with details, and check if token comes
- */
-
-let theToken;
-
-
-describe('Act as client', () => {
-  beforeEach((done) => {
-    // Reset user mode before each test
-    Users.length = 0;
-  });
-});
-
->>>>>>> ebf5ee963cf8f8b99af4a31a9e00754d2e96d260
 describe('It should do all clients will want to do', () => {
   it('should register a client', (done) => {
     // Register a user
@@ -135,37 +100,17 @@ describe('It should do all clients will want to do', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
-<<<<<<< HEAD
         done();
       });
   });
   it('should not get all transactions on account', (done) => {
-=======
-        res.body.data.should.have.property('accountNumber');
-        res.body.data.should.have.property('firstName');
-        res.body.data.should.have.property('lastName');
-        res.body.data.should.have.property('dob');
-        res.body.data.should.have.property('email');
-        res.body.data.should.have.property('type');
-        res.body.data.should.have.property('currency');
-        res.body.data.should.have.property('openingBalance');
-        res.body.data.should.have.property('status');
-        done();
-      });
-  });
-  it('should get all transactions on account', (done) => {
->>>>>>> ebf5ee963cf8f8b99af4a31a9e00754d2e96d260
     // Get all transaction on account
     chai.request(app)
       .get('/api/v1/transactions/client/2088058375')
     // we set the auth header with our theToken
       .set('Authorization', theToken)
       .end((err, res) => {
-<<<<<<< HEAD
         res.should.have.status(404);
-=======
-        res.should.have.status(200);
->>>>>>> ebf5ee963cf8f8b99af4a31a9e00754d2e96d260
         res.body.should.be.a('object');
         done();
       });
@@ -182,21 +127,6 @@ describe('It should do all clients will want to do', () => {
         done();
       });
   });
-<<<<<<< HEAD
-=======
-  it('should get a transaction by ID', (done) => {
-    // Get a transaction by ID
-    chai.request(app)
-      .get('/api/v1/transactions/54788494')
-    // we set the auth header with our theToken
-      .set('Authorization', theToken)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        done();
-      });
-  });
->>>>>>> ebf5ee963cf8f8b99af4a31a9e00754d2e96d260
   it('should not get transaction because of protected route', (done) => {
     // Return not found
     chai.request(app)
