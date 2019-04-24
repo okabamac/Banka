@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.get('/', checkToken, accountControl.getAll);
 router.get('/:accountNumber', checkToken, accountControl.getOne);
+router.get('/:accountNumber/transactions', checkToken, accountControl.getAccountTransactions);
 router.post('/', checkToken, accountControl.createAccount);
 router.patch('/:accountNumber', checkToken, accountControl.modifyAccount);
 router.delete('/:accountNumber', checkToken, accountControl.deleteAccount);

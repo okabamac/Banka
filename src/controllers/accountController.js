@@ -14,7 +14,6 @@ class AccountControl {
       res.status(401);
       return next(new Error('Only staff and admins can view all accounts'));
     }
-<<<<<<< HEAD
     try {
       const {
         rows,
@@ -27,12 +26,6 @@ class AccountControl {
       res.status(500);
       next(new Error('Something went wrong, please try again'));
     }
-=======
-    res.json({
-      status: 200,
-      data: accounts,
-    });
->>>>>>> ebf5ee963cf8f8b99af4a31a9e00754d2e96d260
   }
 
   static async getOne(req, res, next) {
@@ -51,6 +44,38 @@ class AccountControl {
         status: 200,
         data: rows,
       });
+    } catch (e) {
+      res.status(404);
+      next(new Error('Invalid Account Number'));
+    }
+  }
+
+  static async getAccountTransactions(req, res, next) {
+    if (req.decoded.type !== 'client') {
+      res.status(401);
+      return next(new Error('Only clients can access this route'));
+    }
+    const {
+      accountNumber,
+    } = req.params;
+    try {
+      const {
+        rows,
+      } = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
+      if (!rows[0]) {
+        res.status(404);
+        return next();
+      }
+      try {
+        const { rows } = await db.query('SELECT * FROM transactions WHERE accountNumber=$1', [accountNumber]);
+        res.json({
+          status: 200,
+          data: rows,
+        });
+      }
+      catch (e) {
+        next(e);
+      }
     } catch (e) {
       res.status(404);
       next(new Error('Invalid Account Number'));
