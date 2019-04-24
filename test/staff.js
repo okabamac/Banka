@@ -2,7 +2,7 @@ import chai from 'chai';
 
 import chaiHttp from 'chai-http';
 
-import app from '../app';
+import app from '../src/app';
 
 import Users from '../src/models/userModel';
 

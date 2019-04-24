@@ -4,13 +4,13 @@ import morgan from 'morgan';
 
 import cors from 'cors';
 
-import userRoute from './src/routes/userRoute';
+import userRoute from './routes/userRoute';
 
-import authRoute from './src/routes/authRoute';
+import authRoute from './routes/authRoute';
 
-import accountRoute from './src/routes/accountRoute';
+import accountRoute from './routes/accountRoute';
 
-import transactionRoute from './src/routes/transactionRoute';
+import transactionRoute from './routes/transactionRoute';
 
 const app = express();
 
