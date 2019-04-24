@@ -1,7 +1,10 @@
+import moment from 'moment';
 
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 import jwt from 'jsonwebtoken';
+
+import db from '../models/index';
 
 import joiHelper from '../utilities/joiHelper';
 
@@ -11,8 +14,6 @@ import {
   userSignupSchema,
   userSigninSchema,
 } from '../utilities/validations';
-
-import users from '../models/userModel';
 
 
 const doToken = (user) => {
@@ -39,25 +40,42 @@ class AuthControl {
     const {
       firstName, lastName, email, password, type, admin,
     } = validSignup;
-    const checkExist = await users.filter(theUser => theUser.email == email);
-    if (checkExist.length != 0) {
+    const checkExist = await db.query('SELECT * FROM users WHERE email=$1', [email]);
+    if (checkExist.rows.length != 0) {
       res.status(400);
       next(new Error('Email is already in use'));
       return;
     }
-    const user = {
-      id: Math.floor(100000 + Math.random() * 900000), firstName, lastName, email, type, admin,
-    };
-    bcrypt.hash(password, 10, (err, hash) => {
+    bcrypt.hash(password, 10, async (err, hash) => {
       if (err) return next(new Error('Oops something went wrong!'));
-      user.password = hash;
-      users.unshift(user);
-      // return the JWT token for the future API calls
-      const tokenized = doToken(user);
-      return res.json({
-        status: 200,
-        data: tokenized,
-      });
+      const text = `INSERT INTO
+      users(id, email, firstName, lastName, type, isAdmin, password)
+      VALUES($1, $2, $3, $4, $5, $6, $7)
+      returning *`;
+      const values = [
+        22,
+        email,
+        firstName,
+        lastName,
+        type,
+        admin,
+        hash,
+      ];
+      try {
+        const {
+          rows,
+        } = await db.query(text, values);
+        const tokenized = await doToken(rows[0]);
+        return res.json({
+          status: 200,
+          data: tokenized,
+        });
+      } catch (error) {
+        return res.status(400).json({
+          status: 400,
+          error,
+        });
+      }
     });
   }
 
@@ -65,11 +83,11 @@ class AuthControl {
     const validSignin = await joiHelper(req, res, userSigninSchema);
     if (validSignin.statusCode === 422) return;
     const { email, password } = validSignin;
-    const user = users.find(theUser => theUser.email === email);
-    if (user) {
-      bcrypt.compare(password, user.password, (err, result) => {
+    try {
+      const user = await db.query('SELECT * FROM users WHERE email=$1', [email]);
+      bcrypt.compare(password, user.rows[0].password, async (err, result) => {
         if (result) {
-          const tokenized = doToken(user);
+          const tokenized = await doToken(user.rows[0]);
           return res.json({
             status: 200,
             data: tokenized,
@@ -78,7 +96,7 @@ class AuthControl {
         res.status(400);
         return next(new Error('Invalid credentials'));
       });
-    } else {
+    } catch (e) {
       res.status(400);
       next(new Error('Invalid credentials'));
     }
