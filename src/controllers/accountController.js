@@ -14,6 +14,7 @@ class AccountControl {
       res.status(401);
       return next(new Error('Only staff and admins can view all accounts'));
     }
+<<<<<<< HEAD
     try {
       const {
         rows,
@@ -26,6 +27,12 @@ class AccountControl {
       res.status(500);
       next(new Error('Something went wrong, please try again'));
     }
+=======
+    res.json({
+      status: 200,
+      data: accounts,
+    });
+>>>>>>> ebf5ee963cf8f8b99af4a31a9e00754d2e96d260
   }
 
   static async getOne(req, res, next) {

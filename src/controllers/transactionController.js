@@ -16,6 +16,7 @@ class TransactionControl {
       res.status(401);
       return next(new Error('Only staff and admins can view all transactions'));
     }
+<<<<<<< HEAD
     try {
       const {
         rows,
@@ -50,12 +51,39 @@ class TransactionControl {
     } catch (e) {
       next();
     }
+=======
+    res.json({
+      status: 200,
+      data: transactions,
+    });
+>>>>>>> ebf5ee963cf8f8b99af4a31a9e00754d2e96d260
+  }
+
+  static async getAllByClient(req, res, next) {
+    if (req.decoded.type !== 'client') {
+      res.status(401);
+      return next(new Error('Only clients can access this route'));
+    }
+    try {
+      const {
+        accountNumber,
+      } = req.params;
+      const allTransactionsByClient = await transactions.filter(all => all.accountNumber == accountNumber);
+      if (allTransactionsByClient.length == 0) return next();
+      res.json({
+        status: 200,
+        data: allTransactionsByClient,
+      });
+    } catch (e) {
+      next();
+    }
   }
 
   static async getOne(req, res, next) {
     const {
       transactionId,
     } = req.params;
+<<<<<<< HEAD
     try {
       const {
         rows,
@@ -69,6 +97,14 @@ class TransactionControl {
       res.status(404);
       next(new Error('Invalid ID'));
     }
+=======
+    const transaction = await transactions.filter(theTransaction => theTransaction.id == transactionId)[0];
+    if (!transaction) return next();
+    res.json({
+      status: 200,
+      data: transaction,
+    });
+>>>>>>> ebf5ee963cf8f8b99af4a31a9e00754d2e96d260
   }
 
   static async debit(req, res, next) {
@@ -125,9 +161,15 @@ class TransactionControl {
   static async credit(req, res, next) {
     if (req.decoded.type !== 'staff') {
       res.status(401);
+<<<<<<< HEAD
       return next(new Error('Only staff cand debit'));
     }
     const {
+=======
+      return next(new Error('Only staff can credit'));
+    }
+   const {
+>>>>>>> ebf5ee963cf8f8b99af4a31a9e00754d2e96d260
       accountNumber,
     } = req.params;
     try {
