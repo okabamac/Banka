@@ -6,7 +6,6 @@ const nameSchema = alphaNum.min(2).max(30);
 const emailSchema = Joi.string().email({
   minDomainAtoms: 2,
 });
-
 const userSignupSchema = Joi.object().keys({
   firstName: nameSchema.required(),
   lastName: nameSchema.required(),
@@ -46,17 +45,8 @@ const userSigninSchema = Joi.object().keys({
 });
 
 const createAccountSchema = Joi.object().keys({
-  firstName: nameSchema.required(),
-  lastName: nameSchema.required(),
-  dob: Joi.date().min('1-1-1900').iso().required(),
-  sex: Joi.string().min(4).max(10).required(),
   email: emailSchema.required(),
-  phone: Joi.string().required(),
   type: Joi.string().valid('Savings', 'Current').required(),
-  currency: Joi.string().default('Naira', {
-    invalid: true,
-  }),
-  address: Joi.string().min(4).max(500).required(),
 });
 
 const patchAccountSchema = Joi.object().keys({

@@ -1,6 +1,6 @@
-import transactions from '../models/transactionModel';
+import moment from 'moment';
 
-import accounts from '../models/accountModel';
+import db from '../models/index';
 
 import joiHelper from '../utilities/joiHelper';
 
@@ -8,29 +8,24 @@ import {
   creditAccountSchema,
 } from '../utilities/validations';
 
-
-const createTransaction = (account, transactionType, accountNumber, amount) => ({
-  transactionId: Math.floor(100000 + Math.random() * 900000),
-  createdOn: new Date(Date.now()),
-  transactionType,
-  accountNumber,
-  cashier: 15663,
-  amount,
-  currency: account.currency,
-  oldBalance: account.balance,
-  newBalance: transactionType === 'credit' ? account.balance + amount : account.balance - amount,
-});
-
 class TransactionControl {
   static async getAll(req, res, next) {
     if (req.decoded.type === 'client') {
       res.status(401);
       return next(new Error('Only staff and admins can view all transactions'));
     }
-    res.json({
-      status: 200,
-      data: transactions,
-    });
+    try {
+      const {
+        rows,
+      } = await db.query('SELECT * FROM transactions');
+      res.json({
+        status: 200,
+        data: rows,
+      });
+    } catch (e) {
+      res.status(500);
+      next(new Error('Something went wrong, please try again later'));
+    }
   }
 
   static async getAllByClient(req, res, next) {
@@ -42,11 +37,13 @@ class TransactionControl {
       const {
         accountNumber,
       } = req.params;
-      const allTransactionsByClient = await transactions.filter(all => all.accountNumber == accountNumber);
-      if (allTransactionsByClient.length == 0) return next();
+      const {
+        rows,
+      } = await db.query('SELECT * FROM transactions WHERE id=$1', [accountNumber]);
+      if (!rows[0]) return next();
       res.json({
         status: 200,
-        data: allTransactionsByClient,
+        data: rows,
       });
     } catch (e) {
       next();
@@ -57,12 +54,19 @@ class TransactionControl {
     const {
       transactionId,
     } = req.params;
-    const transaction = await transactions.filter(theTransaction => theTransaction.id == transactionId)[0];
-    if (!transaction) return next();
-    res.json({
-      status: 200,
-      data: transaction,
-    });
+    try {
+      const {
+        rows,
+      } = await db.query('SELECT * FROM transactions WHERE id=$1', [transactionId]);
+      if (!rows[0]) return next();
+      res.json({
+        status: 200,
+        data: rows,
+      });
+    } catch (e) {
+      res.status(404);
+      next(new Error('Invalid ID'));
+    }
   }
 
   static async debit(req, res, next) {
@@ -73,53 +77,93 @@ class TransactionControl {
     const {
       accountNumber,
     } = req.params;
-    const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
-    if (!account) return next();
 
-    const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
-    if (validCreditAccount.statusCode === 422) return;
-
-    const type = 'debit';
-    const {
-      amount,
-    } = validCreditAccount;
-    if (account.balance <= amount) {
-      res.status(400);
-      return next(new Error('Insufficient fund'));
+    try {
+      const account = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
+      if (!account.rows[0]) return next();
+      const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
+      if (validCreditAccount.statusCode === 422) return;
+      const {
+        amount,
+      } = validCreditAccount;
+      if (account.rows[0].balance <= amount) {
+        res.status(400);
+        return next(new Error('Insufficient fund'));
+      }
+      const text = `INSERT INTO transactions(id, createdOn, type, accountNumber, amount, cashier, oldBalance, newBalance) VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+      RETURNING *`;
+      const values = [
+        5,
+        moment(new Date()),
+        'debit',
+        account.rows[0].accountnumber,
+        amount,
+        27,
+        account.rows[0].balance,
+        account.rows[0].balance - amount,
+      ];
+      try {
+        await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance - amount, accountNumber]);
+        const {
+          rows,
+        } = await db.query(text, values);
+        res.json({
+          status: 200,
+          data: rows,
+        });
+      } catch (e) {
+        res.status(500);
+        next(e);
+      }
+    } catch (e) {
+      next(e);
     }
-    const transaction = createTransaction(account, type, accountNumber, amount);
-    transactions.unshift(transaction);
-    account.balance = transaction.newBalance;
-    return res.json({
-      status: 200,
-      data: transaction,
-    });
   }
 
   static async credit(req, res, next) {
     if (req.decoded.type !== 'staff') {
       res.status(401);
-      return next(new Error('Only staff can credit'));
+      return next(new Error('Only staff cand debit'));
     }
-   const {
+    const {
       accountNumber,
     } = req.params;
-    const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
-    if (!account) return next();
-
-    const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
-    if (validCreditAccount.statusCode === 422) return;
-    const type = 'credit';
-    const {
-      amount,
-    } = validCreditAccount;
-    const transaction = createTransaction(account, type, accountNumber, amount);
-    transactions.unshift(transaction);
-    account.balance = transaction.newBalance;
-    return res.json({
-      status: 200,
-      data: transaction,
-    });
+    try {
+      const account = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
+      if (!account.rows[0]) return next();
+      const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
+      if (validCreditAccount.statusCode === 422) return;
+      const {
+        amount,
+      } = validCreditAccount;
+      const text = `INSERT INTO transactions(id, createdOn, type, accountNumber, amount, cashier, oldBalance, newBalance) VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+      RETURNING *`;
+      const values = [
+        5,
+        moment(new Date()),
+        'debit',
+        account.rows[0].accountnumber,
+        amount,
+        27,
+        account.rows[0].balance,
+        account.rows[0].balance - amount,
+      ];
+      try {
+        await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance + amount, accountNumber]);
+        const {
+          rows,
+        } = await db.query(text, values);
+        res.json({
+          status: 200,
+          data: rows,
+        });
+      } catch (e) {
+        res.status(500);
+        next(e);
+      }
+    } catch (e) {
+      next(e);
+    }
   }
 }
 export default TransactionControl;

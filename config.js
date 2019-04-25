@@ -2,8 +2,8 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 module.exports = {
-  endpoint: process.env.API_URL,
-  masterKey: process.env.API_KEY,
-  port: process.env.PORT || 5000,
-  jwt_secret: process.env.JWT_SECRET || 'makemeasandwichrightnow',   
+  port: process.env.PORT,
+  jwt_secret: process.env.JWT_SECRET,
+  psqlUrl: process.env.PSQL_CONNECT,
+  psqlTest: process.env.PSQL_TEST,
 };

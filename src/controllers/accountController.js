@@ -1,7 +1,8 @@
+import moment from 'moment';
+
+import db from '../models/index';
 
 import joiHelper from '../utilities/joiHelper';
-
-import accounts from '../models/accountModel';
 
 import {
   createAccountSchema, patchAccountSchema,
@@ -13,10 +14,18 @@ class AccountControl {
       res.status(401);
       return next(new Error('Only staff and admins can view all accounts'));
     }
-    res.json({
-      status: 200,
-      data: accounts,
-    });
+    try {
+      const {
+        rows,
+      } = await db.query('SELECT * from accounts');
+      res.json({
+        status: 200,
+        data: rows,
+      });
+    } catch (e) {
+      res.status(500);
+      next(new Error('Something went wrong, please try again'));
+    }
   }
 
   static async getOne(req, res, next) {
@@ -27,14 +36,18 @@ class AccountControl {
     const {
       accountNumber,
     } = req.params;
-    const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
-    if (!account) {
-      return next();
+    try {
+      const {
+        rows,
+      } = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
+      res.json({
+        status: 200,
+        data: rows,
+      });
+    } catch (e) {
+      res.status(404);
+      next(new Error('Invalid Account Number'));
     }
-    res.json({
-      status: 200,
-      data: account,
-    });
   }
 
   static async createAccount(req, res, next) {
@@ -46,18 +59,34 @@ class AccountControl {
 
     if (validCreateAccount.statusCode === 422) return;
     const {
-      firstName, lastName, sex, dob, email, phone, type, currency,
+      email, type,
     } = validCreateAccount;
-    const account = {
-      accountNumber: Math.floor(100000 + Math.random() * 9000000000), firstName, lastName, sex, dob, email, phone, type, currency,
-    };
-    account.openingBalance = 0.00;
-    account.status = 'active';
-    accounts.unshift(account);
-    res.json({
-      status: 200,
-      data: account,
-    });
+
+    const text = `INSERT INTO
+      accounts(accountNumber, createdOn, ownerEmail, type, balance, status)
+      VALUES($1, $2, $3, $4, $5, $6)
+      RETURNING *`;
+    const values = [
+      Math.floor(100000 + Math.random() * 9000000000),
+      moment(new Date()),
+      email,
+      type,
+      0.00,
+      'active',
+    ];
+    try {
+      const {
+        rows,
+      } = await db.query(text, values);
+      res.json({
+        status: 200,
+        data: rows,
+      });
+    } catch (error) {
+      res.status(400);
+      console.log(error);
+      next(error);
+    }
   }
 
   static async modifyAccount(req, res, next) {
@@ -68,23 +97,23 @@ class AccountControl {
     const {
       accountNumber,
     } = req.params;
-    const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
-    if (!account) {
-      return next();
-    }
-    const validPatch = await joiHelper(req, res, patchAccountSchema);
-    if (validPatch.statusCode === 422) return;
-    const {
-      status,
-    } = validPatch;
-    account.status = validPatch.status;
-    return res.json({
-      status: 200,
-      data: {
-        accountNumber,
+    try {
+      const validPatch = await joiHelper(req, res, patchAccountSchema);
+      if (validPatch.statusCode === 422) return;
+      const {
         status,
-      },
-    });
+      } = validPatch;
+      const result = await db.query('UPDATE accounts SET status=$1 WHERE accountNumber=$2 RETURNING *', [status, accountNumber]);
+      res.json({
+        status: 200,
+        data: {
+          accountNumber,
+          status: result.rows[0].status,
+        },
+      });
+    } catch (e) {
+      next(e);
+    }
   }
 
   static async deleteAccount(req, res, next) {
@@ -95,14 +124,19 @@ class AccountControl {
     const {
       accountNumber,
     } = req.params;
-    const account = await accounts.filter(theAccount => theAccount.accountNumber == accountNumber)[0];
-    if (!account) return next();
-    const index = accounts.indexOf(account);
-    accounts.splice(index, 1);
-    res.json({
-      status: 200,
-      message: 'Account successfully deleted',
-    });
+    try {
+      const { rows } = await db.query('DELETE FROM accounts WHERE accountNumber=$1 RETURNING *', [accountNumber]);
+      if (!rows[0]) return next();
+      res.json({
+        status: 200,
+        data: {
+          status: 200,
+          message: 'Account successfully deleted!',
+        },
+      });
+    } catch (e) {
+      next(e);
+    }
   }
 }
 
