@@ -57,6 +57,7 @@ class AccountControl {
     } = req.params;
     try {
       const { rows } = await db.query('SELECT * FROM transactions WHERE accountNumber=$1', [accountNumber]);
+      if (!res[0]) return next();
       res.json({
         status: 200,
         data: rows,
