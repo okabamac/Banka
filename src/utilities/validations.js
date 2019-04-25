@@ -45,7 +45,6 @@ const userSigninSchema = Joi.object().keys({
 });
 
 const createAccountSchema = Joi.object().keys({
-  email: emailSchema.required(),
   type: Joi.string().valid('Savings', 'Current').required(),
 });
 

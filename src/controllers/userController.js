@@ -39,6 +39,31 @@ class UserControl {
     }
   }
 
+  static async getAllByEmail(req, res, next) {
+    const {
+      email,
+    } = req.params;
+
+    if (email == req.decoded.email) {
+      try {
+        const {
+          rows,
+        } = await db.query('SELECT * FROM accounts WHERE ownerEmail=$1', [email]);
+        if (!rows[0]) return next();
+        return res.json({
+          status: 200,
+          data: rows,
+        });
+      } catch (e) {
+        res.status(404);
+        next(new Error('Invalid Email'));
+      }
+    } else {
+      res.status(404);
+      next(new Error('The email must be your email'));
+    }
+  }
+
   static async deleteUser(req, res, next) {
     if (req.decoded.type === 'client') {
       res.status(401);

@@ -29,7 +29,6 @@ const invalid_login_details = {
 
 const account = {
   type: 'Savings',
-  email: 'amin@tolkien.com',
 };
 
 let theToken;
@@ -204,6 +203,28 @@ describe('It should do all clients will want to do', () => {
       .set('Authorization', theToken)
       .end((err, res) => {
         res.should.have.status(401);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should get all accounts linked with email', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/amin@tolkien.com/accounts')
+    // we set the auth header with our theToken
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not get all accounts linked with email', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/amin@huhu.com/accounts')
+    // we set the auth header with our theToken
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(404);
         res.body.should.be.a('object');
         done();
       });

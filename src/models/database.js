@@ -14,7 +14,7 @@ const createTables = `
   DROP TABLE IF EXISTS transactions;
   CREATE TABLE IF NOT EXISTS
   users(
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     email VARCHAR(128) NOT NULL UNIQUE,
     firstName VARCHAR(150) NOT NULL,
     lastName VARCHAR(150) NOT NULL,
@@ -27,6 +27,7 @@ const createTables = `
     id SERIAL PRIMARY KEY,
     accountNumber BIGINT NOT NULL,
     createdON TIMESTAMP,
+    ownerId INTEGER NOT NULL,
     ownerEmail VARCHAR(150) NOT NULL,
     type VARCHAR(150) NOT NULL,
     balance FLOAT NOT NULL,

@@ -77,17 +77,18 @@ class AccountControl {
 
     if (validCreateAccount.statusCode === 422) return;
     const {
-      email, type,
+      type,
     } = validCreateAccount;
 
     const text = `INSERT INTO
-      accounts(accountNumber, createdOn, ownerEmail, type, balance, status)
-      VALUES($1, $2, $3, $4, $5, $6)
+      accounts(accountNumber, createdOn, ownerId, ownerEmail, type, balance, status)
+      VALUES($1, $2, $3, $4, $5, $6, $7)
       RETURNING *`;
     const values = [
       Math.floor(100000 + Math.random() * 9000000000),
       moment(new Date()),
-      email,
+      req.decoded.id,
+      req.decoded.email,
       type,
       0.00,
       'active',

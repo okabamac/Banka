@@ -17,12 +17,13 @@ const tableSeeds = `
       VALUES 
       ( default, 'markokaba99@gmail.com', 'Mac', 'Okaba', 'staff', ${true}, '$2b$10$MWLVVYvFBQHvmjuRLFS6xuvZxpiN2KZJyQbCLb/lXxGZ2vGVmY2vy'),
       ( default, 'aminuaminu@g.com', 'Aminu', 'Tokien', 'staff', ${false}, '$2b$10$MWLVVYvFBQHvmjuRLFS6xuvZxpiN2KZJyQbCLb/lXxGZ2vGVmY2vy'),
-      ( default, 'johnmax', 'John', 'Max', 'client', ${false}, '$2b$10$MWLVVYvFBQHvmjuRLFS6xuvZxpiN2KZJyQbCLb/lXxGZ2vGVmY2vy');
+      ( default, 'johnmax@r.com', 'John', 'Max', 'client', ${false}, '$2b$10$MWLVVYvFBQHvmjuRLFS6xuvZxpiN2KZJyQbCLb/lXxGZ2vGVmY2vy'),
+      ( default, 'jay@jay.com', 'Kell', 'Max', 'client', ${false}, '$2b$10$MWLVVYvFBQHvmjuRLFS6xuvZxpiN2KZJyQbCLb/lXxGZ2vGVmY2vy');
   INSERT INTO
     accounts
       VALUES 
-      ( default, 2088058375, '${date}', 'jojo@e.com', 'current', 2010.033, 'active'),
-      ( default, 1234567890, '${date}', 'mimi@g.com', 'savings', 123.00, 'dormant');
+      ( default, 2088058375, '${date}', 3, 'johnmax@r.com', 'current', 2010.033, 'active'),
+      ( default, 1234567890, '${date}', 4, 'jay@jay.com', 'savings', 123.00, 'dormant');
   INSERT INTO
     transactions
       VALUES 

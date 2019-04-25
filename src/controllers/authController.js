@@ -21,6 +21,7 @@ const doToken = (user) => {
     email: user.email,
     id: user.id,
     type: user.type,
+    isAdmin: user.isAdmin,
   },
   jwt_secret, {
     expiresIn: '24h', // expires in 24 hours
@@ -49,11 +50,10 @@ class AuthControl {
     bcrypt.hash(password, 10, async (err, hash) => {
       if (err) return next(new Error('Oops something went wrong!'));
       const text = `INSERT INTO
-      users(id, email, firstName, lastName, type, isAdmin, password)
-      VALUES($1, $2, $3, $4, $5, $6, $7)
+      users(email, firstName, lastName, type, isAdmin, password)
+      VALUES($1, $2, $3, $4, $5, $6)
       returning *`;
       const values = [
-        22,
         email,
         firstName,
         lastName,
@@ -71,9 +71,9 @@ class AuthControl {
           data: tokenized,
         });
       } catch (error) {
-        return res.status(400).json({
-          status: 400,
-          error,
+        res.status(500).json({
+          status: 500,
+          error: 'Oops, something went wrong! Try again',
         });
       }
     });
