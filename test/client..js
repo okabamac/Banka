@@ -103,18 +103,6 @@ describe('It should do all clients will want to do', () => {
         done();
       });
   });
-  it('should get all transactions on account', (done) => {
-    // Get all transaction on account
-    chai.request(app)
-      .get('/api/v1/accounts/2088058375/transactions')
-    // we set the auth header with our theToken
-      .set('Authorization', theToken)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        done();
-      });
-  });
   it('should not get a transaction on account', (done) => {
     // Don't get a transaction cuz invalid accountnumber
     chai.request(app)
