@@ -50,6 +50,38 @@ class AccountControl {
     }
   }
 
+  static async getAccountTransactions(req, res, next) {
+    if (req.decoded.type !== 'client') {
+      res.status(401);
+      return next(new Error('Only clients can access this route'));
+    }
+    const {
+      accountNumber,
+    } = req.params;
+    try {
+      const {
+        rows,
+      } = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
+      if (!rows[0]) {
+        res.status(404);
+        return next();
+      }
+      try {
+        const { rows } = await db.query('SELECT * FROM transactions WHERE accountNumber=$1', [accountNumber]);
+        res.json({
+          status: 200,
+          data: rows,
+        });
+      }
+      catch (e) {
+        next(e);
+      }
+    } catch (e) {
+      res.status(404);
+      next(new Error('Invalid Account Number'));
+    }
+  }
+
   static async createAccount(req, res, next) {
     if (req.decoded.type !== 'client') {
       res.status(401);
