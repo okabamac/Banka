@@ -2,11 +2,11 @@
   "name": "Banka",
   "version": "1.0.0",
   "description": "Banka is a lightweight core banking application that powers banking operations like account creation, customer deposit and withdrawals. This app is meant to support a single bank., where users can signup,  and create bank acocunts online, but must visit the branch to withdraw or deposit money.",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
-    "start": "babel-node server.js",
-    "dev": "nodemon --exec babel-node server.js",
-    "test": "export NODE_ENV=test || set NODE_ENV=test&& npm run create && npm run seed && mocha --require @babel/register --timeout 10000",
+    "start": "babel-node server/server.js",
+    "dev": "nodemon --exec babel-node server/server.js",
+    "test": "export NODE_ENV=test || set NODE_ENV=test&& npm run create && npm run seed && mocha --require @babel/register --timeout 10000 --exit",
     "create": "babel-node src/models/database",
     "seed": "babel-node src/models/seed"
   },
