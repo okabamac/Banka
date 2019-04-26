@@ -19,7 +19,7 @@ class UserControl {
   }
 
   static async getOne(req, res, next) {
-    if (req.decoded.type == 'client') {
+    if (req.decoded.type === 'client') {
       res.status(401);
       return next(new Error('Only staff and admins can access this routes'));
     }

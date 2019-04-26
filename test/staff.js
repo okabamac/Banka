@@ -48,7 +48,6 @@ describe('Do all staff will want to do', () => {
   it('should get specific account', (done) => {
     chai.request(app)
       .get('/api/v1/accounts/2088058375')
-
       .set('Authorization', theToken)
       .end((err, res) => {
         res.should.have.status(200);
@@ -105,8 +104,17 @@ describe('Do all staff will want to do', () => {
   });
   it('should not delete account', (done) => {
     chai.request(app)
-      .delete('/api/v1/accounts/2088058379')
-
+      .delete('/api/v1/accounts/20880583700009')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not delete account', (done) => {
+    chai.request(app)
+      .delete('/api/v1/accounts/1122556633')
       .set('Authorization', theToken)
       .end((err, res) => {
         res.should.have.status(404);
@@ -118,36 +126,23 @@ describe('Do all staff will want to do', () => {
     chai.request(app)
       .post('/api/v1/transactions/2088058377/credit')
       .send({ amount: 200 })
-
       .set('Authorization', theToken)
       .end((err, res) => {
         res.should.have.status(404);
-        res.body.should.be.a('object');
-        done();
-      });
-  });
-  it('should credit a bank account', (done) => {
-    chai.request(app)
-      .post('/api/v1/transactions/2088058375/credit')
-      .send({ amount: 200 })
-
-      .set('Authorization', theToken)
-      .end((err, res) => {
-        res.should.have.status(200);
         res.body.should.be.a('object');
         done();
       });
   });
   it('should not debit a bank account', (done) => {
     chai.request(app)
-      .post('/api/v1/transactions/2088058377/debit')
+      .post('/api/v1/transactions/208805837555557/debit')
       .send({
         amount: 200,
       })
 
       .set('Authorization', theToken)
       .end((err, res) => {
-        res.should.have.status(404);
+        res.should.have.status(400);
         res.body.should.be.a('object');
 
         done();
