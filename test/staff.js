@@ -186,4 +186,24 @@ describe('Do all staff will want to do', () => {
         done();
       });
   });
+  it('should get all dormant accounts', (done) => {
+    chai.request(app)
+      .get('/api/v1/accounts?status=dormant')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should get all active accounts', (done) => {
+    chai.request(app)
+      .get('/api/v1/accounts?status=active')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
 });

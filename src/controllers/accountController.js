@@ -9,17 +9,33 @@ class AccountControl {
       res.status(401);
       return next(new Error('Only staff and admins can view all accounts'));
     }
-    try {
-      const {
-        rows,
-      } = await db.query('SELECT * from accounts');
-      res.json({
-        status: 200,
-        data: rows,
-      });
-    } catch (e) {
-      res.status(500);
-      next(new Error('Something went wrong, please try again'));
+
+    if (req.query) {
+      const { status } = req.query;
+      try {
+        const {
+          rows,
+        } = await db.query('SELECT * FROM accounts WHERE status=$1', [status]);
+        res.json({
+          status: 200,
+          data: rows[0],
+        });
+      } catch (e) {
+        next('Something went wrong! Please try again later');
+      }
+    } else {
+      try {
+        const {
+          rows,
+        } = await db.query('SELECT * from accounts');
+        res.json({
+          status: 200,
+          data: rows,
+        });
+      } catch (e) {
+        res.status(500);
+        next(new Error('Something went wrong, please try again'));
+      }
     }
   }
 
