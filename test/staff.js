@@ -74,7 +74,18 @@ describe('Do all staff will want to do', () => {
 
       .set('Authorization', theToken)
       .end((err, res) => {
-        res.should.have.status(404);
+        res.should.have.status(400);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should get specific trans', (done) => {
+    chai.request(app)
+      .get('/api/v1/transactions/1')
+
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
         res.body.should.be.a('object');
         done();
       });

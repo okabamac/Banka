@@ -29,8 +29,8 @@ const invalid_login_details = {
 
 const account = {
   type: 'Savings',
-  email: 'amin@tolkien.com',
-};
+  openingBalance: '2000.00'
+}
 
 let theToken;
 
@@ -64,7 +64,6 @@ describe('It should do all clients will want to do', () => {
       .post('/api/v1/auth/signin')
       .send(invalid_login_details)
       .end((err, res) => {
-        console.log('This runs the login part');
         res.should.have.status(400);
         res.body.should.be.a('object');
         done();
@@ -77,7 +76,6 @@ describe('It should do all clients will want to do', () => {
       .post('/api/v1/auth/signin')
       .send(login_details)
       .end((err, res) => {
-        console.log('This runs the login part');
         res.should.have.status(200);
         res.body.data.should.be.a('object');
         res.body.data.should.have.property('token');
@@ -106,8 +104,18 @@ describe('It should do all clients will want to do', () => {
   it('should not get a transaction on account', (done) => {
     // Don't get a transaction cuz invalid accountnumber
     chai.request(app)
-      .get('/api/v1/accounts/20880583700005/transactions')
-    // we set the auth header with our theToken
+      .get('/api/v1/accounts/20880583/transactions')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not get a transaction on account', (done) => {
+    // Don't get a transaction cuz invalid accountnumber
+    chai.request(app)
+      .get('/api/v1/accounts/2088058566/transactions')
       .set('Authorization', theToken)
       .end((err, res) => {
         res.should.have.status(404);
@@ -115,14 +123,24 @@ describe('It should do all clients will want to do', () => {
         done();
       });
   });
-  it('should not get transaction because of protected route', (done) => {
+  it('should not get transaction because of invalid id', (done) => {
     // Return not found
     chai.request(app)
       .get('/api/v1/transactions/cddfffff')
-    // we set the auth header with our theToken
       .set('Authorization', theToken)
       .end((err, res) => {
-        res.should.have.status(404);
+        res.should.have.status(400);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should  get transaction by id', (done) => {
+    // Return not found
+    chai.request(app)
+      .get('/api/v1/transactions/1')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
         res.body.should.be.a('object');
         done();
       });
@@ -132,10 +150,9 @@ describe('It should do all clients will want to do', () => {
     // staff and admins page
     chai.request(app)
       .post('/api/v1/transactions/2088058375/debit')
-    // we set the auth header with our theToken
       .set('Authorization', theToken)
       .end((err, res) => {
-        res.should.have.status(401);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         done();
       });
@@ -143,10 +160,9 @@ describe('It should do all clients will want to do', () => {
   it('should not credit account', (done) => {
     chai.request(app)
       .post('/api/v1/transactions/2088058375/credit')
-    // we set the auth header with our theToken
       .set('Authorization', theToken)
       .end((err, res) => {
-        res.should.have.status(401);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         done();
       });
@@ -154,7 +170,6 @@ describe('It should do all clients will want to do', () => {
   it('should not get all accounts', (done) => {
     chai.request(app)
       .get('/api/v1/accounts/')
-    // we set the auth header with our theToken
       .set('Authorization', theToken)
       .end((err, res) => {
         res.should.have.status(401);
@@ -166,10 +181,9 @@ describe('It should do all clients will want to do', () => {
   it('should not get accounts by number', (done) => {
     chai.request(app)
       .get('/api/v1/accounts/2088058375')
-    // we set the auth header with our theToken
       .set('Authorization', theToken)
       .end((err, res) => {
-        res.should.have.status(200);
+        res.should.have.status(401);
         res.body.should.be.a('object');
         done();
       });
@@ -178,7 +192,6 @@ describe('It should do all clients will want to do', () => {
     // Delete account
     chai.request(app)
       .delete('/api/v1/accounts/2088058375')
-    // we set the auth header with our theToken
       .set('Authorization', theToken)
       .end((err, res) => {
         res.should.have.status(401);
@@ -189,7 +202,6 @@ describe('It should do all clients will want to do', () => {
   it('should not get all users', (done) => {
     chai.request(app)
       .get('/api/v1/users')
-    // we set the auth header with our theToken
       .set('Authorization', theToken)
       .end((err, res) => {
         res.should.have.status(401);
@@ -200,10 +212,29 @@ describe('It should do all clients will want to do', () => {
   it('should not get a user by ID', (done) => {
     chai.request(app)
       .get('/api/v1/users/1')
-    // we set the auth header with our theToken
       .set('Authorization', theToken)
       .end((err, res) => {
         res.should.have.status(401);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should get all accounts linked with email', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/amin@tolkien.com/accounts')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not get all accounts linked with email', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/amin@huhu.com/accounts')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(404);
         res.body.should.be.a('object');
         done();
       });

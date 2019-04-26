@@ -3,12 +3,6 @@ import moment from 'moment';
 
 import db from '../models/index';
 
-import joiHelper from '../utilities/joiHelper';
-
-import {
-  createAccountSchema, patchAccountSchema,
-} from '../utilities/validations';
-
 class AccountControl {
   static async getAll(req, res, next) {
     if (req.decoded.type === 'client') {
@@ -30,6 +24,10 @@ class AccountControl {
   }
 
   static async getOne(req, res, next) {
+    if (req.decoded.type == 'client') {
+      res.status(401);
+      return next(new Error('Only staff and admin can access this route'));
+    }
     const {
       accountNumber,
     } = req.params;
@@ -62,9 +60,8 @@ class AccountControl {
         status: 200,
         data: rows,
       });
-    }
-    catch (e) {
-      next(e);
+    } catch (e) {
+      next();
     }
   }
 
@@ -73,23 +70,20 @@ class AccountControl {
       res.status(401);
       return next(new Error('Only clients can create bank accounts'));
     }
-    const validCreateAccount = await joiHelper(req, res, createAccountSchema);
-
-    if (validCreateAccount.statusCode === 422) return;
     const {
-      email, type,
-    } = validCreateAccount;
+      type, openingBalance,
+    } = req.body;
 
     const text = `INSERT INTO
-      accounts(accountNumber, createdOn, ownerEmail, type, balance, status)
+      accounts(accountNumber, createdOn, ownerId, type, balance, status)
       VALUES($1, $2, $3, $4, $5, $6)
       RETURNING *`;
     const values = [
       Math.floor(100000 + Math.random() * 9000000000),
       moment(new Date()),
-      email,
+      req.decoded.id,
       type,
-      0.00,
+      openingBalance,
       'active',
     ];
     try {
@@ -117,7 +111,7 @@ class AccountControl {
     } = req.params;
     try {
       const validPatch = await joiHelper(req, res, patchAccountSchema);
-      if (validPatch.statusCode === 422) return;
+      if (validPatch.statusCode === 400) return;
       const {
         status,
       } = validPatch;

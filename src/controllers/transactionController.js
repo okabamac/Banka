@@ -2,12 +2,6 @@ import moment from 'moment';
 
 import db from '../models/index';
 
-import joiHelper from '../utilities/joiHelper';
-
-import {
-  creditAccountSchema,
-} from '../utilities/validations';
-
 class TransactionControl {
   static async getAll(req, res, next) {
     if (req.decoded.type === 'client') {
@@ -52,12 +46,12 @@ class TransactionControl {
 
   static async getOne(req, res, next) {
     const {
-      transactionId,
+      id,
     } = req.params;
     try {
       const {
         rows,
-      } = await db.query('SELECT * FROM transactions WHERE id=$1', [transactionId]);
+      } = await db.query('SELECT * FROM transactions WHERE id=$1', [id]);
       if (!rows[0]) return next();
       res.json({
         status: 200,
@@ -82,7 +76,7 @@ class TransactionControl {
       const account = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
       if (!account.rows[0]) return next();
       const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
-      if (validCreditAccount.statusCode === 422) return;
+      if (validCreditAccount.statusCode === 400) return;
       const {
         amount,
       } = validCreditAccount;
@@ -132,7 +126,7 @@ class TransactionControl {
       const account = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
       if (!account.rows[0]) return next();
       const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
-      if (validCreditAccount.statusCode === 422) return;
+      if (validCreditAccount.statusCode === 400) return;
       const {
         amount,
       } = validCreditAccount;

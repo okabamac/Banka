@@ -1,6 +1,6 @@
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config(); 
 module.exports = {
   port: process.env.PORT,
   jwt_secret: process.env.JWT_SECRET,
