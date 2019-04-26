@@ -239,4 +239,24 @@ describe('It should do all clients will want to do', () => {
         done();
       });
   });
+  it('should not get view all active accounts', (done) => {
+    chai.request(app)
+      .get('/api/v1/accounts?status=active')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not get view all dormant accounts', (done) => {
+    chai.request(app)
+      .get('/api/v1/accounts?status=dormant')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
 });

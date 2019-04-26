@@ -75,24 +75,27 @@ class TransactionControl {
     try {
       const account = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
       if (!account.rows[0]) return next();
-      const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
-      if (validCreditAccount.statusCode === 400) return;
+      if (account.rows[0].status === 'dormant') {
+        return res.status.json({
+          status: 400,
+          data: 'You can\'t debit this account because it is dormant',
+        });
+      }
       const {
         amount,
-      } = validCreditAccount;
+      } = req.body;
       if (account.rows[0].balance <= amount) {
         res.status(400);
         return next(new Error('Insufficient fund'));
       }
-      const text = `INSERT INTO transactions(id, createdOn, type, accountNumber, amount, cashier, oldBalance, newBalance) VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+      const text = `INSERT INTO transactions(createdOn, type, accountNumber, amount, cashier, oldBalance, newBalance) VALUES($1, $2, $3, $4, $5, $6, $7)
       RETURNING *`;
       const values = [
-        5,
         moment(new Date()),
         'debit',
         account.rows[0].accountnumber,
         amount,
-        27,
+        req.decoded.id,
         account.rows[0].balance,
         account.rows[0].balance - amount,
       ];
@@ -114,7 +117,7 @@ class TransactionControl {
     }
   }
 
-  static async credit(req, res, next) {
+  static async credit (req, res, next) {
     if (req.decoded.type !== 'staff') {
       res.status(401);
       return next(new Error('Only staff cand debit'));
@@ -125,20 +128,23 @@ class TransactionControl {
     try {
       const account = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
       if (!account.rows[0]) return next();
-      const validCreditAccount = await joiHelper(req, res, creditAccountSchema);
-      if (validCreditAccount.statusCode === 400) return;
+      if (account.rows[0].status === 'dormant') {
+        return res.status.json({
+          status: 400,
+          data: 'You can\'t credit this account because it is dormant',
+        });
+      }
       const {
         amount,
-      } = validCreditAccount;
-      const text = `INSERT INTO transactions(id, createdOn, type, accountNumber, amount, cashier, oldBalance, newBalance) VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+      } = req.body;
+      const text = `INSERT INTO transactions(createdOn, type, accountNumber, amount, cashier, oldBalance, newBalance) VALUES($1, $2, $3, $4, $5, $6, $7)
       RETURNING *`;
       const values = [
-        5,
         moment(new Date()),
         'debit',
         account.rows[0].accountnumber,
         amount,
-        27,
+        req.decoded.id,
         account.rows[0].balance,
         account.rows[0].balance - amount,
       ];
