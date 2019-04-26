@@ -22,8 +22,8 @@ const tableSeeds = `
   INSERT INTO
     accounts
       VALUES 
-      ( default, 2088058375, '${date}', 3, 'johnmax@r.com', 'current', 2010.033, 'active'),
-      ( default, 1234567890, '${date}', 4, 'jay@jay.com', 'savings', 123.00, 'dormant');
+      ( default, 2088058375, '${date}', 3, 'current', 2010.033, 'active'),
+      ( default, 1234567890, '${date}', 4, 'savings', 123.00, 'dormant');
   INSERT INTO
     transactions
       VALUES 

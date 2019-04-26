@@ -24,10 +24,10 @@ class UserControl {
       return next(new Error('Only staff and admins can access this routes'));
     }
     const {
-      userId,
+      id,
     } = req.params;
     try {
-      const { rows } = await db.query('SELECT * FROM users WHERE id=$1', [userId]);
+      const { rows } = await db.query('SELECT * FROM users WHERE id=$1', [id]);
       if (!rows[0]) return next();
       return res.json({
         status: 200,
@@ -43,24 +43,22 @@ class UserControl {
     const {
       email,
     } = req.params;
-
-    if (email == req.decoded.email) {
-      try {
-        const {
-          rows,
-        } = await db.query('SELECT * FROM accounts WHERE ownerEmail=$1', [email]);
-        if (!rows[0]) return next();
-        return res.json({
+    try {
+      const { rows } = await db.query('SELECT * FROM users WHERE email=$1', [email]);
+      if (!rows[0]) return next();
+      const { id } = rows[0];
+      if (req.decoded.id == id) {
+        const { rows } = await db.query('SELECT * FROM accounts WHERE ownerId=$1', [id]);
+        res.status(200).json({
           status: 200,
           data: rows,
         });
-      } catch (e) {
-        res.status(404);
-        next(new Error('Invalid Email'));
+      } else {
+        res.status(401);
+        next('You don\'t have access to view this account details');
       }
-    } else {
-      res.status(404);
-      next(new Error('The email must be your email'));
+    } catch (e) {
+      next(new Error('Something went wrong! Please try again'));
     }
   }
 
@@ -70,12 +68,12 @@ class UserControl {
       return next(new Error('Only staff and admins can delete accounts'));
     }
     const {
-      userId,
+      id,
     } = req.params;
     try {
       const {
         rows,
-      } = await db.query('DELETE FROM users WHERE id=$1 RETURNING *', [userId]);
+      } = await db.query('DELETE FROM users WHERE id=$1 RETURNING *', [id]);
       if (!rows[0]) return next();
       res.json({
         status: 200,

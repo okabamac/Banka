@@ -28,7 +28,6 @@ const createTables = `
     accountNumber BIGINT NOT NULL,
     createdON TIMESTAMP,
     ownerId INTEGER NOT NULL,
-    ownerEmail VARCHAR(150) NOT NULL,
     type VARCHAR(150) NOT NULL,
     balance FLOAT NOT NULL,
     status VARCHAR(150) NOT NULL 

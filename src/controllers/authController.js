@@ -1,4 +1,4 @@
-import moment from 'moment';
+/* eslint-disable consistent-return */
 
 import bcrypt from 'bcryptjs';
 
@@ -6,19 +6,11 @@ import jwt from 'jsonwebtoken';
 
 import db from '../models/index';
 
-import joiHelper from '../utilities/joiHelper';
-
 import { jwt_secret } from '../../config';
-
-import {
-  userSignupSchema,
-  userSigninSchema,
-} from '../utilities/validations';
 
 
 const doToken = (user) => {
   const token = jwt.sign({
-    email: user.email,
     id: user.id,
     type: user.type,
     isAdmin: user.isAdmin,
@@ -36,11 +28,9 @@ const doToken = (user) => {
 
 class AuthControl {
   static async signup(req, res, next) {
-    const validSignup = await joiHelper(req, res, userSignupSchema);
-    if (validSignup.statusCode === 422) return;
     const {
-      firstName, lastName, email, password, type, admin,
-    } = validSignup;
+      firstName, lastName, email, password,
+    } = req.body;
     const checkExist = await db.query('SELECT * FROM users WHERE email=$1', [email]);
     if (checkExist.rows.length != 0) {
       res.status(400);
@@ -57,8 +47,8 @@ class AuthControl {
         email,
         firstName,
         lastName,
-        type,
-        admin,
+        'client',
+        false,
         hash,
       ];
       try {
@@ -66,9 +56,14 @@ class AuthControl {
           rows,
         } = await db.query(text, values);
         const tokenized = await doToken(rows[0]);
+        const {
+          token, id, email, firstname, lastname, type, isadmin,
+        } = tokenized;
         return res.json({
           status: 200,
-          data: tokenized,
+          data: {
+            token, id, email, firstname, lastname, type, isadmin,
+          },
         });
       } catch (error) {
         res.status(500).json({
@@ -80,25 +75,35 @@ class AuthControl {
   }
 
   static async signin(req, res, next) {
-    const validSignin = await joiHelper(req, res, userSigninSchema);
-    if (validSignin.statusCode === 422) return;
-    const { email, password } = validSignin;
+
+    const { email, password } = req.body;
     try {
-      const user = await db.query('SELECT * FROM users WHERE email=$1', [email]);
-      bcrypt.compare(password, user.rows[0].password, async (err, result) => {
+      const { rows } = await db.query('SELECT * FROM users WHERE email=$1', [email]);
+      if (!rows[0]) {
+        return res.status(400).json({
+          status: 400,
+          error: 'Invalid credentials',
+        });
+      }
+      bcrypt.compare(password, rows[0].password, async (err, result) => {
         if (result) {
-          const tokenized = await doToken(user.rows[0]);
+          const tokenized = await doToken(rows[0]);
+          const {
+            token, id, email, firstname, lastname, type, isadmin,
+          } = tokenized;
           return res.json({
             status: 200,
-            data: tokenized,
+            data: {
+              token, id, email, firstname, lastname, type, isadmin,
+            },
           });
         }
         res.status(400);
         return next(new Error('Invalid credentials'));
       });
     } catch (e) {
-      res.status(400);
-      next(new Error('Invalid credentials'));
+      res.status(500);
+      next(new Error('Something went wrong! Please, try again later'));
     }
   }
 }
