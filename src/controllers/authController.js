@@ -13,7 +13,7 @@ const doToken = (user) => {
   const token = jwt.sign({
     id: user.id,
     type: user.type,
-    isAdmin: user.isAdmin,
+    isAdmin: user.isadmin,
   },
   jwt_secret, {
     expiresIn: '24h', // expires in 24 hours
@@ -75,7 +75,6 @@ class AuthControl {
   }
 
   static async signin(req, res, next) {
-
     const { email, password } = req.body;
     try {
       const { rows } = await db.query('SELECT * FROM users WHERE email=$1', [email]);
@@ -88,6 +87,7 @@ class AuthControl {
       bcrypt.compare(password, rows[0].password, async (err, result) => {
         if (result) {
           const tokenized = await doToken(rows[0]);
+
           const {
             token, id, email, firstname, lastname, type, isadmin,
           } = tokenized;

@@ -22,68 +22,50 @@ class TransactionControl {
     }
   }
 
-  static async getAllByClient(req, res, next) {
-    if (req.decoded.type !== 'client') {
-      res.status(401);
-      return next(new Error('Only clients can access this route'));
-    }
-    try {
-      const {
-        accountNumber,
-      } = req.params;
-      const {
-        rows,
-      } = await db.query('SELECT * FROM transactions WHERE id=$1', [accountNumber]);
-      if (!rows[0]) return next();
-      res.json({
-        status: 200,
-        data: rows,
-      });
-    } catch (e) {
-      next();
-    }
-  }
-
   static async getOne(req, res, next) {
-    const {
-      id,
-    } = req.params;
+    const { id, type } = req.decoded;
     try {
-      const {
-        rows,
-      } = await db.query('SELECT * FROM transactions WHERE id=$1', [id]);
-      if (!rows[0]) return next();
-      res.json({
-        status: 200,
-        data: rows,
+      const transaction = await db.query('SELECT * FROM transactions WHERE id=$1', [req.params.id]);
+      const account = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [transaction.rows[0].accountNumber]);
+      if ((account.rows[0].ownerid === id && type === 'client') || type === 'staff') {
+        return res.status(200).json({
+          status: 200,
+          data: transaction.rows,
+        });
+      }
+      res.status(401).json({
+        status: 401,
+        message: 'Access denied',
       });
     } catch (e) {
-      res.status(404);
-      next(new Error('Invalid ID'));
+      next(e);
     }
   }
 
   static async debit(req, res, next) {
-    if (req.decoded.type !== 'staff') {
+    if (req.decoded.isadmin || req.decoded.isAdmin || req.decoded.type === 'client') {
       res.status(401);
-      return next(new Error('Only staff cand debit'));
+      return next(new Error('Only staff can debit'));
     }
     const {
       accountNumber,
     } = req.params;
-
+    const {
+      amount,
+    } = req.body;
     try {
       const account = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
-      if (!account.rows[0]) return next();
       if (account.rows[0].status === 'dormant') {
-        return res.status.json({
+        return res.status(400).json({
           status: 400,
-          data: 'You can\'t debit this account because it is dormant',
+          error: 'You can\'t debit this account because it is dormant',
         });
       }
-      const {
-        amount,
-      } = req.body;
+
+      if (!account.rows[0]) {
+        res.status(404);
+        return next(new Error('Account not found'));
+      }
       if (account.rows[0].balance <= amount) {
         res.status(400);
         return next(new Error('Insufficient fund'));
@@ -99,68 +81,61 @@ class TransactionControl {
         account.rows[0].balance,
         account.rows[0].balance - amount,
       ];
-      try {
-        await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance - amount, accountNumber]);
-        const {
-          rows,
-        } = await db.query(text, values);
-        res.json({
-          status: 200,
-          data: rows,
-        });
-      } catch (e) {
-        res.status(500);
-        next(e);
-      }
+      await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance - amount, accountNumber]);
+      const {
+        rows,
+      } = await db.query(text, values);
+      res.json({
+        status: 200,
+        data: rows,
+      });
     } catch (e) {
       next(e);
     }
   }
 
-  static async credit (req, res, next) {
-    if (req.decoded.type !== 'staff') {
+  static async credit(req, res, next) {
+    if (req.decoded.isadmin || req.decoded.isAdmin || req.decoded.type === 'client') {
       res.status(401);
-      return next(new Error('Only staff cand debit'));
+      return next(new Error('Only staff can credit'));
     }
     const {
       accountNumber,
     } = req.params;
+    const {
+      amount,
+    } = req.body;
     try {
       const account = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
-      if (!account.rows[0]) return next();
+      if (!account.rows[0]) {
+        res.status(404);
+        return next(new Error('Account not found'));
+      }
       if (account.rows[0].status === 'dormant') {
-        return res.status.json({
+        return res.status(400).json({
           status: 400,
-          data: 'You can\'t credit this account because it is dormant',
+          error: 'You can\'t credit this account because it is dormant',
         });
       }
-      const {
-        amount,
-      } = req.body;
       const text = `INSERT INTO transactions(createdOn, type, accountNumber, amount, cashier, oldBalance, newBalance) VALUES($1, $2, $3, $4, $5, $6, $7)
       RETURNING *`;
       const values = [
         moment(new Date()),
-        'debit',
+        'credit',
         account.rows[0].accountnumber,
         amount,
         req.decoded.id,
         account.rows[0].balance,
-        account.rows[0].balance - amount,
+        account.rows[0].balance + amount,
       ];
-      try {
-        await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance + amount, accountNumber]);
-        const {
-          rows,
-        } = await db.query(text, values);
-        res.json({
-          status: 200,
-          data: rows,
-        });
-      } catch (e) {
-        res.status(500);
-        next(e);
-      }
+      await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance + amount, accountNumber]);
+      const {
+        rows,
+      } = await db.query(text, values);
+      res.json({
+        status: 200,
+        data: rows,
+      });
     } catch (e) {
       next(e);
     }

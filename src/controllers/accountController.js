@@ -6,78 +6,62 @@ import db from '../models/index';
 class AccountControl {
   static async getAll(req, res, next) {
     if (req.decoded.type === 'client') {
-      res.status(401);
-      return next(new Error('Only staff and admins can view all accounts'));
+      return res.status(401).json({
+        status: 401,
+        error: 'Access denied',
+      });
     }
-
-    if (req.query) {
-      const { status } = req.query;
-      try {
-        const {
-          rows,
-        } = await db.query('SELECT * FROM accounts WHERE status=$1', [status]);
-        res.json({
-          status: 200,
-          data: rows[0],
-        });
-      } catch (e) {
-        next('Something went wrong! Please try again later');
-      }
-    } else {
-      try {
-        const {
-          rows,
-        } = await db.query('SELECT * from accounts');
-        res.json({
-          status: 200,
-          data: rows,
-        });
-      } catch (e) {
-        res.status(500);
-        next(new Error('Something went wrong, please try again'));
-      }
+    try {
+      const result = await db.query('SELECT * FROM accounts');
+      res.status(200).json({
+        status: 200,
+        data: result.rows,
+      });
+    } catch (e) {
+      next(e);
     }
   }
 
   static async getOne(req, res, next) {
-    if (req.decoded.type == 'client') {
-      res.status(401);
-      return next(new Error('Only staff and admin can access this route'));
-    }
     const {
       accountNumber,
     } = req.params;
     try {
-      const {
-        rows,
-      } = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
-      res.json({
+      const result = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
+      if (req.decoded.type === 'client' && req.decoded.id !== result.rows[0].ownerid) {
+        return res.status(401).json({
+          status: 401,
+          error: 'Access denied',
+        });
+      }
+      res.status(200).json({
         status: 200,
-        data: rows,
+        data: result.rows,
       });
     } catch (e) {
-      res.status(404);
-      next(new Error('Invalid Account Number'));
+      next(e);
     }
   }
 
   static async getAccountTransactions(req, res, next) {
-    if (req.decoded.type !== 'client') {
-      res.status(401);
-      return next(new Error('Only clients can access this route'));
-    }
     const {
       accountNumber,
     } = req.params;
     try {
-      const { rows } = await db.query('SELECT * FROM transactions WHERE accountNumber=$1', [accountNumber]);
-      if (!res[0]) return next();
-      res.json({
-        status: 200,
-        data: rows,
+      const account = await db.query('SELECT * FROM accounts WHERE accountNumber=$1', [accountNumber]);
+      const result = await db.query('SELECT * FROM transactions WHERE accountNumber=$1', [accountNumber]);
+      if (req.decoded.id === account.rows[0].ownerid || req.decoded.type === 'staff') {
+        return res.json({
+          status: 200,
+          data: result.rows,
+        });
+      }
+      return res.status(401).json({
+        status: 401,
+        error: 'Access denied',
       });
     } catch (e) {
-      next();
+      next(e);
     }
   }
 
@@ -112,7 +96,6 @@ class AccountControl {
       });
     } catch (error) {
       res.status(400);
-      console.log(error);
       next(error);
     }
   }
@@ -125,12 +108,10 @@ class AccountControl {
     const {
       accountNumber,
     } = req.params;
+    const {
+      status,
+    } = req.body;
     try {
-      const validPatch = await joiHelper(req, res, patchAccountSchema);
-      if (validPatch.statusCode === 400) return;
-      const {
-        status,
-      } = validPatch;
       const result = await db.query('UPDATE accounts SET status=$1 WHERE accountNumber=$2 RETURNING *', [status, accountNumber]);
       res.json({
         status: 200,
@@ -157,10 +138,7 @@ class AccountControl {
       if (!rows[0]) return next();
       res.json({
         status: 200,
-        data: {
-          status: 200,
-          message: 'Account successfully deleted!',
-        },
+        message: 'Account successfully deleted!',
       });
     } catch (e) {
       next(e);

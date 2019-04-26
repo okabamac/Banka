@@ -1,7 +1,7 @@
 import Joi from 'joi';
 // avatar: Joi.binary().encoding('base64').max(2 * 1024 * 1024)
 
-const nameSchema = Joi.string().trim().min(2).max(30);
+const nameSchema = Joi.string().trim().replace(/\s/g, '').min(2);
 const emailSchema = Joi.object().keys({
   email: Joi.string().email({
     minDomainAtoms: 2,

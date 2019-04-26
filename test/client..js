@@ -33,7 +33,7 @@ const account = {
 }
 
 let theToken;
-
+let accNumber;
 
 describe('It should do all clients will want to do', () => {
   it('should register a client', (done) => {
@@ -93,10 +93,29 @@ describe('It should do all clients will want to do', () => {
     chai.request(app)
       .post('/api/v1/accounts/')
       .send(account)
-    // we set the auth header with our token
       .set('Authorization', theToken)
       .end((err, res) => {
         res.should.have.status(200);
+        res.body.should.be.a('object');
+
+        const {
+          accountNumber,
+        } = res.body.data;
+        accNumber = accountNumber;
+        done();
+      });
+  });
+  it('should not create a bank account', (done) => {
+    // follow up with requesting user protected page
+    chai.request(app)
+      .post('/api/v1/accounts/')
+      .send({
+        type: 'draft',
+        openingBalance: 'eheheh',
+      })
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(400);
         res.body.should.be.a('object');
         done();
       });
@@ -115,10 +134,21 @@ describe('It should do all clients will want to do', () => {
   it('should not get a transaction on account', (done) => {
     // Don't get a transaction cuz invalid accountnumber
     chai.request(app)
-      .get('/api/v1/accounts/2088058566/transactions')
+      .get('/api/v1/accounts/2088058375/transactions')
       .set('Authorization', theToken)
       .end((err, res) => {
-        res.should.have.status(404);
+        res.should.have.status(401);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not get a transaction on account', (done) => {
+    // Don't get a transaction cuz invalid accountnumber
+    chai.request(app)
+      .get('/api/v1/accounts/2088058565556/transactions')
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(400);
         res.body.should.be.a('object');
         done();
       });
@@ -134,10 +164,9 @@ describe('It should do all clients will want to do', () => {
         done();
       });
   });
-  it('should  get transaction by id', (done) => {
-    // Return not found
+  it('should get transaction by id', (done) => {
     chai.request(app)
-      .get('/api/v1/transactions/1')
+      .get('/api/v1/transactions/222')
       .set('Authorization', theToken)
       .end((err, res) => {
         res.should.have.status(200);
