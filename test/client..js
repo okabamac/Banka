@@ -15,7 +15,7 @@ const login_details = {
 };
 
 const register_details = {
-  firstName: 'Aminu',
+  firstName: 'Aminu', 
   lastName: 'Tolkien',
   email: 'amin@tolkien.com',
   password: 'johnbaby',
@@ -25,7 +25,7 @@ const register_details = {
 const invalid_login_details = {
   email: 'amin@tolkien.com',
   password: 'hahahaha',
-};
+}; 
 
 const account = {
   type: 'Savings',
@@ -132,7 +132,7 @@ describe('It should do all clients will want to do', () => {
       });
   });
   it('should not get a transaction on account', (done) => {
-    // Don't get a transaction cuz invalid accountnumber
+    // Don't get a transaction cuz access
     chai.request(app)
       .get('/api/v1/accounts/2088058375/transactions')
       .set('Authorization', theToken)

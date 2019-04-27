@@ -12,6 +12,23 @@ const login_details = {
   email: 'aminuaminu@g.com',
   password: 'johnbaby',
 };
+
+const registration_details = {
+  firstName: ' Shine',
+  lastName: 'Ijeomah',
+  email: 'hvvenc@gmail.com',
+  password: 'johnbaby',
+  confirmPassword: 'johnbaby',
+  type: 'staff',
+  admin: 'true',
+}
+const registration_details2 = {
+  firstName: ' Shine',
+  lastName: 'Ijeomah',
+  email: 'hvvenc@gmail.com',
+  password: 'johnbaby',
+  confirmPassword: 'johnbaby',
+};
 let theToken;
 
 describe('Do all staff will want to do', () => {
@@ -31,6 +48,28 @@ describe('Do all staff will want to do', () => {
         } = res.body.data;
 
         theToken = token;
+        done();
+      });
+  });
+  it('should not add user', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/addUser')
+      .send(registration_details)
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.be.a('object');
+        done();
+      });
+  });
+  it('should not add user', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/addUser')
+      .send(registration_details2)
+      .set('Authorization', theToken)
+      .end((err, res) => {
+        res.should.have.status(400);
+        res.body.should.be.a('object');
         done();
       });
   });
