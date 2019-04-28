@@ -1,13 +1,14 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable consistent-return */
-
 import bcrypt from 'bcryptjs';
 
 import jwt from 'jsonwebtoken';
 
 import db from '../models/index';
 
-import { jwt_secret } from '../../config';
-
+import {
+  jwt_secret,
+} from '../../config';
 
 const doToken = (user) => {
   const token = jwt.sign({
@@ -18,83 +19,115 @@ const doToken = (user) => {
   jwt_secret, {
     expiresIn: '24h', // expires in 24 hours
   });
-  const data = {
-    token,
-    ...user,
-  };
-    // return the JWT token for the future API calls
+  const data = Object.assign({ user, token });
+  // return the JWT token for the future API calls
   return data;
 };
+
+const text = `INSERT INTO
+      users(email, firstName, lastName, type, isAdmin, password)
+      VALUES($1, $2, $3, $4, $5, $6)
+      returning *`;
 
 class AuthControl {
   static async signup(req, res, next) {
     const {
       firstName, lastName, email, password,
     } = req.body;
-    const checkExist = await db.query('SELECT * FROM users WHERE email=$1', [email]);
-    if (checkExist.rows.length != 0) {
-      res.status(400);
-      next(new Error('Email is already in use'));
-      return;
-    }
-    bcrypt.hash(password, 10, async (err, hash) => {
-      if (err) return next(new Error('Oops something went wrong!'));
-      const text = `INSERT INTO
-      users(email, firstName, lastName, type, isAdmin, password)
-      VALUES($1, $2, $3, $4, $5, $6)
-      returning *`;
-      const values = [
-        email,
-        firstName,
-        lastName,
-        'client',
-        false,
-        hash,
-      ];
-      try {
+    try {
+      bcrypt.hash(password, 10, async (err, hash) => {
+        const addNewUser = await db.query(text, [email,
+          firstName,
+          lastName,
+          'client',
+          false,
+          hash,
+        ]);
+        const tokenized = await doToken(addNewUser.rows[0]);
         const {
-          rows,
-        } = await db.query(text, values);
-        const tokenized = await doToken(rows[0]);
-        const {
-          token, id, email, firstname, lastname, type, isadmin,
-        } = tokenized;
+          id, type, isadmin,
+        } = tokenized.user;
         return res.json({
           status: 200,
           data: {
-            token, id, email, firstname, lastname, type, isadmin,
+            token: tokenized.token,
+            id,
+            email,
+            firstName,
+            lastName,
+            type,
+            isadmin,
           },
         });
-      } catch (error) {
-        res.status(500).json({
-          status: 500,
-          error: 'Oops, something went wrong! Try again',
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async addUser(req, res, next) {
+    if (req.decoded.isAdmin === false) {
+      return res.status(401).json({
+        status: 401,
+        error: 'Access denied',
+      });
+    }
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      type,
+      admin,
+    } = req.body;
+    try {
+      bcrypt.hash(password, 10, async (err, hash) => {
+        const addNewUser = await db.query(text, [email,
+          firstName,
+          lastName,
+          type, admin,
+          hash,
+        ]);
+        const tokenized = await doToken(addNewUser.rows[0]);
+        const {
+          id, isadmin,
+        } = tokenized.user;
+        return res.json({
+          status: 200,
+          data: {
+            token: tokenized.token,
+            id,
+            email,
+            firstName,
+            lastName,
+            type,
+            isadmin,
+          },
         });
-      }
-    });
+      });
+    } catch (e) {
+      next(e);
+    }
   }
 
   static async signin(req, res, next) {
     const { email, password } = req.body;
     try {
-      const { rows } = await db.query('SELECT * FROM users WHERE email=$1', [email]);
-      if (!rows[0]) {
-        return res.status(400).json({
-          status: 400,
-          error: 'Invalid credentials',
-        });
+      const result = await db.query('SELECT * FROM users WHERE email=$1', [email]);
+      if (!result.rows[0]) {
+        res.status(400);
+        return next(new Error('Invalid credentials'));
       }
-      bcrypt.compare(password, rows[0].password, async (err, result) => {
-        if (result) {
-          const tokenized = await doToken(rows[0]);
-
+      bcrypt.compare(password, result.rows[0].password, async (err, data) => {
+        if (data) {
+          const tokenized = await doToken(result.rows[0]);
           const {
-            token, id, email, firstname, lastname, type, isadmin,
-          } = tokenized;
+            id, firstname, lastname, type, isadmin,
+          } = tokenized.user;
           return res.json({
             status: 200,
             data: {
-              token, id, email, firstname, lastname, type, isadmin,
+              token: tokenized.token, id, email, firstname, lastname, type, isadmin,
             },
           });
         }
@@ -102,8 +135,7 @@ class AuthControl {
         return next(new Error('Invalid credentials'));
       });
     } catch (e) {
-      res.status(500);
-      next(new Error('Something went wrong! Please, try again later'));
+      next(e);
     }
   }
 }

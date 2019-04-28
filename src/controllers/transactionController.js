@@ -2,6 +2,9 @@ import moment from 'moment';
 
 import db from '../models/index';
 
+const text = `INSERT INTO transactions(createdOn, type, accountNumber, amount, cashier, oldBalance, newBalance) VALUES($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *`;
+
 class TransactionControl {
   static async getAll(req, res, next) {
     if (req.decoded.type === 'client') {
@@ -12,13 +15,12 @@ class TransactionControl {
       const {
         rows,
       } = await db.query('SELECT * FROM transactions');
-      res.json({
+      return res.json({
         status: 200,
         data: rows,
       });
     } catch (e) {
-      res.status(500);
-      next(new Error('Something went wrong, please try again later'));
+      return next(e);
     }
   }
 
@@ -33,12 +35,12 @@ class TransactionControl {
           data: transaction.rows,
         });
       }
-      res.status(401).json({
+      return res.status(401).json({
         status: 401,
         message: 'Access denied',
       });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   }
 
@@ -70,9 +72,10 @@ class TransactionControl {
         res.status(400);
         return next(new Error('Insufficient fund'));
       }
-      const text = `INSERT INTO transactions(createdOn, type, accountNumber, amount, cashier, oldBalance, newBalance) VALUES($1, $2, $3, $4, $5, $6, $7)
-      RETURNING *`;
-      const values = [
+      await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance - amount, accountNumber]);
+      const {
+        rows,
+      } = await db.query(text, [
         moment(new Date()),
         'debit',
         account.rows[0].accountnumber,
@@ -80,17 +83,13 @@ class TransactionControl {
         req.decoded.id,
         account.rows[0].balance,
         account.rows[0].balance - amount,
-      ];
-      await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance - amount, accountNumber]);
-      const {
-        rows,
-      } = await db.query(text, values);
-      res.json({
+      ]);
+      return res.json({
         status: 200,
         data: rows,
       });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   }
 
@@ -117,9 +116,10 @@ class TransactionControl {
           error: 'You can\'t credit this account because it is dormant',
         });
       }
-      const text = `INSERT INTO transactions(createdOn, type, accountNumber, amount, cashier, oldBalance, newBalance) VALUES($1, $2, $3, $4, $5, $6, $7)
-      RETURNING *`;
-      const values = [
+      await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance + amount, accountNumber]);
+      const {
+        rows,
+      } = await db.query(text, [
         moment(new Date()),
         'credit',
         account.rows[0].accountnumber,
@@ -127,17 +127,13 @@ class TransactionControl {
         req.decoded.id,
         account.rows[0].balance,
         account.rows[0].balance + amount,
-      ];
-      await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance + amount, accountNumber]);
-      const {
-        rows,
-      } = await db.query(text, values);
-      res.json({
+      ]);
+      return res.json({
         status: 200,
         data: rows,
       });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   }
 }

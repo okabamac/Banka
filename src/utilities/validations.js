@@ -30,6 +30,38 @@ const userSignupSchema = Joi.object().keys({
     }),
 });
 
+const addUserSchema = Joi.object().keys({
+  firstName: nameSchema.required(),
+  lastName: nameSchema.required(),
+  email: Joi.string().email({
+    minDomainAtoms: 2,
+  }).required(),
+  password: Joi.string()
+    .min(6)
+    .max(30)
+    .regex(/^[a-zA-Z0-9]{3,30}$/)
+    .required(),
+  confirmPassword: Joi.any()
+    .valid(Joi.ref('password'))
+    .required()
+    .options({
+      language: {
+        any: {
+          allowOnly: 'must match password',
+        },
+      },
+    }),
+  type: Joi.string()
+    .min(3)
+    .max(15).default('staff', {
+      invalid: true,
+    })
+    .required(),
+  admin: Joi.boolean().default(false, {
+    invalid: true,
+  })
+    .required(),
+});
 const userSigninSchema = Joi.object().keys({
   email: Joi.string().email({
     minDomainAtoms: 2,
@@ -63,6 +95,7 @@ const accountNumberSchema = Joi.object().keys({
 module.exports = {
   emailSchema,
   userSignupSchema,
+  addUserSchema,
   userSigninSchema,
   createAccountSchema,
   patchAccountSchema,

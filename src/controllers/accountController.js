@@ -3,6 +3,11 @@ import moment from 'moment';
 
 import db from '../models/index';
 
+const text = `INSERT INTO
+      accounts(accountNumber, createdOn, ownerId, type, balance, status)
+      VALUES($1, $2, $3, $4, $5, $6)
+      RETURNING *`;
+
 class AccountControl {
   static async getAll(req, res, next) {
     if (req.decoded.type === 'client') {
@@ -73,23 +78,17 @@ class AccountControl {
     const {
       type, openingBalance,
     } = req.body;
-
-    const text = `INSERT INTO
-      accounts(accountNumber, createdOn, ownerId, type, balance, status)
-      VALUES($1, $2, $3, $4, $5, $6)
-      RETURNING *`;
-    const values = [
-      Math.floor(100000 + Math.random() * 9000000000),
-      moment(new Date()),
-      req.decoded.id,
-      type,
-      openingBalance,
-      'active',
-    ];
     try {
       const {
         rows,
-      } = await db.query(text, values);
+      } = await db.query(text, [
+        Math.floor(100000 + Math.random() * 9000000000),
+        moment(new Date()),
+        req.decoded.id,
+        type,
+        openingBalance,
+        'active',
+      ]);
       res.json({
         status: 200,
         data: rows,
