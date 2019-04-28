@@ -24,25 +24,16 @@ const doToken = (user) => {
   return data;
 };
 
-const trimCheck = (data) => {
-  Object.keys(data).forEach((a) => {
-    // eslint-disable-next-line no-param-reassign
-    data[a] = data[a].trim().replace(/\s/g, '');
-  });
-  return data;
-};
-
 const text = `INSERT INTO
       users(email, firstName, lastName, type, isAdmin, password)
       VALUES($1, $2, $3, $4, $5, $6)
       returning *`;
 
-
 class AuthControl {
   static async signup(req, res, next) {
     const {
       firstName, lastName, email, password,
-    } = await trimCheck(req.body);
+    } = req.body;
     try {
       bcrypt.hash(password, 10, async (err, hash) => {
         const addNewUser = await db.query(text, [email,
@@ -55,7 +46,7 @@ class AuthControl {
         const tokenized = await doToken(addNewUser.rows[0]);
         const {
           id, type, isadmin,
-        } = tokenized;
+        } = tokenized.user;
         return res.json({
           status: 200,
           data: {
@@ -75,7 +66,7 @@ class AuthControl {
   }
 
   static async addUser(req, res, next) {
-    if (req.decoded.isAdmin === false) { 
+    if (req.decoded.isAdmin === false) {
       return res.status(401).json({
         status: 401,
         error: 'Access denied',
@@ -88,7 +79,7 @@ class AuthControl {
       password,
       type,
       admin,
-    } = trimCheck(req.body);
+    } = req.body;
     try {
       bcrypt.hash(password, 10, async (err, hash) => {
         const addNewUser = await db.query(text, [email,

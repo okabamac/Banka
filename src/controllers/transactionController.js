@@ -20,7 +20,7 @@ class TransactionControl {
         data: rows,
       });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   }
 
@@ -40,7 +40,7 @@ class TransactionControl {
         message: 'Access denied',
       });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   }
 
@@ -84,12 +84,12 @@ class TransactionControl {
         account.rows[0].balance,
         account.rows[0].balance - amount,
       ]);
-      res.json({
+      return res.json({
         status: 200,
         data: rows,
       });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   }
 
@@ -128,13 +128,13 @@ class TransactionControl {
         account.rows[0].balance,
         account.rows[0].balance + amount,
       ]);
-      res.json({
+      return res.json({
         status: 200,
         data: rows,
       });
-    } catch (e) { 
-      next(e);
+    } catch (e) {
+      return next(e);
     }
   }
 }
-export default TransactionControl; 
+export default TransactionControl;

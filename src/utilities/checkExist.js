@@ -10,5 +10,4 @@ const checkExist = async (req, res, next) => {
   }
   return next();
 };
-export default checkExist; 
- 
+export default checkExist;
