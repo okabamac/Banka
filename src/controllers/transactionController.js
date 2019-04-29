@@ -72,7 +72,9 @@ class TransactionControl {
         res.status(400);
         return next(new Error('Insufficient fund'));
       }
-      await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance - amount, accountNumber]);
+      const sub = parseFloat(account.rows[0].balance) - parseFloat(amount);
+      const bal = parseFloat(account.rows[0].balance);
+      await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [sub, accountNumber]);
       const {
         rows,
       } = await db.query(text, [
@@ -81,8 +83,8 @@ class TransactionControl {
         account.rows[0].accountnumber,
         amount,
         req.decoded.id,
-        account.rows[0].balance,
-        account.rows[0].balance - amount,
+        bal,
+        sub,
       ]);
       return res.json({
         status: 200,
@@ -116,7 +118,9 @@ class TransactionControl {
           error: 'You can\'t credit this account because it is dormant',
         });
       }
-      await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [account.rows[0].balance + amount, accountNumber]);
+      const add = parseFloat(account.rows[0].balance) + parseFloat(amount);
+      const bal = parseFloat(account.rows[0].balance);
+      await db.query('UPDATE accounts SET balance=$1 WHERE accountNumber=$2', [add, accountNumber]);
       const {
         rows,
       } = await db.query(text, [
@@ -125,8 +129,8 @@ class TransactionControl {
         account.rows[0].accountnumber,
         amount,
         req.decoded.id,
-        account.rows[0].balance,
-        account.rows[0].balance + amount,
+        bal,
+        add,
       ]);
       return res.json({
         status: 200,
