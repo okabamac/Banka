@@ -18,12 +18,12 @@ class AccountControl {
     }
     try {
       const result = await db.query('SELECT * FROM accounts');
-      res.status(200).json({
+      return res.status(200).json({
         status: 200,
         data: result.rows,
       });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   }
 
@@ -39,12 +39,12 @@ class AccountControl {
           error: 'Access denied',
         });
       }
-      res.status(200).json({
+      return res.status(200).json({
         status: 200,
         data: result.rows,
       });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   }
 
@@ -66,7 +66,7 @@ class AccountControl {
         error: 'Access denied',
       });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   }
 
@@ -89,13 +89,13 @@ class AccountControl {
         openingBalance,
         'active',
       ]);
-      res.json({
+      return res.json({
         status: 200,
         data: rows,
       });
     } catch (error) {
       res.status(400);
-      next(error);
+      return next(error);
     }
   }
 
@@ -112,7 +112,7 @@ class AccountControl {
     } = req.body;
     try {
       const result = await db.query('UPDATE accounts SET status=$1 WHERE accountNumber=$2 RETURNING *', [status, accountNumber]);
-      res.json({
+      return res.json({
         status: 200,
         data: {
           accountNumber,
@@ -120,7 +120,7 @@ class AccountControl {
         },
       });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   }
 
@@ -135,12 +135,12 @@ class AccountControl {
     try {
       const { rows } = await db.query('DELETE FROM accounts WHERE accountNumber=$1 RETURNING *', [accountNumber]);
       if (!rows[0]) return next();
-      res.json({
+      return res.json({
         status: 200,
         message: 'Account successfully deleted!',
       });
     } catch (e) {
-      next(e);
+      return next(e);
     }
   }
 }
