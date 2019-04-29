@@ -64,7 +64,7 @@ The test covers all the endpoints and requests sent to them.
 ## Deployments
 This application was deployed to the following:
 - [Heroku](https://banka-ch-api.herokuapp.com) : For API endpoints.
-- [Github Pages](https://okabamac.github.io/banka) : UI template for this application.
+- [Github Pages](https://okabamac.github.io/Banka/) : UI template for this application.
 - [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2319936) : Pivot Tracker stories
 - [Swagger Documentation](https://banka-ch-api.herokuapp.com/api-docs) : Swagger Documentation
 
