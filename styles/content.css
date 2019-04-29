@@ -358,12 +358,12 @@
      margin: auto;
      display: grid;
      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-     grid-template-rows: 450px;
+     grid-template-rows: 430px;
      grid-gap: 0.7em;
      opacity: 1;
-     width: 80%;
+     width: 90%;
      height: 85%;
-     margin: 2em auto;
+     margin: 1em auto;
 
 }
 .customerList {
