@@ -4,6 +4,7 @@ import morgan from 'morgan';
 
 import cors from 'cors';
 
+import swaggerUi from 'swagger-ui-express';
 import userRoute from '../src/routes/userRoute';
 
 import authRoute from '../src/routes/authRoute';
@@ -11,6 +12,9 @@ import authRoute from '../src/routes/authRoute';
 import accountRoute from '../src/routes/accountRoute';
 
 import transactionRoute from '../src/routes/transactionRoute';
+
+
+import swaggerDocument from './swagger.json';
 
 const app = express();
 
@@ -29,6 +33,7 @@ app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/accounts', accountRoute);
 app.use('/api/v1/transactions', transactionRoute);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 app.use((req, res, next) => {

@@ -47,7 +47,7 @@ class UserControl {
       const { rows } = await db.query('SELECT * FROM users WHERE email=$1', [email]);
       if (!rows[0]) return next();
       const { id } = rows[0];
-      if (req.decoded.id === id) {
+      if (req.decoded.id === id || req.decoded.type ==='staff') {
         const result = await db.query('SELECT * FROM accounts WHERE ownerId=$1', [id]);
         return res.status(200).json({
           status: 200,
