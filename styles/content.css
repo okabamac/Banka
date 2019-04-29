@@ -359,7 +359,7 @@
      display: grid;
      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
      grid-template-rows: 430px;
-     grid-gap: 0.7em;
+     grid-gap: 1em;
      opacity: 1;
      width: 90%;
      height: 85%;
