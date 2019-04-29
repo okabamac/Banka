@@ -107,7 +107,7 @@
     margin-bottom: 2em;
 }
 .cardShow {
-    padding: 2em;
+    padding: 1.6em;
     position: relative;
      height: 100%;
      width: 100%;
@@ -121,7 +121,7 @@
     position: relative;
     min-height: 490px;
     opacity: 0;
-    top: 35px;
+    top: 20px;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
 }
