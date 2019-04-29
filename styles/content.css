@@ -345,10 +345,6 @@
     top: 0.2em;
 }
 
-.search-contain form {
-
-}
-
 .customerAllAccounts {
     top: 15px;
     position: relative;
@@ -363,7 +359,7 @@
      display: grid;
      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
      grid-template-rows: 450px;
-     grid-gap: 3em;
+     grid-gap: 0.7em;
      opacity: 1;
      width: 80%;
      height: 85%;
