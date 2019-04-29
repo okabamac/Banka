@@ -75,7 +75,7 @@ const userSigninSchema = Joi.object().keys({
 
 const createAccountSchema = Joi.object().keys({
   type: Joi.string().trim().valid('Savings', 'Current').required(),
-  openingBalance: Joi.number().precision(5).min(0).required(),
+  openingBalance: Joi.number().min(0).precision(5).required(),
 });
 
 const patchAccountSchema = Joi.object().keys({
